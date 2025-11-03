@@ -1,0 +1,1462 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kids Learning Hub</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      font-size: 40px;
+    }
+
+    .logo-text h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #667eea;
+    }
+
+    .logo-text p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .language-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .language-selector select {
+      padding: 8px 12px;
+      border: 2px solid #667eea;
+      border-radius: 20px;
+      background: white;
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .auth-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .login-btn {
+      background: transparent;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+
+    .login-btn:hover {
+      background: #667eea;
+      color: white;
+    }
+
+    .signup-btn {
+      background: #667eea;
+      color: white;
+    }
+
+    .signup-btn:hover {
+      background: #5568d3;
+    }
+
+    .user-info {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      color: #333;
+    }
+
+    .logout-btn {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 16px;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    nav a:hover, nav a.active {
+      color: #667eea;
+    }
+
+    /* Sections */
+    .section {
+      display: none;
+      min-height: 80vh;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 48px;
+      margin: 0 0 20px 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 24px;
+      margin: 0 0 40px 0;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .cta-button {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 18px 40px;
+      font-size: 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Content Sections */
+    .content-section {
+      background: white;
+      padding: 60px 20px;
+      border-radius: 30px 30px 0 0;
+      margin-top: -30px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      color: #333;
+      margin: 0 0 50px 0;
+    }
+
+    /* Courses Grid */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .course-card {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .course-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .course-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    .course-card h3 {
+      font-size: 24px;
+      color: #333;
+      margin: 0 0 15px 0;
+    }
+
+    .course-card p {
+      font-size: 16px;
+      color: #666;
+      margin: 0 0 20px 0;
+      line-height: 1.6;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .view-course-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    .view-course-btn:hover {
+      background: #5568d3;
+    }
+
+    /* About Section */
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-content h3 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .about-content p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .feature-card {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+
+    /* Contact Section */
+    .contact-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-form {
+      background: #f8f9fa;
+      padding: 40px;
+      border-radius: 20px;
+      margin-top: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .submit-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #5568d3;
+    }
+
+    /* Auth Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90%;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      padding: 30px;
+      border-bottom: 2px solid #f0f0f0;
+      text-align: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 28px;
+      color: #333;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    /* Video Modal */
+    .video-modal .modal-content {
+      max-width: 900px;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      margin-bottom: 20px;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .video-description {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .video-description h4 {
+      margin: 0 0 15px 0;
+      color: #333;
+      font-size: 20px;
+    }
+
+    .video-description p {
+      margin: 0;
+      line-height: 1.6;
+      color: #666;
+    }
+
+    /* Chat Bot */
+    .chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .chat-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #667eea;
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .chat-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .chat-window {
+      display: none;
+      position: absolute;
+      bottom: 70px;
+      right: 0;
+      width: 350px;
+      height: 500px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .chat-window.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background: #667eea;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      word-wrap: break-word;
+    }
+
+    .message.user {
+      background: #667eea;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .message.bot {
+      background: #f0f0f0;
+      color: #333;
+      align-self: flex-start;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 20px;
+      border-top: 1px solid #eee;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 20px;
+      outline: none;
+    }
+
+    .chat-input button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    /* Loading States */
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .header-right {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero h2 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-window {
+        width: 300px;
+        height: 400px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <header>
+   <div class="header-content">
+    <div class="logo">
+     <div class="logo-icon">
+      🎓
+     </div>
+     <div class="logo-text">
+      <h1 id="site-title">Kids Learning Hub</h1>
+      <p id="site-tagline">Learn, Create, Grow!</p>
+     </div>
+    </div>
+    <div class="header-right">
+     <div class="language-selector"><span>🌐</span> <select id="language-select" onchange="changeLanguage()"> <option value="en">English</option> <option value="ar">العربية</option> <option value="rw">Kinyarwanda</option> </select>
+     </div>
+     <div class="auth-buttons" id="auth-buttons"><button class="auth-btn login-btn" onclick="openModal('login')">Login</button> <button class="auth-btn signup-btn" onclick="openModal('signup')">Sign Up</button>
+     </div>
+     <div class="user-info" id="user-info"><span>Welcome, <span id="user-name"></span>!</span> <button class="logout-btn" onclick="logout()">Logout</button>
+     </div>
+    </div>
+    <nav><a href="#" onclick="showSection('home')" class="nav-link active">Home</a> <a href="#" onclick="showSection('courses')" class="nav-link">Courses</a> <a href="#" onclick="showSection('about')" class="nav-link">About</a> <a href="#" onclick="showSection('contact')" class="nav-link">Contact</a>
+    </nav>
+   </div>
+  </header><!-- Home Section -->
+  <section id="home" class="section active">
+   <div class="hero">
+    <div class="container">
+     <h2 id="hero-title">Start Your Learning Adventure</h2>
+     <p id="hero-subtitle">Explore courses in programming, AI, design, and more!</p><button class="cta-button" onclick="showSection('courses')"> <span data-translate="explore_courses">Explore Courses</span> 🚀 </button>
+    </div>
+   </div>
+  </section><!-- Courses Section -->
+  <section id="courses" class="section">
+   <div class="content-section">
+    <h2 class="section-title" data-translate="popular_courses">Popular Courses</h2>
+    <div class="courses-grid" id="courses-grid"></div>
+   </div>
+  </section><!-- About Section -->
+  <section id="about" class="section">
+   <div class="content-section">
+    <div class="about-content">
+     <h2 class="section-title" id="about-title">About Our Platform</h2>
+     <h3 data-translate="mission_title">Our Mission</h3>
+     <p id="about-description" data-translate="mission_text">We provide quality education for children worldwide, making learning fun and accessible through interactive courses and AI-powered assistance.</p>
+     <div class="features-grid">
+      <div class="feature-card">
+       <div class="feature-icon">
+        🎯
+       </div>
+       <h4 data-translate="interactive_title">Interactive Learning</h4>
+       <p data-translate="interactive_desc">Hands-on projects and real-world applications</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        🤖
+       </div>
+       <h4 data-translate="ai_title">AI Assistant</h4>
+       <p data-translate="ai_desc">24/7 AI chat support for learning assistance</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        🌍
+       </div>
+       <h4 data-translate="multilingual_title">Multi-language</h4>
+       <p data-translate="multilingual_desc">Available in English, Arabic, and Kinyarwanda</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Contact Section -->
+  <section id="contact" class="section">
+   <div class="content-section">
+    <div class="contact-content">
+     <h2 class="section-title" id="contact-title">Get In Touch</h2>
+     <p style="text-align: center; font-size: 18px; color: #666;" data-translate="contact_desc">Have questions? We'd love to hear from you!</p>
+     <div class="contact-form">
+      <form id="contact-form" onsubmit="submitContact(event)">
+       <div class="form-group"><label for="contact-name" data-translate="name_label">Name</label> <input type="text" id="contact-name" required>
+       </div>
+       <div class="form-group"><label for="contact-email" data-translate="email_label">Email</label> <input type="email" id="contact-email" required>
+       </div>
+       <div class="form-group"><label for="contact-subject" data-translate="subject_label">Subject</label> <input type="text" id="contact-subject" required>
+       </div>
+       <div class="form-group"><label for="contact-message" data-translate="message_label">Message</label> <textarea id="contact-message" rows="5" required></textarea>
+       </div><button type="submit" class="submit-btn" data-translate="send_message">Send Message</button>
+      </form>
+     </div>
+     <div style="text-align: center; margin-top: 30px;">
+      <p><strong data-translate="email_us">Email us:</strong> <span id="contact-email-display">support@kidslearninghub.com</span></p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Auth Modals -->
+  <div id="auth-modal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header"><button class="close-modal" onclick="closeModal('auth-modal')">×</button>
+     <h2 id="auth-modal-title">Login</h2>
+    </div>
+    <div class="modal-body">
+     <form id="auth-form" onsubmit="handleAuth(event)">
+      <div class="form-group" id="name-group" style="display: none;"><label for="auth-name" data-translate="name_label">Name</label> <input type="text" id="auth-name">
+      </div>
+      <div class="form-group"><label for="auth-email" data-translate="email_label">Email</label> <input type="email" id="auth-email" required>
+      </div>
+      <div class="form-group"><label for="auth-password" data-translate="password_label">Password</label> <input type="password" id="auth-password" required>
+      </div><button type="submit" class="submit-btn" id="auth-submit-btn">Login</button>
+     </form>
+     <p style="text-align: center; margin-top: 20px;"><span id="auth-switch-text">Don't have an account?</span> <a href="#" onclick="switchAuthMode()" style="color: #667eea; font-weight: bold;" id="auth-switch-link">Sign up</a></p>
+    </div>
+   </div>
+  </div><!-- Video Modal -->
+  <div id="video-modal" class="modal video-modal">
+   <div class="modal-content">
+    <div class="modal-header"><button class="close-modal" onclick="closeModal('video-modal')">×</button>
+     <h2 id="video-modal-title"></h2>
+    </div>
+    <div class="modal-body">
+     <div class="video-container" id="video-container"></div>
+     <div class="video-description" id="video-description"></div>
+    </div>
+   </div>
+  </div><!-- Chat Widget -->
+  <div class="chat-widget"><button class="chat-toggle" onclick="toggleChat()">💬</button>
+   <div class="chat-window" id="chat-window">
+    <div class="chat-header" data-translate="ai_assistant">
+     AI Learning Assistant
+    </div>
+    <div class="chat-messages" id="chat-messages">
+     <div class="message bot" data-translate="welcome_message">
+      Hello! I'm your AI learning assistant. How can I help you today?
+     </div>
+    </div>
+    <div class="chat-input"><input type="text" id="chat-input" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)"> <button onclick="sendMessage()">Send</button>
+    </div>
+   </div>
+  </div>
+  <footer>
+   <p id="footer-text">© 2024 Kids Learning Hub. Happy Learning!</p>
+  </footer>
+  <script>
+    const defaultConfig = {
+      site_title: "Kids Learning Hub",
+      site_tagline: "Learn, Create, Grow!",
+      hero_title: "Start Your Learning Adventure",
+      hero_subtitle: "Explore courses in programming, AI, design, and more!",
+      about_title: "About Our Platform",
+      about_description: "We provide quality education for children worldwide",
+      contact_title: "Get In Touch",
+      contact_email: "support@kidslearninghub.com",
+      footer_text: "© 2024 Kids Learning Hub. Happy Learning!",
+      background_color: "#667eea",
+      surface_color: "#ffffff",
+      text_color: "#333333",
+      primary_action_color: "#ff6b6b",
+      secondary_action_color: "#667eea",
+      font_family: "Comic Sans MS",
+      font_size: 16
+    };
+
+    let currentUser = null;
+    let currentLanguage = 'en';
+    let authMode = 'login';
+    let userData = [];
+
+    const translations = {
+      en: {
+        explore_courses: "Explore Courses",
+        popular_courses: "Popular Courses",
+        mission_title: "Our Mission",
+        mission_text: "We provide quality education for children worldwide, making learning fun and accessible through interactive courses and AI-powered assistance.",
+        interactive_title: "Interactive Learning",
+        interactive_desc: "Hands-on projects and real-world applications",
+        ai_title: "AI Assistant",
+        ai_desc: "24/7 AI chat support for learning assistance",
+        multilingual_title: "Multi-language",
+        multilingual_desc: "Available in English, Arabic, and Kinyarwanda",
+        contact_desc: "Have questions? We'd love to hear from you!",
+        name_label: "Name",
+        email_label: "Email",
+        password_label: "Password",
+        subject_label: "Subject",
+        message_label: "Message",
+        send_message: "Send Message",
+        email_us: "Email us:",
+        ai_assistant: "AI Learning Assistant",
+        welcome_message: "Hello! I'm your AI learning assistant. How can I help you today?"
+      },
+      ar: {
+        explore_courses: "استكشف الدورات",
+        popular_courses: "الدورات الشائعة",
+        mission_title: "مهمتنا",
+        mission_text: "نحن نقدم تعليماً عالي الجودة للأطفال في جميع أنحاء العالم، مما يجعل التعلم ممتعاً ومتاحاً من خلال الدورات التفاعلية والمساعدة المدعومة بالذكاء الاصطناعي.",
+        interactive_title: "التعلم التفاعلي",
+        interactive_desc: "مشاريع عملية وتطبيقات من العالم الحقيقي",
+        ai_title: "مساعد الذكاء الاصطناعي",
+        ai_desc: "دعم الدردشة بالذكاء الاصطناعي على مدار الساعة للمساعدة في التعلم",
+        multilingual_title: "متعدد اللغات",
+        multilingual_desc: "متوفر باللغة الإنجليزية والعربية والكينيارواندا",
+        contact_desc: "هل لديك أسئلة؟ نحن نحب أن نسمع منك!",
+        name_label: "الاسم",
+        email_label: "البريد الإلكتروني",
+        password_label: "كلمة المرور",
+        subject_label: "الموضوع",
+        message_label: "الرسالة",
+        send_message: "إرسال الرسالة",
+        email_us: "راسلنا:",
+        ai_assistant: "مساعد التعلم بالذكاء الاصطناعي",
+        welcome_message: "مرحباً! أنا مساعد التعلم بالذكاء الاصطناعي. كيف يمكنني مساعدتك اليوم؟"
+      },
+      rw: {
+        explore_courses: "Shakisha Amasomo",
+        popular_courses: "Amasomo Azwi",
+        mission_title: "Intego Yacu",
+        mission_text: "Dutanga uburezi bwiza ku bana ku isi yose, dukora ko kwiga bishimishije kandi biboroha binyuze mu masomo akorana n'ubufasha bw'ubwenge bw'ubuhanga.",
+        interactive_title: "Kwiga Gukorana",
+        interactive_desc: "Imishinga y'amaboko n'ibikorwa by'ukuri",
+        ai_title: "Umufasha w'Ubwenge Buhanga",
+        ai_desc: "Ubufasha bw'ikiganiro cy'ubwenge buhanga 24/7 mu gufasha kwiga",
+        multilingual_title: "Indimi Nyinshi",
+        multilingual_desc: "Biraboneka mu Cyongereza, Icyarabu, na Kinyarwanda",
+        contact_desc: "Ufite ibibazo? Dushimira kugira icyo tubwira!",
+        name_label: "Izina",
+        email_label: "Imeri",
+        password_label: "Ijambo Ry'ibanga",
+        subject_label: "Ingingo",
+        message_label: "Ubutumwa",
+        send_message: "Kohereza Ubutumwa",
+        email_us: "Twandikire:",
+        ai_assistant: "Umufasha wo Kwiga w'Ubwenge Buhanga",
+        welcome_message: "Muraho! Ndi umufasha wawe wo kwiga w'ubwenge buhanga. Ese nshobora kugufasha iki uyu munsi?"
+      }
+    };
+
+    const courses = [
+      {
+        id: 1,
+        title: "ChatGPT & AI Basics",
+        icon: "🤖",
+        description: "Learn how to use ChatGPT and understand AI fundamentals",
+        lessons: 8,
+        duration: "2 hours",
+        videos: [
+          { 
+            title: "What is ChatGPT?", 
+            duration: "10 min", 
+            description: "Introduction to AI chatbots and how they work",
+            videoId: "JTxsNm9IdYU",
+            explanation: "This lesson introduces you to ChatGPT, an AI chatbot that can understand and respond to human language. You'll learn what artificial intelligence is, how chatbots work, and why ChatGPT is special. We'll explore the basics of machine learning and natural language processing in simple terms that kids can understand."
+          },
+          { 
+            title: "Getting Started with ChatGPT", 
+            duration: "15 min", 
+            description: "Creating your first prompts and conversations",
+            videoId: "JTxsNm9IdYU",
+            explanation: "Learn how to start conversations with ChatGPT effectively. This lesson covers how to create an account, write your first prompts, and understand how to communicate clearly with AI. You'll practice asking questions and giving instructions to get the best responses from ChatGPT."
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "HTML & CSS Basics",
+        icon: "🌐",
+        description: "Build your first website with HTML and CSS",
+        lessons: 10,
+        duration: "3 hours",
+        videos: [
+          { 
+            title: "Introduction to HTML", 
+            duration: "15 min", 
+            description: "What is HTML and how websites work",
+            videoId: "UB1O30fR-EE",
+            explanation: "HTML (HyperText Markup Language) is the foundation of all websites. In this lesson, you'll learn what HTML is, how it structures web pages, and why it's important. We'll explore how web browsers read HTML code and turn it into the websites you see every day. You'll understand the basic concept of tags and elements that make up web pages."
+          },
+          { 
+            title: "HTML Tags & Elements", 
+            duration: "20 min", 
+            description: "Building blocks of web pages",
+            videoId: "UB1O30fR-EE",
+            explanation: "Discover the essential HTML tags that form the building blocks of websites. You'll learn about headings, paragraphs, links, images, and lists. This lesson teaches you how to use opening and closing tags, add attributes, and structure content properly. By the end, you'll know how to create basic web page layouts using HTML elements."
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "JavaScript Programming",
+        icon: "⚡",
+        description: "Make websites interactive with JavaScript",
+        lessons: 12,
+        duration: "4 hours",
+        videos: [
+          { 
+            title: "What is JavaScript?", 
+            duration: "12 min", 
+            description: "Introduction to programming and JavaScript",
+            videoId: "PkZNo7MFNFg",
+            explanation: "JavaScript is the programming language that makes websites interactive and dynamic. In this lesson, you'll learn what programming is, why JavaScript is important for web development, and how it differs from HTML and CSS. We'll explore examples of JavaScript in action on popular websites and understand how it responds to user interactions like clicks and keyboard input."
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "Python Programming",
+        icon: "🐍",
+        description: "Learn Python from scratch with fun projects",
+        lessons: 14,
+        duration: "5 hours",
+        videos: [
+          { 
+            title: "Why Learn Python?", 
+            duration: "10 min", 
+            description: "Introduction to Python programming language",
+            videoId: "_uQrJ0TkZlc",
+            explanation: "Python is one of the most popular and beginner-friendly programming languages in the world. This lesson explains why Python is great for beginners, what you can build with it (games, websites, apps, and more), and how it's used by companies like Google, Netflix, and Instagram. You'll learn about Python's simple syntax and why it's perfect for kids starting their programming journey."
+          }
+        ]
+      }
+    ];
+
+    // Data SDK Implementation
+    const dataHandler = {
+      onDataChanged(data) {
+        userData = data;
+        console.log('User data updated:', data.length, 'records');
+      }
+    };
+
+    async function initializeDataSDK() {
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+    }
+
+    // Authentication Functions
+    async function handleAuth(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const originalText = submitBtn.textContent;
+      submitBtn.innerHTML = '<span class="spinner"></span> Processing...';
+      submitBtn.disabled = true;
+
+      const email = document.getElementById('auth-email').value;
+      const password = document.getElementById('auth-password').value;
+      const name = document.getElementById('auth-name').value;
+
+      try {
+        if (userData.length >= 999) {
+          showToast('Maximum user limit reached. Please try again later.');
+          return;
+        }
+
+        if (authMode === 'signup') {
+          const existingUser = userData.find(user => user.email === email);
+          if (existingUser) {
+            showToast('User already exists. Please login instead.');
+            return;
+          }
+
+          const newUser = {
+            id: Date.now().toString(),
+            email: email,
+            password: password,
+            name: name,
+            createdAt: new Date().toISOString(),
+            type: 'user'
+          };
+
+          if (window.dataSdk) {
+            const result = await window.dataSdk.create(newUser);
+            if (result.isOk) {
+              currentUser = newUser;
+              updateAuthUI();
+              closeModal('auth-modal');
+              showToast('Account created successfully!');
+            } else {
+              showToast('Failed to create account. Please try again.');
+            }
+          }
+        } else {
+          const user = userData.find(u => u.email === email && u.password === password);
+          if (user) {
+            currentUser = user;
+            updateAuthUI();
+            closeModal('auth-modal');
+            showToast('Login successful!');
+          } else {
+            showToast('Invalid email or password.');
+          }
+        }
+      } catch (error) {
+        showToast('An error occurred. Please try again.');
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    }
+
+    function updateAuthUI() {
+      const authButtons = document.getElementById('auth-buttons');
+      const userInfo = document.getElementById('user-info');
+      const userName = document.getElementById('user-name');
+
+      if (currentUser) {
+        authButtons.style.display = 'none';
+        userInfo.style.display = 'flex';
+        userName.textContent = currentUser.name || currentUser.email;
+      } else {
+        authButtons.style.display = 'flex';
+        userInfo.style.display = 'none';
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      updateAuthUI();
+      showToast('Logged out successfully!');
+    }
+
+    function openModal(type) {
+      if (type === 'login') {
+        authMode = 'login';
+        document.getElementById('auth-modal-title').textContent = 'Login';
+        document.getElementById('auth-submit-btn').textContent = 'Login';
+        document.getElementById('name-group').style.display = 'none';
+        document.getElementById('auth-switch-text').textContent = "Don't have an account?";
+        document.getElementById('auth-switch-link').textContent = 'Sign up';
+        document.getElementById('auth-name').required = false;
+      } else if (type === 'signup') {
+        authMode = 'signup';
+        document.getElementById('auth-modal-title').textContent = 'Sign Up';
+        document.getElementById('auth-submit-btn').textContent = 'Sign Up';
+        document.getElementById('name-group').style.display = 'block';
+        document.getElementById('auth-switch-text').textContent = 'Already have an account?';
+        document.getElementById('auth-switch-link').textContent = 'Login';
+        document.getElementById('auth-name').required = true;
+      }
+      document.getElementById('auth-modal').classList.add('active');
+    }
+
+    function switchAuthMode() {
+      if (authMode === 'login') {
+        openModal('signup');
+      } else {
+        openModal('login');
+      }
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    // Navigation Functions
+    function showSection(sectionName) {
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      document.getElementById(sectionName).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Course Functions
+    function renderCourses() {
+      const grid = document.getElementById('courses-grid');
+      grid.innerHTML = '';
+      
+      courses.forEach(course => {
+        const card = document.createElement('div');
+        card.className = 'course-card';
+        card.innerHTML = `
+          <div class="course-icon">${course.icon}</div>
+          <h3>${course.title}</h3>
+          <p>${course.description}</p>
+          <div class="course-meta">
+            <span>📹 ${course.lessons} lessons</span>
+            <span>⏱️ ${course.duration}</span>
+          </div>
+          <button class="view-course-btn" onclick="openCourse(${course.id})">View Course</button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openCourse(courseId) {
+      const course = courses.find(c => c.id === courseId);
+      if (!course || !course.videos || course.videos.length === 0) return;
+
+      const firstVideo = course.videos[0];
+      openVideo(firstVideo.videoId, firstVideo.title, firstVideo.explanation);
+    }
+
+    function openVideo(videoId, title, explanation) {
+      document.getElementById('video-modal-title').textContent = title;
+      
+      const videoContainer = document.getElementById('video-container');
+      videoContainer.innerHTML = `
+        <iframe 
+          src="https://www.youtube.com/embed/${videoId}" 
+          frameborder="0" 
+          allowfullscreen>
+        </iframe>
+      `;
+
+      const descriptionContainer = document.getElementById('video-description');
+      descriptionContainer.innerHTML = `
+        <h4>Lesson Overview</h4>
+        <p>${explanation}</p>
+      `;
+
+      document.getElementById('video-modal').classList.add('active');
+    }
+
+    // Chat Functions
+    function toggleChat() {
+      const chatWindow = document.getElementById('chat-window');
+      chatWindow.classList.toggle('active');
+    }
+
+    function handleChatKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      addChatMessage(message, 'user');
+      input.value = '';
+
+      setTimeout(() => {
+        const response = generateAIResponse(message);
+        addChatMessage(response, 'bot');
+      }, 1000);
+    }
+
+    function addChatMessage(message, sender) {
+      const messagesContainer = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${sender}`;
+      messageDiv.textContent = message;
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function generateAIResponse(message) {
+      const responses = {
+        en: [
+          "That's a great question! Let me help you with that.",
+          "I'd be happy to explain that concept to you!",
+          "Learning programming is exciting! Here's what you need to know...",
+          "That's a common question among young learners. Here's the answer...",
+          "Great job asking questions! That shows you're thinking like a programmer."
+        ],
+        ar: [
+          "هذا سؤال رائع! دعني أساعدك في ذلك.",
+          "سأكون سعيداً لشرح هذا المفهوم لك!",
+          "تعلم البرمجة مثير! إليك ما تحتاج لمعرفته...",
+          "هذا سؤال شائع بين المتعلمين الصغار. إليك الإجابة...",
+          "عمل رائع في طرح الأسئلة! هذا يظهر أنك تفكر مثل المبرمج."
+        ],
+        rw: [
+          "Ni ikibazo cyiza cyane! Reka nkugufashe muri icyo.",
+          "Nzishimira gusobanura icyo gitekerezo!",
+          "Kwiga porogaramu birashimishije! Dore icyo ukeneye kumenya...",
+          "Ni ikibazo gisanzwe mu banyeshuri bato. Dore igisubizo...",
+          "Akazi keza mu kubaza ibibazo! Ibyo byerekana ko utekereza nk'umukora porogaramu."
+        ]
+      };
+
+      const langResponses = responses[currentLanguage] || responses.en;
+      return langResponses[Math.floor(Math.random() * langResponses.length)];
+    }
+
+    // Language Functions
+    function changeLanguage() {
+      const select = document.getElementById('language-select');
+      currentLanguage = select.value;
+      updateTranslations();
+    }
+
+    function updateTranslations() {
+      const elements = document.querySelectorAll('[data-translate]');
+      elements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[currentLanguage] && translations[currentLanguage][key]) {
+          element.textContent = translations[currentLanguage][key];
+        }
+      });
+    }
+
+    // Contact Form
+    async function submitContact(event) {
+      event.preventDefault();
+      
+      const submitBtn = event.target.querySelector('.submit-btn');
+      const originalText = submitBtn.textContent;
+      submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
+      submitBtn.disabled = true;
+
+      try {
+        if (userData.length >= 999) {
+          showToast('Message limit reached. Please try again later.');
+          return;
+        }
+
+        const contactData = {
+          id: Date.now().toString(),
+          name: document.getElementById('contact-name').value,
+          email: document.getElementById('contact-email').value,
+          subject: document.getElementById('contact-subject').value,
+          message: document.getElementById('contact-message').value,
+          createdAt: new Date().toISOString(),
+          type: 'contact'
+        };
+
+        if (window.dataSdk) {
+          const result = await window.dataSdk.create(contactData);
+          if (result.isOk) {
+            showToast('Message sent successfully! We\'ll get back to you soon.');
+            document.getElementById('contact-form').reset();
+          } else {
+            showToast('Failed to send message. Please try again.');
+          }
+        }
+      } catch (error) {
+        showToast('An error occurred. Please try again.');
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    }
+
+    // Utility Functions
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #333;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        z-index: 10000;
+        max-width: 300px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      `;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    // Element SDK Implementation
+    async function onConfigChange(config) {
+      const baseSize = config.font_size || defaultConfig.font_size;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Arial, sans-serif';
+      const fontFamily = `${customFont}, ${baseFontStack}`;
+
+      document.body.style.fontFamily = fontFamily;
+      document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+
+      document.getElementById('site-title').textContent = config.site_title || defaultConfig.site_title;
+      document.getElementById('site-title').style.fontSize = `${baseSize * 1.75}px`;
+      document.getElementById('site-title').style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+      document.getElementById('site-tagline').textContent = config.site_tagline || defaultConfig.site_tagline;
+      document.getElementById('site-tagline').style.fontSize = `${baseSize * 0.875}px`;
+
+      document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
+      document.getElementById('hero-title').style.fontSize = `${baseSize * 3}px`;
+
+      document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+      document.getElementById('hero-subtitle').style.fontSize = `${baseSize * 1.5}px`;
+
+      document.getElementById('about-title').textContent = config.about_title || defaultConfig.about_title;
+      document.getElementById('about-title').style.fontSize = `${baseSize * 2.25}px`;
+      document.getElementById('about-title').style.color = config.text_color || defaultConfig.text_color;
+
+      document.getElementById('about-description').textContent = config.about_description || defaultConfig.about_description;
+      document.getElementById('about-description').style.fontSize = `${baseSize * 1.125}px`;
+
+      document.getElementById('contact-title').textContent = config.contact_title || defaultConfig.contact_title;
+      document.getElementById('contact-title').style.fontSize = `${baseSize * 2.25}px`;
+      document.getElementById('contact-title').style.color = config.text_color || defaultConfig.text_color;
+
+      document.getElementById('contact-email-display').textContent = config.contact_email || defaultConfig.contact_email;
+
+      document.getElementById('footer-text').textContent = config.footer_text || defaultConfig.footer_text;
+      document.getElementById('footer-text').style.fontSize = `${baseSize}px`;
+
+      const ctaButtons = document.querySelectorAll('.cta-button');
+      ctaButtons.forEach(btn => {
+        btn.style.background = config.primary_action_color || defaultConfig.primary_action_color;
+        btn.style.fontSize = `${baseSize * 1.25}px`;
+      });
+
+      const submitButtons = document.querySelectorAll('.submit-btn, .view-course-btn');
+      submitButtons.forEach(btn => {
+        btn.style.background = config.secondary_action_color || defaultConfig.secondary_action_color;
+        btn.style.fontSize = `${baseSize}px`;
+      });
+
+      const navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(link => {
+        link.style.fontSize = `${baseSize}px`;
+        link.style.color = config.text_color || defaultConfig.text_color;
+      });
+    }
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeDataSDK();
+      renderCourses();
+      updateTranslations();
+      updateAuthUI();
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () => config.background_color || defaultConfig.background_color,
+                set: (value) => {
+                  config.background_color = value;
+                  window.elementSdk.setConfig({ background_color: value });
+                }
+              },
+              {
+                get: () => config.surface_color || defaultConfig.surface_color,
+                set: (value) => {
+                  config.surface_color = value;
+                  window.elementSdk.setConfig({ surface_color: value });
+                }
+              },
+              {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (value) => {
+                  config.text_color = value;
+                  window.elementSdk.setConfig({ text_color: value });
+                }
+              },
+              {
+                get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                set: (value) => {
+                  config.primary_action_color = value;
+                  window.elementSdk.setConfig({ primary_action_color: value });
+                }
+              },
+              {
+                get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                set: (value) => {
+                  config.secondary_action_color = value;
+                  window.elementSdk.setConfig({ secondary_action_color: value });
+                }
+              }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => config.font_family || defaultConfig.font_family,
+              set: (value) => {
+                config.font_family = value;
+                window.elementSdk.setConfig({ font_family: value });
+              }
+            },
+            fontSizeable: {
+              get: () => config.font_size || defaultConfig.font_size,
+              set: (value) => {
+                config.font_size = value;
+                window.elementSdk.setConfig({ font_size: value });
+              }
+            }
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["site_title", config.site_title || defaultConfig.site_title],
+            ["site_tagline", config.site_tagline || defaultConfig.site_tagline],
+            ["hero_title", config.hero_title || defaultConfig.hero_title],
+            ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+            ["about_title", config.about_title || defaultConfig.about_title],
+            ["about_description", config.about_description || defaultConfig.about_description],
+            ["contact_title", config.contact_title || defaultConfig.contact_title],
+            ["contact_email", config.contact_email || defaultConfig.contact_email],
+            ["footer_text", config.footer_text || defaultConfig.footer_text]
+          ])
+        });
+      }
+    });
+
+    // Modal click outside to close
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('modal')) {
+        e.target.classList.remove('active');
+      }
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'996b6dabf02a793a',t:'MTc2MTgzMjcyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

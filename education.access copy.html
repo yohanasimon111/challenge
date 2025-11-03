@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Access - HopeLink Mahama</title>
+    <link rel="stylesheet" href="main css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">HopeLink Mahama</a>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="hunger-help.html" class="nav-link">Hunger Help</a>
+                <div class="nav-dropdown">
+                    <a href="education-access.html" class="nav-link active">Education Access</a>
+                    <div class="dropdown-content">
+                        <a href="education-access.html#e-learning">E-Learning Portal</a>
+                        <a href="education-access.html#resources">Learning Resources</a>
+                        <a href="education-access.html#volunteer">Volunteer Teachers</a>
+                    </div>
+                </div>
+                <a href="women-safety.html" class="nav-link">Women Safety</a>
+                <a href="Youth Empowerment .html" class="nav-link">Youth Empowerment</a>
+                <a href="health-hygiene.html" class="nav-link">Health & Hygiene</a>
+                <a href="mental-wellness.html" class="nav-link">Mental Wellness</a>
+                <a href="about-us.html" class="nav-link">About Us</a>
+                <a href="get-involved.html" class="nav-link">Get Involved</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Education Access</h1>
+            <p>Providing quality education resources for children and youth in Mahama Camp</p>
+        </div>
+    </section>
+
+    <!-- Page Content -->
+    <section class="page-content">
+        <div class="container">
+            <!-- E-Learning Portal -->
+            <div class="content-section" id="e-learning">
+                <h2>E-Learning Portal</h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>Primary Education</h3>
+                        <p>Interactive lessons for children ages 6-12 in mathematics, languages, and science.</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar">
+                                <div class="progress" data-progress="65"></div>
+                            </div>
+                            <span>65% Complete</span>
+                        </div>
+                        <button class="btn btn-primary start-learning" data-level="primary">Start Learning</button>
+                    </div>
+                    <div class="content-card">
+                        <h3>Secondary Education</h3>
+                        <p>Advanced courses for youth including sciences, humanities, and vocational skills.</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar">
+                                <div class="progress" data-progress="42"></div>
+                            </div>
+                            <span>42% Complete</span>
+                        </div>
+                        <button class="btn btn-primary start-learning" data-level="secondary">Start Learning</button>
+                    </div>
+                    <div class="content-card">
+                        <h3>Language Learning</h3>
+                        <p>Learn English, French, and Kinyarwanda with interactive exercises and practice.</p>
+                        <div class="language-options">
+                            <button class="btn btn-outline language-btn" data-language="english">English</button>
+                            <button class="btn btn-outline language-btn" data-language="french">French</button>
+                            <button class="btn btn-outline language-btn" data-language="kinyarwanda">Kinyarwanda</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Resources -->
+            <div class="content-section" id="resources">
+                <h2>Learning Resources</h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>Download Materials</h3>
+                        <p>Access textbooks, worksheets, and educational materials for offline use.</p>
+                        <div class="resource-list">
+                            <div class="resource-item">
+                                <span>Mathematics Workbook (Primary)</span>
+                                <button class="btn btn-sm download-btn" data-resource="math-primary">Download</button>
+                            </div>
+                            <div class="resource-item">
+                                <span>Science Textbook (Secondary)</span>
+                                <button class="btn btn-sm download-btn" data-resource="science-secondary">Download</button>
+                            </div>
+                            <div class="resource-item">
+                                <span>Language Learning Guide</span>
+                                <button class="btn btn-sm download-btn" data-resource="language-guide">Download</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <h3>Educational Videos</h3>
+                        <p>Watch instructional videos on various subjects (available offline).</p>
+                        <div class="video-gallery">
+                            <div class="video-item" data-video="math-basics">
+                                <div class="video-thumbnail">📹</div>
+                                <span>Mathematics Basics</span>
+                            </div>
+                            <div class="video-item" data-video="science-experiments">
+                                <div class="video-thumbnail">📹</div>
+                                <span>Science Experiments</span>
+                            </div>
+                            <div class="video-item" data-video="english-lesson">
+                                <div class="video-thumbnail">📹</div>
+                                <span>English Lesson</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <h3>Study Groups</h3>
+                        <p>Join or create study groups with other students in the camp.</p>
+                        <button class="btn btn-outline" id="find-study-group">Find Study Group</button>
+                        <button class="btn btn-primary" id="create-study-group">Create New Group</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volunteer Teachers -->
+            <div class="content-section" id="volunteer">
+                <h2>Volunteer Teachers</h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>Become a Volunteer</h3>
+                        <p>Share your knowledge and help educate children and youth in the camp.</p>
+                        <button class="btn btn-primary" id="volunteer-signup">Sign Up to Volunteer</button>
+                    </div>
+                    <div class="content-card">
+                        <h3>Upload Teaching Materials</h3>
+                        <p>Contribute educational resources to help others learn.</p>
+                        <form id="upload-material-form" class="upload-form">
+                            <div class="form-group">
+                                <label for="material-title">Material Title</label>
+                                <input type="text" id="material-title" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="material-type">Type</label>
+                                <select id="material-type" class="form-control" required>
+                                    <option value="">Select type</option>
+                                    <option value="worksheet">Worksheet</option>
+                                    <option value="textbook">Textbook</option>
+                                    <option value="video">Video</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="material-file">Upload File</label>
+                                <input type="file" id="material-file" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload Material</button>
+                        </form>
+                    </div>
+                    <div class="content-card">
+                        <h3>Teacher Resources</h3>
+                        <p>Access teaching guides, lesson plans, and classroom management tips.</p>
+                        <button class="btn btn-outline" id="access-teacher-resources">Access Resources</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>HopeLink Mahama</h3>
+                    <p>Connecting children, women, and youth in Mahama Camp to food, safety, education, and hope through technology.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hunger-help.html">Hunger Help</a></li>
+                        <li><a href="education-access.html">Education Access</a></li>
+                        <li><a href="women-safety.html">Women Safety</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="youth-empowerment.html">Youth Empowerment</a></li>
+                        <li><a href="health-hygiene.html">Health & Hygiene</a></li>
+                        <li><a href="mental-wellness.html">Mental Wellness</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>Mahama Refugee Camp, Rwanda</p>
+                    <p>Email: info@hopelinkmahama.org</p>
+                    <p>Phone: +250 788 123 456</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HopeLink Mahama. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/js/main.js"></script>
+    <script src="js/js/js/education-access.js"></script>
+</body>
+</html>

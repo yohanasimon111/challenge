@@ -1,0 +1,2556 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnHub - Online Learning Platform</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #e0e0e0;
+      background: #0a0a0a;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 80%;
+      height: 100%;
+      background: #2c3e50;
+      z-index: 2000;
+      transition: left 0.3s ease;
+      padding: 2rem;
+    }
+
+    .mobile-menu.active {
+      left: 0;
+    }
+
+    .mobile-menu-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      float: right;
+      cursor: pointer;
+      margin-bottom: 2rem;
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .mobile-nav-links li {
+      margin-bottom: 1rem;
+    }
+
+    .mobile-nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      display: block;
+      padding: 1rem 0;
+      border-bottom: 1px solid #34495e;
+    }
+
+    /* Navigation */
+    nav {
+      background: #1a1a1a;
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      border-bottom: 2px solid #00ff41;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00ff41;
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      color: #00ff41;
+      text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .user-info {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #3498db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .logout-btn {
+      background: none;
+      border: 1px solid white;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: white;
+      color: #2c3e50;
+    }
+
+    .btn {
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #00ff41;
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #00cc33;
+      box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #00ff41;
+      border: 2px solid #00ff41;
+    }
+
+    .btn-secondary:hover {
+      background: #00ff41;
+      color: #000;
+      box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    }
+
+    /* Skill Progress */
+    .skill-progress {
+      background: #1a1a1a;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+      margin-bottom: 2rem;
+      border: 1px solid #333;
+    }
+
+    .skill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .skill-name {
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+
+    .skill-bar {
+      flex: 1;
+      height: 10px;
+      background: #333;
+      border-radius: 5px;
+      margin: 0 1rem;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ff41, #00cc33);
+      border-radius: 5px;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    }
+
+    .skill-percentage {
+      font-weight: bold;
+      color: #00ff41;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #000 100%);
+      color: white;
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 255, 65, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(0, 255, 65, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Section Styles */
+    section {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #e0e0e0;
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .about-features {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: #1a1a1a;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+      border: 1px solid #333;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: #00ff41;
+      box-shadow: 0 5px 20px rgba(0, 255, 65, 0.1);
+    }
+
+    .feature-card h3 {
+      color: #00ff41;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: #b0b0b0;
+    }
+
+    /* Courses Section */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .course-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid #333;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      border-color: #00ff41;
+      box-shadow: 0 10px 30px rgba(0, 255, 65, 0.1);
+    }
+
+    .course-locked {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+    }
+
+    .course-icon {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 2rem;
+      text-align: center;
+      font-size: 3rem;
+    }
+
+    .course-content {
+      padding: 1.5rem;
+    }
+
+    .course-content h3 {
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+
+    .course-progress {
+      margin-top: 1rem;
+    }
+
+    .course-progress-bar {
+      height: 6px;
+      background: #ecf0f1;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .course-progress-fill {
+      height: 100%;
+      background: #2ecc71;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    /* Reading Section */
+    .reading-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .reading-card {
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .reading-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .reading-card h3 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .reading-content {
+      color: #7f8c8d;
+      line-height: 1.6;
+    }
+
+    /* Admin Dashboard */
+    .admin-dashboard {
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      opacity: 0.9;
+    }
+
+    .admin-section {
+      margin-bottom: 2rem;
+    }
+
+    .admin-section h3 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .message-item {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #3498db;
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .message-sender {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .message-time {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+
+    .video-upload {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-radius: 10px;
+      border: 2px dashed #3498db;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Code Editor Section */
+    .code-editor-container {
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .editor-header {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .editor-tab {
+      padding: 0.5rem 1rem;
+      background: #ecf0f1;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .editor-tab.active {
+      background: #3498db;
+      color: white;
+    }
+
+    .editor-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      height: 400px;
+    }
+
+    .editor-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .editor-panel h4 {
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+    }
+
+    textarea {
+      flex: 1;
+      padding: 1rem;
+      border: 2px solid #ecf0f1;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      resize: none;
+    }
+
+    .output-frame {
+      flex: 1;
+      border: 2px solid #ecf0f1;
+      border-radius: 5px;
+      background: white;
+    }
+
+    .run-button {
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    /* Course Detail Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 10px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90%;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .close-modal:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .video-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .video-item {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      position: relative;
+    }
+
+    .video-item:hover {
+      background: #e9ecef;
+    }
+
+    .video-item.completed {
+      background: #d4edda;
+      border-left: 4px solid #28a745;
+    }
+
+    .video-number {
+      background: #3498db;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .video-info {
+      flex: 1;
+    }
+
+    .video-info h4 {
+      color: #2c3e50;
+      margin-bottom: 0.3rem;
+    }
+
+    .video-duration {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+
+    .video-player {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      position: relative;
+    }
+
+    .video-upload-area {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+    }
+
+    .upload-btn {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    /* AI Assistant Section */
+    .ai-container {
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .chat-box {
+      height: 400px;
+      border: 2px solid #ecf0f1;
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      background: #f8f9fa;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      max-width: 80%;
+    }
+
+    .message.user {
+      background: #3498db;
+      color: white;
+      margin-left: auto;
+    }
+
+    .message.ai {
+      background: white;
+      border: 1px solid #ecf0f1;
+    }
+
+    .chat-input-container {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 1rem;
+      border: 2px solid #ecf0f1;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    /* Contact Section */
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #ecf0f1;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Auth Forms */
+    .auth-container {
+      max-width: 450px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .auth-container h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 1.5rem 0;
+      color: #7f8c8d;
+    }
+
+    .social-login {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.8rem;
+      border: 2px solid #ecf0f1;
+      background: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .social-btn:hover {
+      background: #f8f9fa;
+      border-color: #3498db;
+    }
+
+    .google-btn {
+      background: #4285f4;
+      color: white;
+      border-color: #4285f4;
+    }
+
+    .google-btn:hover {
+      background: #357ae8;
+    }
+
+    /* Footer */
+    footer {
+      background: #2c3e50;
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #27ae60;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 3000;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Loading Spinner */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .editor-wrapper {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .editor-panel {
+        height: 300px;
+      }
+
+      .admin-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reading-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skill-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .skill-bar {
+        width: 100%;
+        margin: 0;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu"><button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
+   <ul class="mobile-nav-links">
+    <li><a onclick="showSection('home'); toggleMobileMenu();">Home</a></li>
+    <li><a onclick="showSection('about'); toggleMobileMenu();">About</a></li>
+    <li><a onclick="showSection('courses'); toggleMobileMenu();">Courses</a></li>
+    <li><a onclick="showSection('reading'); toggleMobileMenu();">Reading</a></li>
+    <li><a onclick="showSection('code-editor'); toggleMobileMenu();">Code Editor</a></li>
+    <li><a onclick="showSection('ai-assistant'); toggleMobileMenu();">AI Assistant</a></li>
+    <li><a onclick="showSection('contact'); toggleMobileMenu();">Contact</a></li>
+   </ul>
+  </div><!-- Navigation -->
+  <nav>
+   <div class="nav-container">
+    <div class="logo" id="site-title">
+     LearnHub
+    </div><button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <ul class="nav-links">
+     <li><a onclick="showSection('home')">Home</a></li>
+     <li><a onclick="showSection('about')">About</a></li>
+     <li><a onclick="showSection('courses')">Courses</a></li>
+     <li><a onclick="showSection('reading')">Reading</a></li>
+     <li><a onclick="showSection('code-editor')">Code Editor</a></li>
+     <li><a onclick="showSection('ai-assistant')">AI Assistant</a></li>
+     <li><a onclick="showSection('contact')">Contact</a></li>
+    </ul>
+    <div class="auth-buttons" id="auth-buttons"><button class="btn btn-secondary" onclick="showSection('login')">Login</button> <button class="btn btn-primary" onclick="showSection('signup')">Sign Up</button>
+    </div>
+    <div class="user-info" id="user-info">
+     <div class="user-avatar" id="user-avatar">
+      U
+     </div><span id="user-name">User</span> <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+   </div>
+  </nav><!-- Home Section -->
+  <section id="home" class="hero">
+   <div class="container">
+    <h1 id="hero-title">Learn Coding &amp; More Online</h1>
+    <p id="hero-subtitle">Interactive courses with video tutorials and live code editor</p><button class="btn btn-primary" onclick="showSection('courses')" style="font-size: 1.1rem; padding: 1rem 2rem;">Explore Courses</button> <!-- Skill Progress (shown only when logged in) -->
+    <div id="skill-progress-section" class="skill-progress hidden" style="margin-top: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+     <h3 style="text-align: center; margin-bottom: 1.5rem; color: #2c3e50;">Your Learning Progress</h3>
+     <div id="skill-progress-container"></div>
+    </div>
+   </div>
+  </section><!-- About Section -->
+  <section id="about" class="hidden">
+   <div class="container">
+    <h2 class="section-title" id="about-title">About Our Platform</h2>
+    <div class="about-content">
+     <div class="about-text">
+      <p id="about-description">We provide high-quality online education for students worldwide. Our platform offers interactive video courses, live code editor, and AI-powered assistance to help you master programming and other essential skills.</p>
+      <p style="margin-top: 1rem;">Join thousands of students who are already learning and building their future with us.</p>
+     </div>
+     <div class="about-features">
+      <div class="feature-card">
+       <h3>📚 Comprehensive Courses</h3>
+       <p>Learn HTML, CSS, JavaScript, Python, Node.js, English and more with structured video lessons.</p>
+      </div>
+      <div class="feature-card">
+       <h3>💻 Live Code Editor</h3>
+       <p>Practice coding in real-time with our integrated code editor and see instant results.</p>
+      </div>
+      <div class="feature-card">
+       <h3>🤖 AI Assistant</h3>
+       <p>Get instant help and answers to your questions with our AI-powered learning assistant.</p>
+      </div>
+      <div class="feature-card">
+       <h3>📊 Progress Tracking</h3>
+       <p>Track your learning progress and see your skills improve with detailed analytics.</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Courses Section -->
+  <section id="courses" class="hidden">
+   <div class="container">
+    <h2 class="section-title">Our Courses</h2>
+    <div class="courses-grid">
+     <div class="course-card" onclick="openCourse('html')">
+      <div class="course-locked" id="html-lock" style="display: none;">
+       🔒 Login Required
+      </div>
+      <div class="course-icon">
+       🌐
+      </div>
+      <div class="course-content">
+       <h3>HTML Course</h3>
+       <p>Master the foundation of web development with HTML5</p>
+       <div class="course-meta"><span>📹 25 Videos</span> <span>⏱️ 8 hours</span>
+       </div>
+       <div class="course-progress">
+        <div class="course-progress-bar">
+         <div class="course-progress-fill" id="html-progress" style="width: 0%"></div>
+        </div><small id="html-progress-text">0% Complete</small>
+       </div>
+      </div>
+     </div>
+     <div class="course-card" onclick="openCourse('css')">
+      <div class="course-locked" id="css-lock" style="display: none;">
+       🔒 Login Required
+      </div>
+      <div class="course-icon">
+       🎨
+      </div>
+      <div class="course-content">
+       <h3>CSS Course</h3>
+       <p>Learn to style beautiful and responsive websites</p>
+       <div class="course-meta"><span>📹 30 Videos</span> <span>⏱️ 10 hours</span>
+       </div>
+       <div class="course-progress">
+        <div class="course-progress-bar">
+         <div class="course-progress-fill" id="css-progress" style="width: 0%"></div>
+        </div><small id="css-progress-text">0% Complete</small>
+       </div>
+      </div>
+     </div>
+     <div class="course-card" onclick="openCourse('javascript')">
+      <div class="course-locked" id="javascript-lock" style="display: none;">
+       🔒 Login Required
+      </div>
+      <div class="course-icon">
+       ⚡
+      </div>
+      <div class="course-content">
+       <h3>JavaScript Course</h3>
+       <p>Build interactive web applications with JavaScript</p>
+       <div class="course-meta"><span>📹 40 Videos</span> <span>⏱️ 15 hours</span>
+       </div>
+       <div class="course-progress">
+        <div class="course-progress-bar">
+         <div class="course-progress-fill" id="javascript-progress" style="width: 0%"></div>
+        </div><small id="javascript-progress-text">0% Complete</small>
+       </div>
+      </div>
+     </div>
+     <div class="course-card" onclick="openCourse('python')">
+      <div class="course-locked" id="python-lock" style="display: none;">
+       🔒 Login Required
+      </div>
+      <div class="course-icon">
+       🐍
+      </div>
+      <div class="course-content">
+       <h3>Python Course</h3>
+       <p>Learn Python programming from basics to advanced</p>
+       <div class="course-meta"><span>📹 45 Videos</span> <span>⏱️ 18 hours</span>
+       </div>
+       <div class="course-progress">
+        <div class="course-progress-bar">
+         <div class="course-progress-fill" id="python-progress" style="width: 0%"></div>
+        </div><small id="python-progress-text">0% Complete</small>
+       </div>
+      </div>
+     </div>
+     <div class="course-card" onclick="openCourse('nodejs')">
+      <div class="course-locked" id="nodejs-lock" style="display: none;">
+       🔒 Login Required
+      </div>
+      <div class="course-icon">
+       🟢
+      </div>
+      <div class="course-content">
+       <h3>Node.js Course</h3>
+       <p>Build server-side applications with Node.js</p>
+       <div class="course-meta"><span>📹 35 Videos</span> <span>⏱️ 12 hours</span>
+       </div>
+       <div class="course-progress">
+        <div class="course-progress-bar">
+         <div class="course-progress-fill" id="nodejs-progress" style="width: 0%"></div>
+        </div><small id="nodejs-progress-text">0% Complete</small>
+       </div>
+      </div>
+     </div>
+     <div class="course-card" onclick="openCourse('english')">
+      <div class="course-locked" id="english-lock" style="display: none;">
+       🔒 Login Required
+      </div>
+      <div class="course-icon">
+       📖
+      </div>
+      <div class="course-content">
+       <h3>English Course</h3>
+       <p>Improve your English language skills</p>
+       <div class="course-meta"><span>📹 50 Videos</span> <span>⏱️ 20 hours</span>
+       </div>
+       <div class="course-progress">
+        <div class="course-progress-bar">
+         <div class="course-progress-fill" id="english-progress" style="width: 0%"></div>
+        </div><small id="english-progress-text">0% Complete</small>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Reading Section -->
+  <section id="reading" class="hidden">
+   <div class="container">
+    <h2 class="section-title">Learning Resources</h2>
+    <div class="reading-grid">
+     <div class="reading-card" onclick="openReading('html-guide')">
+      <h3>🌐 HTML Complete Guide</h3>
+      <div class="reading-content">
+       <p>Comprehensive guide to HTML5 elements, semantic markup, forms, and best practices. Learn how to structure web pages properly and create accessible content.</p>
+       <p><strong>Topics covered:</strong> Document structure, semantic elements, forms, accessibility, SEO optimization</p>
+      </div>
+     </div>
+     <div class="reading-card" onclick="openReading('css-guide')">
+      <h3>🎨 CSS Styling Handbook</h3>
+      <div class="reading-content">
+       <p>Master CSS from basics to advanced techniques including Flexbox, Grid, animations, and responsive design principles.</p>
+       <p><strong>Topics covered:</strong> Selectors, box model, layouts, animations, responsive design, CSS Grid</p>
+      </div>
+     </div>
+     <div class="reading-card" onclick="openReading('js-guide')">
+      <h3>⚡ JavaScript Reference</h3>
+      <div class="reading-content">
+       <p>Complete JavaScript reference covering ES6+ features, DOM manipulation, async programming, and modern development practices.</p>
+       <p><strong>Topics covered:</strong> ES6+ syntax, promises, async/await, DOM APIs, event handling</p>
+      </div>
+     </div>
+     <div class="reading-card" onclick="openReading('python-guide')">
+      <h3>🐍 Python Programming Guide</h3>
+      <div class="reading-content">
+       <p>Learn Python from fundamentals to advanced concepts including OOP, data structures, and popular libraries.</p>
+       <p><strong>Topics covered:</strong> Syntax, data types, OOP, file handling, libraries, best practices</p>
+      </div>
+     </div>
+     <div class="reading-card" onclick="openReading('nodejs-guide')">
+      <h3>🟢 Node.js Development</h3>
+      <div class="reading-content">
+       <p>Server-side JavaScript development with Node.js, Express.js, databases, and deployment strategies.</p>
+       <p><strong>Topics covered:</strong> Node.js basics, Express framework, databases, APIs, deployment</p>
+      </div>
+     </div>
+     <div class="reading-card" onclick="openReading('english-guide')">
+      <h3>📖 English Language Skills</h3>
+      <div class="reading-content">
+       <p>Improve your English grammar, vocabulary, writing, and communication skills for academic and professional success.</p>
+       <p><strong>Topics covered:</strong> Grammar rules, vocabulary building, writing techniques, speaking practice</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Code Editor Section -->
+  <section id="code-editor" class="hidden">
+   <div class="container">
+    <h2 class="section-title">Live Code Editor</h2>
+    <div class="code-editor-container">
+     <div class="editor-header"><button class="editor-tab active" onclick="switchEditorTab('html')">HTML</button> <button class="editor-tab" onclick="switchEditorTab('css')">CSS</button> <button class="editor-tab" onclick="switchEditorTab('js')">JavaScript</button>
+     </div>
+     <div class="editor-wrapper">
+      <div class="editor-panel">
+       <h4>Code Editor</h4><textarea id="code-input" placeholder="Write your code here...">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #3498db;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello, World!&lt;/h1&gt;
+  &lt;p&gt;Start coding and see the results!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+      </div>
+      <div class="editor-panel">
+       <h4>Output</h4><iframe id="output-frame" class="output-frame"></iframe>
+      </div>
+     </div><button class="btn btn-primary run-button" onclick="runCode()">▶ Run Code</button>
+    </div>
+   </div>
+  </section><!-- AI Assistant Section -->
+  <section id="ai-assistant" class="hidden">
+   <div class="container">
+    <h2 class="section-title">AI Learning Assistant</h2>
+    <div class="ai-container">
+     <div class="chat-box" id="chat-box">
+      <div class="message ai"><strong>AI Assistant:</strong><br>
+        Hello! I'm your AI learning assistant. Ask me anything about programming, courses, or learning tips!
+      </div>
+     </div>
+     <div class="chat-input-container"><input type="text" id="chat-input" class="chat-input" placeholder="Ask me anything..." onkeypress="handleChatKeypress(event)"> <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Contact Section -->
+  <section id="contact" class="hidden">
+   <div class="container">
+    <h2 class="section-title" id="contact-title">Get In Touch</h2>
+    <form class="contact-form" onsubmit="handleContactSubmit(event)">
+     <div class="form-group"><label for="contact-name">Name</label> <input type="text" id="contact-name" required>
+     </div>
+     <div class="form-group"><label for="contact-email">Email</label> <input type="email" id="contact-email" required>
+     </div>
+     <div class="form-group"><label for="contact-subject">Subject</label> <input type="text" id="contact-subject" required>
+     </div>
+     <div class="form-group"><label for="contact-message">Message</label> <textarea id="contact-message" required></textarea>
+     </div><button type="submit" class="btn btn-primary" style="width: 100%;"> <span id="contact-submit-text">Send Message</span> <span id="contact-loading" class="loading hidden"></span> </button>
+    </form>
+   </div>
+  </section><!-- Login Section -->
+  <section id="login" class="hidden">
+   <div class="container">
+    <div class="auth-container">
+     <h2>Welcome Back</h2>
+     <div class="social-login"><button class="social-btn google-btn" onclick="loginWithGoogle()"> <span>🔵</span> Continue with Google </button> <button class="social-btn" onclick="showToast('Facebook login coming soon!')"> <span>📘</span> Continue with Facebook </button>
+     </div>
+     <div class="divider">
+      or
+     </div>
+     <form onsubmit="handleLogin(event)">
+      <div class="form-group"><label for="login-email">Email</label> <input type="email" id="login-email" required>
+      </div>
+      <div class="form-group"><label for="login-password">Password</label> <input type="password" id="login-password" required>
+      </div><button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+     </form>
+     <p style="text-align: center; margin-top: 1rem;">Don't have an account? <a href="#" onclick="showSection('signup'); return false;" style="color: #3498db;">Sign up</a></p>
+    </div>
+   </div>
+  </section><!-- Sign Up Section -->
+  <section id="signup" class="hidden">
+   <div class="container">
+    <div class="auth-container">
+     <h2>Create Account</h2>
+     <div class="social-login"><button class="social-btn google-btn" onclick="signupWithGoogle()"> <span>🔵</span> Sign up with Google </button> <button class="social-btn" onclick="showToast('Facebook signup coming soon!')"> <span>📘</span> Sign up with Facebook </button>
+     </div>
+     <div class="divider">
+      or
+     </div>
+     <form onsubmit="handleSignup(event)">
+      <div class="form-group"><label for="signup-name">Full Name</label> <input type="text" id="signup-name" required>
+      </div>
+      <div class="form-group"><label for="signup-email">Email</label> <input type="email" id="signup-email" required>
+      </div>
+      <div class="form-group"><label for="signup-password">Password</label> <input type="password" id="signup-password" required>
+      </div>
+      <div class="form-group"><label for="signup-confirm">Confirm Password</label> <input type="password" id="signup-confirm" required>
+      </div><button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+     </form>
+     <p style="text-align: center; margin-top: 1rem;">Already have an account? <a href="#" onclick="showSection('login'); return false;" style="color: #3498db;">Login</a></p>
+    </div>
+   </div>
+  </section><!-- Admin Dashboard (Only visible to admin) -->
+  <section id="admin" class="hidden">
+   <div class="container">
+    <h2 class="section-title">Admin Dashboard</h2><!-- Analytics -->
+    <div class="admin-dashboard">
+     <div class="admin-stats">
+      <div class="stat-card">
+       <div class="stat-number" id="total-users">
+        0
+       </div>
+       <div class="stat-label">
+        Total Users
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-number" id="online-users">
+        0
+       </div>
+       <div class="stat-label">
+        Online Now
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-number" id="total-downloads">
+        0
+       </div>
+       <div class="stat-label">
+        Downloads
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-number" id="total-messages">
+        0
+       </div>
+       <div class="stat-label">
+        Messages
+       </div>
+      </div>
+     </div>
+    </div><!-- Video Upload -->
+    <div class="admin-dashboard">
+     <h3>Upload Course Videos</h3>
+     <div class="video-upload">
+      <h4>📹 Add New Video</h4>
+      <p>Upload videos for your courses (Note: This is a demo interface)</p><input type="file" accept="video/*" style="margin: 1rem 0;"> <button class="upload-btn" onclick="showToast('Video upload feature coming soon!')">Upload Video</button>
+     </div>
+    </div><!-- Messages -->
+    <div class="admin-dashboard">
+     <div class="admin-section">
+      <h3>Contact Messages</h3>
+      <div id="admin-messages">
+       <p style="color: #7f8c8d; text-align: center;">No messages yet</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Course Detail Modal -->
+  <div id="course-modal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header"><button class="close-modal" onclick="closeModal()">×</button>
+     <h2 id="modal-course-title">Course Title</h2>
+     <p id="modal-course-subtitle">Course Description</p>
+    </div>
+    <div class="modal-body">
+     <div class="video-player" id="video-player">
+      <div class="video-upload-area" id="admin-video-upload" style="display: none;">
+       <h3>Upload Video</h3>
+       <p>Add your course video here</p><button class="upload-btn" onclick="showToast('Video upload coming soon!')">Choose Video File</button>
+      </div>
+      <div id="default-video-player">
+       🎥 Video Player - Click on a video below to start learning
+      </div>
+     </div>
+     <h3 style="margin-bottom: 1rem;">Course Videos</h3>
+     <div class="video-list" id="video-list"></div>
+    </div>
+   </div>
+  </div><!-- Reading Modal -->
+  <div id="reading-modal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header"><button class="close-modal" onclick="closeReadingModal()">×</button>
+     <h2 id="reading-title">Reading Material</h2>
+    </div>
+    <div class="modal-body">
+     <div id="reading-content"></div>
+    </div>
+   </div>
+  </div><!-- Footer -->
+  <footer>
+   <div class="container">
+    <p>© 2024 <span id="footer-title">LearnHub</span>. All rights reserved.</p>
+    <p style="margin-top: 0.5rem;">Empowering students worldwide through quality education</p>
+   </div>
+  </footer>
+  <script>
+    const defaultConfig = {
+      site_title: "LearnHub",
+      tagline: "Master Skills, Build Your Future",
+      hero_title: "Learn Coding & More Online",
+      hero_subtitle: "Interactive courses with video tutorials and live code editor",
+      about_title: "About Our Platform",
+      about_description: "We provide high-quality online education for students worldwide. Our platform offers interactive video courses, live code editor, and AI-powered assistance to help you master programming and other essential skills.",
+      contact_title: "Get In Touch",
+      background_color: "#f8f9fa",
+      primary_color: "#3498db",
+      secondary_color: "#2c3e50",
+      text_color: "#333333",
+      accent_color: "#667eea",
+      font_family: "Segoe UI",
+      font_size: 16
+    };
+
+    let currentUser = null;
+    let isAdmin = false;
+    let allData = [];
+    let onlineUsers = 1;
+    let totalDownloads = 0;
+
+    const courseData = {
+      html: {
+        title: "HTML Course",
+        subtitle: "Master the foundation of web development",
+        videos: [
+          { title: "Introduction to HTML", duration: "15:30" },
+          { title: "HTML Document Structure", duration: "20:15" },
+          { title: "Text Formatting Tags", duration: "18:45" },
+          { title: "Links and Navigation", duration: "22:10" },
+          { title: "Images and Media", duration: "25:30" },
+          { title: "Lists and Tables", duration: "19:20" },
+          { title: "Forms and Input Elements", duration: "28:45" },
+          { title: "Semantic HTML5 Elements", duration: "24:15" },
+          { title: "HTML Best Practices", duration: "16:50" },
+          { title: "Building Your First Webpage", duration: "35:20" }
+        ]
+      },
+      css: {
+        title: "CSS Course",
+        subtitle: "Learn to style beautiful websites",
+        videos: [
+          { title: "Introduction to CSS", duration: "14:20" },
+          { title: "CSS Selectors", duration: "22:30" },
+          { title: "Colors and Backgrounds", duration: "18:15" },
+          { title: "Box Model", duration: "25:40" },
+          { title: "Typography and Fonts", duration: "20:10" },
+          { title: "Flexbox Layout", duration: "30:25" },
+          { title: "Grid Layout", duration: "32:15" },
+          { title: "Responsive Design", duration: "28:50" },
+          { title: "Animations and Transitions", duration: "26:30" },
+          { title: "CSS Variables and Custom Properties", duration: "19:45" }
+        ]
+      },
+      javascript: {
+        title: "JavaScript Course",
+        subtitle: "Build interactive web applications",
+        videos: [
+          { title: "JavaScript Basics", duration: "20:15" },
+          { title: "Variables and Data Types", duration: "18:30" },
+          { title: "Functions and Scope", duration: "25:45" },
+          { title: "Arrays and Objects", duration: "28:20" },
+          { title: "DOM Manipulation", duration: "32:10" },
+          { title: "Events and Event Handling", duration: "24:35" },
+          { title: "Async JavaScript and Promises", duration: "30:50" },
+          { title: "Fetch API and AJAX", duration: "26:15" },
+          { title: "ES6+ Features", duration: "29:40" },
+          { title: "Building Interactive Projects", duration: "40:25" }
+        ]
+      },
+      python: {
+        title: "Python Course",
+        subtitle: "Learn Python from basics to advanced",
+        videos: [
+          { title: "Introduction to Python", duration: "16:45" },
+          { title: "Python Syntax and Variables", duration: "19:20" },
+          { title: "Data Types and Operators", duration: "22:15" },
+          { title: "Control Flow and Loops", duration: "25:30" },
+          { title: "Functions and Modules", duration: "28:10" },
+          { title: "Lists, Tuples, and Dictionaries", duration: "30:45" },
+          { title: "Object-Oriented Programming", duration: "35:20" },
+          { title: "File Handling", duration: "24:15" },
+          { title: "Error Handling and Exceptions", duration: "21:50" },
+          { title: "Python Projects and Applications", duration: "42:30" }
+        ]
+      },
+      nodejs: {
+        title: "Node.js Course",
+        subtitle: "Build server-side applications",
+        videos: [
+          { title: "Introduction to Node.js", duration: "18:30" },
+          { title: "Node.js Basics and NPM", duration: "22:15" },
+          { title: "File System Module", duration: "20:45" },
+          { title: "HTTP Module and Web Server", duration: "28:20" },
+          { title: "Express.js Framework", duration: "32:10" },
+          { title: "RESTful API Development", duration: "35:45" },
+          { title: "Database Integration", duration: "30:25" },
+          { title: "Authentication and Security", duration: "33:50" },
+          { title: "Deployment and Production", duration: "26:15" },
+          { title: "Building Full-Stack Applications", duration: "45:30" }
+        ]
+      },
+      english: {
+        title: "English Course",
+        subtitle: "Improve your English language skills",
+        videos: [
+          { title: "English Grammar Basics", duration: "20:15" },
+          { title: "Tenses and Verb Forms", duration: "25:30" },
+          { title: "Vocabulary Building", duration: "18:45" },
+          { title: "Reading Comprehension", duration: "22:20" },
+          { title: "Writing Skills", duration: "24:10" },
+          { title: "Speaking and Pronunciation", duration: "28:35" },
+          { title: "Listening Practice", duration: "26:15" },
+          { title: "Business English", duration: "30:45" },
+          { title: "Academic English", duration: "27:50" },
+          { title: "English for Daily Conversation", duration: "32:20" }
+        ]
+      }
+    };
+
+    const readingMaterials = {
+      'html-guide': {
+        title: 'HTML Complete Guide',
+        content: `
+          <h3>Introduction to HTML</h3>
+          <p>HTML (HyperText Markup Language) is the standard markup language for creating web pages. It describes the structure of a web page using markup elements.</p>
+          
+          <h3>Basic Structure</h3>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;My First Heading&lt;/h1&gt;
+    &lt;p&gt;My first paragraph.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <h3>Common HTML Elements</h3>
+          <ul>
+            <li><strong>&lt;h1&gt; to &lt;h6&gt;</strong> - Headings</li>
+            <li><strong>&lt;p&gt;</strong> - Paragraphs</li>
+            <li><strong>&lt;a&gt;</strong> - Links</li>
+            <li><strong>&lt;img&gt;</strong> - Images</li>
+            <li><strong>&lt;div&gt;</strong> - Division/Container</li>
+            <li><strong>&lt;span&gt;</strong> - Inline container</li>
+          </ul>
+
+          <h3>Semantic HTML5 Elements</h3>
+          <p>HTML5 introduced semantic elements that provide meaning to the structure:</p>
+          <ul>
+            <li><strong>&lt;header&gt;</strong> - Page or section header</li>
+            <li><strong>&lt;nav&gt;</strong> - Navigation links</li>
+            <li><strong>&lt;main&gt;</strong> - Main content</li>
+            <li><strong>&lt;article&gt;</strong> - Independent content</li>
+            <li><strong>&lt;section&gt;</strong> - Thematic grouping</li>
+            <li><strong>&lt;aside&gt;</strong> - Sidebar content</li>
+            <li><strong>&lt;footer&gt;</strong> - Page or section footer</li>
+          </ul>
+        `
+      },
+      'css-guide': {
+        title: 'CSS Styling Handbook',
+        content: `
+          <h3>Introduction to CSS</h3>
+          <p>CSS (Cascading Style Sheets) is used to style and layout web pages. It controls the visual presentation of HTML elements.</p>
+          
+          <h3>CSS Syntax</h3>
+          <pre><code>selector {
+    property: value;
+    property: value;
+}</code></pre>
+
+          <h3>CSS Selectors</h3>
+          <ul>
+            <li><strong>Element Selector:</strong> <code>p { color: blue; }</code></li>
+            <li><strong>Class Selector:</strong> <code>.my-class { font-size: 16px; }</code></li>
+            <li><strong>ID Selector:</strong> <code>#my-id { background: red; }</code></li>
+            <li><strong>Attribute Selector:</strong> <code>[type="text"] { border: 1px solid; }</code></li>
+          </ul>
+
+          <h3>Box Model</h3>
+          <p>Every HTML element is a rectangular box consisting of:</p>
+          <ul>
+            <li><strong>Content:</strong> The actual content</li>
+            <li><strong>Padding:</strong> Space around content</li>
+            <li><strong>Border:</strong> Border around padding</li>
+            <li><strong>Margin:</strong> Space outside border</li>
+          </ul>
+
+          <h3>Flexbox Layout</h3>
+          <pre><code>.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}</code></pre>
+
+          <h3>CSS Grid</h3>
+          <pre><code>.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}</code></pre>
+        `
+      },
+      'js-guide': {
+        title: 'JavaScript Reference',
+        content: `
+          <h3>Introduction to JavaScript</h3>
+          <p>JavaScript is a programming language that enables interactive web pages. It's an essential part of web applications.</p>
+          
+          <h3>Variables and Data Types</h3>
+          <pre><code>// Variables
+let name = "John";
+const age = 25;
+var city = "New York";
+
+// Data Types
+let string = "Hello";
+let number = 42;
+let boolean = true;
+let array = [1, 2, 3];
+let object = { name: "John", age: 25 };</code></pre>
+
+          <h3>Functions</h3>
+          <pre><code>// Function Declaration
+function greet(name) {
+    return "Hello, " + name;
+}
+
+// Arrow Function
+const greet = (name) => {
+    return \`Hello, \${name}\`;
+};</code></pre>
+
+          <h3>DOM Manipulation</h3>
+          <pre><code>// Select elements
+const element = document.getElementById('myId');
+const elements = document.querySelectorAll('.myClass');
+
+// Modify content
+element.textContent = 'New text';
+element.innerHTML = '&lt;strong&gt;Bold text&lt;/strong&gt;';
+
+// Add event listeners
+element.addEventListener('click', function() {
+    console.log('Element clicked!');
+});</code></pre>
+
+          <h3>Async/Await</h3>
+          <pre><code>async function fetchData() {
+    try {
+        const response = await fetch('/api/data');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}</code></pre>
+        `
+      },
+      'python-guide': {
+        title: 'Python Programming Guide',
+        content: `
+          <h3>Introduction to Python</h3>
+          <p>Python is a high-level, interpreted programming language known for its simplicity and readability.</p>
+          
+          <h3>Basic Syntax</h3>
+          <pre><code># Variables
+name = "Alice"
+age = 30
+is_student = True
+
+# Lists
+fruits = ["apple", "banana", "orange"]
+
+# Dictionaries
+person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York"
+}</code></pre>
+
+          <h3>Functions</h3>
+          <pre><code>def greet(name, age=None):
+    if age:
+        return f"Hello {name}, you are {age} years old"
+    return f"Hello {name}"
+
+# Lambda functions
+square = lambda x: x ** 2</code></pre>
+
+          <h3>Classes and Objects</h3>
+          <pre><code>class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def introduce(self):
+        return f"Hi, I'm {self.name} and I'm {self.age} years old"
+
+# Create instance
+person = Person("Alice", 30)
+print(person.introduce())</code></pre>
+
+          <h3>File Handling</h3>
+          <pre><code># Reading files
+with open('file.txt', 'r') as file:
+    content = file.read()
+
+# Writing files
+with open('output.txt', 'w') as file:
+    file.write("Hello, World!")</code></pre>
+        `
+      },
+      'nodejs-guide': {
+        title: 'Node.js Development',
+        content: `
+          <h3>Introduction to Node.js</h3>
+          <p>Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine, allowing you to run JavaScript on the server.</p>
+          
+          <h3>Getting Started</h3>
+          <pre><code>// app.js
+console.log("Hello, Node.js!");
+
+// Run with: node app.js</code></pre>
+
+          <h3>Modules</h3>
+          <pre><code>// Importing modules
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+
+// Creating modules
+// math.js
+exports.add = (a, b) => a + b;
+exports.subtract = (a, b) => a - b;
+
+// Using custom module
+const math = require('./math');
+console.log(math.add(5, 3));</code></pre>
+
+          <h3>Express.js Server</h3>
+          <pre><code>const express = require('express');
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(express.json());
+
+// Routes
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.post('/api/users', (req, res) => {
+    const user = req.body;
+    res.json({ message: 'User created', user });
+});
+
+app.listen(port, () => {
+    console.log(\`Server running at http://localhost:\${port}\`);
+});</code></pre>
+
+          <h3>Working with Databases</h3>
+          <pre><code>// Using MongoDB with Mongoose
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    age: Number
+});
+
+const User = mongoose.model('User', userSchema);
+
+// Create user
+const newUser = new User({
+    name: 'John Doe',
+    email: 'john@example.com',
+    age: 25
+});
+
+newUser.save();</code></pre>
+        `
+      },
+      'english-guide': {
+        title: 'English Language Skills',
+        content: `
+          <h3>English Grammar Fundamentals</h3>
+          <p>Master the essential grammar rules for effective communication in English.</p>
+          
+          <h3>Parts of Speech</h3>
+          <ul>
+            <li><strong>Nouns:</strong> Person, place, thing, or idea (cat, house, happiness)</li>
+            <li><strong>Verbs:</strong> Action or state of being (run, is, think)</li>
+            <li><strong>Adjectives:</strong> Describe nouns (big, beautiful, smart)</li>
+            <li><strong>Adverbs:</strong> Describe verbs, adjectives, or other adverbs (quickly, very, well)</li>
+            <li><strong>Pronouns:</strong> Replace nouns (he, she, it, they)</li>
+          </ul>
+
+          <h3>Verb Tenses</h3>
+          <h4>Present Tense</h4>
+          <ul>
+            <li><strong>Simple Present:</strong> I work every day.</li>
+            <li><strong>Present Continuous:</strong> I am working now.</li>
+            <li><strong>Present Perfect:</strong> I have worked here for 5 years.</li>
+          </ul>
+
+          <h4>Past Tense</h4>
+          <ul>
+            <li><strong>Simple Past:</strong> I worked yesterday.</li>
+            <li><strong>Past Continuous:</strong> I was working when you called.</li>
+            <li><strong>Past Perfect:</strong> I had worked before you arrived.</li>
+          </ul>
+
+          <h3>Writing Tips</h3>
+          <ul>
+            <li>Use clear and concise sentences</li>
+            <li>Vary your sentence structure</li>
+            <li>Use active voice when possible</li>
+            <li>Proofread for grammar and spelling errors</li>
+            <li>Organize your ideas logically</li>
+          </ul>
+
+          <h3>Common Mistakes to Avoid</h3>
+          <ul>
+            <li><strong>Your vs. You're:</strong> Your book (possessive) vs. You're smart (you are)</li>
+            <li><strong>There, Their, They're:</strong> There is a book, Their book, They're reading</li>
+            <li><strong>Its vs. It's:</strong> The dog wagged its tail vs. It's raining</li>
+          </ul>
+        `
+      }
+    };
+
+    // Data SDK Handler
+    const dataHandler = {
+      onDataChanged(data) {
+        allData = data;
+        updateUI();
+        updateAdminDashboard();
+      }
+    };
+
+    function updateUI() {
+      if (!currentUser) return;
+
+      // Update skill progress
+      updateSkillProgress();
+      updateCourseProgress();
+    }
+
+    function updateSkillProgress() {
+      const skillContainer = document.getElementById('skill-progress-container');
+      if (!skillContainer) return;
+
+      const skills = ['HTML', 'CSS', 'JavaScript', 'Python', 'Node.js', 'English'];
+      const userProgress = getUserProgress();
+
+      skillContainer.innerHTML = '';
+      skills.forEach(skill => {
+        const progress = userProgress[skill.toLowerCase()] || 0;
+        const skillItem = document.createElement('div');
+        skillItem.className = 'skill-item';
+        skillItem.innerHTML = `
+          <div class="skill-name">${skill}</div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: ${progress}%"></div>
+          </div>
+          <div class="skill-percentage">${progress}%</div>
+        `;
+        skillContainer.appendChild(skillItem);
+      });
+    }
+
+    function updateCourseProgress() {
+      const courses = ['html', 'css', 'javascript', 'python', 'nodejs', 'english'];
+      const userProgress = getUserProgress();
+
+      courses.forEach(course => {
+        const progress = userProgress[course] || 0;
+        const progressBar = document.getElementById(`${course}-progress`);
+        const progressText = document.getElementById(`${course}-progress-text`);
+        
+        if (progressBar) progressBar.style.width = `${progress}%`;
+        if (progressText) progressText.textContent = `${progress}% Complete`;
+      });
+    }
+
+    function getUserProgress() {
+      if (!currentUser) return {};
+
+      const userProgressData = allData.filter(item => 
+        item.type === 'progress' && item.userId === currentUser.id
+      );
+
+      const progress = {};
+      userProgressData.forEach(item => {
+        if (!progress[item.courseId]) progress[item.courseId] = 0;
+        if (item.completed) {
+          const courseVideos = courseData[item.courseId]?.videos?.length || 10;
+          progress[item.courseId] = Math.min(100, progress[item.courseId] + (100 / courseVideos));
+        }
+      });
+
+      return progress;
+    }
+
+    function updateAdminDashboard() {
+      if (!isAdmin) return;
+
+      // Update stats
+      const users = allData.filter(item => item.type === 'user');
+      const messages = allData.filter(item => item.type === 'message');
+      
+      document.getElementById('total-users').textContent = users.length;
+      document.getElementById('online-users').textContent = onlineUsers;
+      document.getElementById('total-downloads').textContent = totalDownloads;
+      document.getElementById('total-messages').textContent = messages.length;
+
+      // Update messages
+      const messagesContainer = document.getElementById('admin-messages');
+      if (messages.length === 0) {
+        messagesContainer.innerHTML = '<p style="color: #7f8c8d; text-align: center;">No messages yet</p>';
+      } else {
+        messagesContainer.innerHTML = messages.map(msg => `
+          <div class="message-item">
+            <div class="message-header">
+              <span class="message-sender">${msg.name} (${msg.email})</span>
+              <span class="message-time">${new Date(msg.timestamp).toLocaleString()}</span>
+            </div>
+            <div><strong>Subject:</strong> ${msg.subject}</div>
+            <div style="margin-top: 0.5rem;">${msg.message}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    async function trackProgress(courseId, videoId) {
+      if (!currentUser) return;
+
+      const progressData = {
+        id: `progress_${currentUser.id}_${courseId}_${videoId}_${Date.now()}`,
+        type: 'progress',
+        userId: currentUser.id,
+        courseId: courseId,
+        videoId: videoId,
+        completed: true,
+        timestamp: new Date().toISOString()
+      };
+
+      const result = await window.dataSdk.create(progressData);
+      if (result.isOk) {
+        showToast(`Great! Your ${courseId.toUpperCase()} skill improved!`);
+      }
+    }
+
+    async function trackCodeExecution() {
+      if (!currentUser) return;
+
+      const codeData = {
+        id: `code_${currentUser.id}_${Date.now()}`,
+        type: 'code_execution',
+        userId: currentUser.id,
+        timestamp: new Date().toISOString()
+      };
+
+      const result = await window.dataSdk.create(codeData);
+      if (result.isOk) {
+        // Randomly improve a skill
+        const skills = ['html', 'css', 'javascript'];
+        const randomSkill = skills[Math.floor(Math.random() * skills.length)];
+        showToast(`Code executed! Your ${randomSkill.toUpperCase()} skill improved by 2%!`);
+      }
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('active');
+    }
+
+    function showSection(sectionId) {
+      // Check if user needs to be logged in for certain sections
+      if (!currentUser && ['courses', 'code-editor', 'ai-assistant'].includes(sectionId)) {
+        showToast('Please login to access this feature');
+        showSection('login');
+        return;
+      }
+
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        section.classList.add('hidden');
+      });
+      
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Show skill progress on home page if logged in
+      if (sectionId === 'home' && currentUser) {
+        document.getElementById('skill-progress-section').classList.remove('hidden');
+      }
+
+      // Show admin section if admin
+      if (sectionId === 'admin' && isAdmin) {
+        document.getElementById('admin').classList.remove('hidden');
+      }
+    }
+
+    function openCourse(courseId) {
+      if (!currentUser) {
+        showToast('Please login to access courses');
+        showSection('login');
+        return;
+      }
+
+      const course = courseData[courseId];
+      if (!course) return;
+
+      document.getElementById('modal-course-title').textContent = course.title;
+      document.getElementById('modal-course-subtitle').textContent = course.subtitle;
+
+      const videoList = document.getElementById('video-list');
+      videoList.innerHTML = '';
+
+      // Show admin upload area if admin
+      const adminUpload = document.getElementById('admin-video-upload');
+      const defaultPlayer = document.getElementById('default-video-player');
+      
+      if (isAdmin) {
+        adminUpload.style.display = 'block';
+        defaultPlayer.style.display = 'none';
+      } else {
+        adminUpload.style.display = 'none';
+        defaultPlayer.style.display = 'block';
+      }
+
+      const userProgress = getUserProgress();
+      const completedVideos = allData.filter(item => 
+        item.type === 'progress' && 
+        item.userId === currentUser.id && 
+        item.courseId === courseId && 
+        item.completed
+      );
+
+      course.videos.forEach((video, index) => {
+        const isCompleted = completedVideos.some(p => p.videoId === `video_${index}`);
+        const videoItem = document.createElement('div');
+        videoItem.className = `video-item ${isCompleted ? 'completed' : ''}`;
+        videoItem.innerHTML = `
+          <div class="video-number">${isCompleted ? '✓' : index + 1}</div>
+          <div class="video-info">
+            <h4>${video.title}</h4>
+            <div class="video-duration">⏱️ ${video.duration}</div>
+          </div>
+        `;
+        videoItem.onclick = () => playVideo(video.title, courseId, `video_${index}`);
+        videoList.appendChild(videoItem);
+      });
+
+      document.getElementById('course-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('course-modal').classList.remove('active');
+    }
+
+    function playVideo(videoTitle, courseId, videoId) {
+      const player = document.getElementById('video-player');
+      player.innerHTML = `
+        <div style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">▶️</div>
+          <div style="font-size: 1.2rem;">Now Playing:</div>
+          <div style="font-size: 1.5rem; margin-top: 0.5rem;">${videoTitle}</div>
+          <div style="margin-top: 1rem; opacity: 0.7;">Video content would play here</div>
+          <button class="btn btn-primary" onclick="completeVideo('${courseId}', '${videoId}')" style="margin-top: 1rem;">
+            Mark as Complete
+          </button>
+        </div>
+      `;
+    }
+
+    async function completeVideo(courseId, videoId) {
+      await trackProgress(courseId, videoId);
+    }
+
+    function openReading(readingId) {
+      const material = readingMaterials[readingId];
+      if (!material) return;
+
+      document.getElementById('reading-title').textContent = material.title;
+      document.getElementById('reading-content').innerHTML = material.content;
+      document.getElementById('reading-modal').classList.add('active');
+    }
+
+    function closeReadingModal() {
+      document.getElementById('reading-modal').classList.remove('active');
+    }
+
+    function switchEditorTab(tab) {
+      const tabs = document.querySelectorAll('.editor-tab');
+      tabs.forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const codeInput = document.getElementById('code-input');
+      if (tab === 'html') {
+        codeInput.placeholder = 'Write your HTML code here...';
+      } else if (tab === 'css') {
+        codeInput.placeholder = 'Write your CSS code here...';
+      } else if (tab === 'js') {
+        codeInput.placeholder = 'Write your JavaScript code here...';
+      }
+    }
+
+    async function runCode() {
+      const code = document.getElementById('code-input').value;
+      const outputFrame = document.getElementById('output-frame');
+      const frameDoc = outputFrame.contentDocument || outputFrame.contentWindow.document;
+      frameDoc.open();
+      frameDoc.write(code);
+      frameDoc.close();
+
+      // Track code execution
+      await trackCodeExecution();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatBox = document.getElementById('chat-box');
+      
+      const userMessage = document.createElement('div');
+      userMessage.className = 'message user';
+      userMessage.innerHTML = `<strong>You:</strong><br>${message}`;
+      chatBox.appendChild(userMessage);
+
+      input.value = '';
+
+      setTimeout(() => {
+        const aiMessage = document.createElement('div');
+        aiMessage.className = 'message ai';
+        aiMessage.innerHTML = `<strong>AI Assistant:</strong><br>That's a great question! I'm here to help you learn. ${getAIResponse(message)}`;
+        chatBox.appendChild(aiMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 1000);
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function getAIResponse(message) {
+      const lowerMessage = message.toLowerCase();
+      if (lowerMessage.includes('html')) {
+        return 'HTML is the foundation of web development. Start with our HTML course to learn about tags, elements, and document structure!';
+      } else if (lowerMessage.includes('css')) {
+        return 'CSS is used to style your web pages. Check out our CSS course to learn about selectors, layouts, and responsive design!';
+      } else if (lowerMessage.includes('javascript')) {
+        return 'JavaScript makes websites interactive! Our JavaScript course covers everything from basics to advanced concepts.';
+      } else if (lowerMessage.includes('python')) {
+        return 'Python is a versatile programming language. Our Python course will teach you from fundamentals to building real applications!';
+      } else {
+        return 'Feel free to explore our courses and use the code editor to practice. What would you like to learn today?';
+      }
+    }
+
+    function handleChatKeypress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    async function handleContactSubmit(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('contact-submit-text');
+      const loading = document.getElementById('contact-loading');
+      
+      submitBtn.style.display = 'none';
+      loading.classList.remove('hidden');
+
+      const messageData = {
+        id: `message_${Date.now()}`,
+        type: 'message',
+        name: document.getElementById('contact-name').value,
+        email: document.getElementById('contact-email').value,
+        subject: document.getElementById('contact-subject').value,
+        message: document.getElementById('contact-message').value,
+        timestamp: new Date().toISOString(),
+        status: 'unread'
+      };
+
+      const result = await window.dataSdk.create(messageData);
+      
+      submitBtn.style.display = 'inline';
+      loading.classList.add('hidden');
+
+      if (result.isOk) {
+        showToast('Message sent successfully! We\'ll get back to you soon.');
+        event.target.reset();
+      } else {
+        showToast('Failed to send message. Please try again.');
+      }
+    }
+
+    function loginWithGoogle() {
+      // Simulate Google login
+      const user = {
+        id: 'google_' + Date.now(),
+        name: 'Google User',
+        email: 'user@gmail.com',
+        avatar: 'G'
+      };
+      
+      currentUser = user;
+      isAdmin = user.email === 'admin@learnhub.com';
+      
+      updateAuthUI();
+      showToast('Successfully logged in with Google!');
+      showSection('home');
+    }
+
+    function signupWithGoogle() {
+      // Simulate Google signup
+      loginWithGoogle();
+      showToast('Account created successfully with Google!');
+    }
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      
+      // Check if admin
+      if (email === 'admin@learnhub.com' && password === 'admin123') {
+        currentUser = {
+          id: 'admin_1',
+          name: 'Admin',
+          email: email,
+          avatar: 'A'
+        };
+        isAdmin = true;
+      } else {
+        currentUser = {
+          id: 'user_' + Date.now(),
+          name: email.split('@')[0],
+          email: email,
+          avatar: email[0].toUpperCase()
+        };
+        isAdmin = false;
+      }
+      
+      updateAuthUI();
+      showToast('Login successful! Welcome back.');
+      showSection('home');
+    }
+
+    async function handleSignup(event) {
+      event.preventDefault();
+      
+      const password = document.getElementById('signup-password').value;
+      const confirm = document.getElementById('signup-confirm').value;
+      
+      if (password !== confirm) {
+        showToast('Passwords do not match!');
+        return;
+      }
+      
+      const name = document.getElementById('signup-name').value;
+      const email = document.getElementById('signup-email').value;
+      
+      currentUser = {
+        id: 'user_' + Date.now(),
+        name: name,
+        email: email,
+        avatar: name[0].toUpperCase()
+      };
+      
+      // Create user record
+      const userData = {
+        id: currentUser.id,
+        type: 'user',
+        name: name,
+        email: email,
+        timestamp: new Date().toISOString()
+      };
+      
+      await window.dataSdk.create(userData);
+      
+      updateAuthUI();
+      showToast('Account created successfully! Welcome to LearnHub.');
+      showSection('home');
+    }
+
+    function updateAuthUI() {
+      const authButtons = document.getElementById('auth-buttons');
+      const userInfo = document.getElementById('user-info');
+      
+      if (currentUser) {
+        authButtons.style.display = 'none';
+        userInfo.style.display = 'flex';
+        
+        document.getElementById('user-avatar').textContent = currentUser.avatar;
+        document.getElementById('user-name').textContent = currentUser.name;
+        
+        // Update course locks
+        const courseLocks = document.querySelectorAll('.course-locked');
+        courseLocks.forEach(lock => lock.style.display = 'none');
+        
+        // Show admin link if admin
+        if (isAdmin) {
+          const navLinks = document.querySelector('.nav-links');
+          if (!document.getElementById('admin-link')) {
+            const adminLink = document.createElement('li');
+            adminLink.innerHTML = '<a id="admin-link" onclick="showSection(\'admin\')">Admin</a>';
+            navLinks.appendChild(adminLink);
+          }
+        }
+      } else {
+        authButtons.style.display = 'flex';
+        userInfo.style.display = 'none';
+        
+        // Show course locks
+        const courseLocks = document.querySelectorAll('.course-locked');
+        courseLocks.forEach(lock => lock.style.display = 'block');
+        
+        // Hide skill progress
+        document.getElementById('skill-progress-section').classList.add('hidden');
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      isAdmin = false;
+      updateAuthUI();
+      
+      // Remove admin link
+      const adminLink = document.getElementById('admin-link');
+      if (adminLink) adminLink.parentElement.remove();
+      
+      showToast('Logged out successfully');
+      showSection('home');
+    }
+
+    function showToast(message) {
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    // Initialize Data SDK
+    async function initializeApp() {
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+      
+      // Simulate online users
+      setInterval(() => {
+        onlineUsers = Math.floor(Math.random() * 50) + 10;
+        totalDownloads = Math.floor(Math.random() * 1000) + 500;
+        updateAdminDashboard();
+      }, 30000);
+    }
+
+    async function onConfigChange(config) {
+      const baseFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+      const fontSize = config.font_size || defaultConfig.font_size;
+
+      document.body.style.fontFamily = `${baseFont}, ${baseFontStack}`;
+      document.body.style.fontSize = `${fontSize}px`;
+      document.body.style.background = config.background_color || defaultConfig.background_color;
+      document.body.style.color = config.text_color || defaultConfig.text_color;
+
+      const nav = document.querySelector('nav');
+      if (nav) nav.style.background = config.secondary_color || defaultConfig.secondary_color;
+
+      const hero = document.querySelector('.hero');
+      if (hero) hero.style.background = `linear-gradient(135deg, ${config.accent_color || defaultConfig.accent_color} 0%, ${config.primary_color || defaultConfig.primary_color} 100%)`;
+
+      const primaryButtons = document.querySelectorAll('.btn-primary');
+      primaryButtons.forEach(btn => {
+        btn.style.background = config.primary_color || defaultConfig.primary_color;
+      });
+
+      const featureCards = document.querySelectorAll('.feature-card h3');
+      featureCards.forEach(h3 => {
+        h3.style.color = config.primary_color || defaultConfig.primary_color;
+      });
+
+      const editorTabActive = document.querySelector('.editor-tab.active');
+      if (editorTabActive) {
+        editorTabActive.style.background = config.primary_color || defaultConfig.primary_color;
+      }
+
+      const videoNumbers = document.querySelectorAll('.video-number');
+      videoNumbers.forEach(num => {
+        num.style.background = config.primary_color || defaultConfig.primary_color;
+      });
+
+      const userMessages = document.querySelectorAll('.message.user');
+      userMessages.forEach(msg => {
+        msg.style.background = config.primary_color || defaultConfig.primary_color;
+      });
+
+      document.getElementById('site-title').textContent = config.site_title || defaultConfig.site_title;
+      document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
+      document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+      document.getElementById('about-title').textContent = config.about_title || defaultConfig.about_title;
+      document.getElementById('about-description').textContent = config.about_description || defaultConfig.about_description;
+      document.getElementById('contact-title').textContent = config.contact_title || defaultConfig.contact_title;
+      document.getElementById('footer-title').textContent = config.site_title || defaultConfig.site_title;
+
+      const sectionTitles = document.querySelectorAll('.section-title');
+      sectionTitles.forEach(title => {
+        title.style.fontSize = `${fontSize * 1.5625}px`;
+      });
+
+      const heroTitle = document.getElementById('hero-title');
+      if (heroTitle) heroTitle.style.fontSize = `${fontSize * 1.875}px`;
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["site_title", config.site_title || defaultConfig.site_title],
+          ["tagline", config.tagline || defaultConfig.tagline],
+          ["hero_title", config.hero_title || defaultConfig.hero_title],
+          ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+          ["about_title", config.about_title || defaultConfig.about_title],
+          ["about_description", config.about_description || defaultConfig.about_description],
+          ["contact_title", config.contact_title || defaultConfig.contact_title]
+        ])
+      });
+    }
+
+    // Initialize app
+    initializeApp();
+    runCode();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9982a03e3026acb3',t:'MTc2MjA3NTk2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

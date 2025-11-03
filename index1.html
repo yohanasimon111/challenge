@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Campaigns - Humanitarian Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-color: #1f2937;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Campaign Filters */
+        .campaign-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--white);
+            border: 1px solid #e5e7eb;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        /* Campaign Grid */
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .campaign-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .campaign-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .campaign-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .campaign-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .campaign-urgency {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--danger-color);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .campaign-content {
+            padding: 20px;
+        }
+
+        .campaign-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .campaign-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .campaign-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .campaign-location, .campaign-donors {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .progress-raised {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .progress-goal {
+            color: #6b7280;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-color);
+            border-radius: 10px;
+            transition: width 1.5s ease-in-out;
+            width: 0%;
+        }
+
+        .campaign-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .donate-btn {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .donate-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            color: #d1d5db;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .favorite-btn:hover, .favorite-btn.active {
+            color: var(--danger-color);
+        }
+
+        /* Live Donation Counter */
+        .live-donations {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .live-donations-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .live-donations-title i {
+            color: var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        .donation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .donation-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .donation-item:last-child {
+            border-bottom: none;
+        }
+
+        .donation-amount {
+            font-weight: 600;
+            color: var(--success-color);
+        }
+
+        /* Gamification Elements */
+        .gamification-badges {
+            display: flex;
+            gap: 10px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+        }
+
+        .badge i {
+            color: var(--warning-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .campaign-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .campaign-filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Carousel for Mobile */
+        .campaign-carousel {
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-card {
+            min-width: 100%;
+            padding: 0 10px;
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d1d5db;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-dot.active {
+            background: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .campaign-grid {
+                display: none;
+            }
+
+            .campaign-carousel {
+                display: block;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #d1d5db;
+        }
+    </style>
+</head>
+<body>
+    <section class="section-container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Campaigns</h2>
+            <p class="section-subtitle">Join thousands of donors supporting urgent humanitarian causes around the world. Your contribution makes a real difference.</p>
+        </div>
+
+        <div class="campaign-filters">
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">All Campaigns</button>
+                <button class="filter-btn" data-filter="health">Health</button>
+                <button class="filter-btn" data-filter="education">Education</button>
+                <button class="filter-btn" data-filter="emergency">Emergency</button>
+                <button class="filter-btn" data-filter="environment">Environment</button>
+            </div>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search campaigns...">
+            </div>
+        </div>
+
+        <!-- Desktop Grid -->
+        <div class="campaign-grid">
+            <!-- Campaign 1 -->
+            <div class="campaign-card" data-category="health" data-title="Clean Water for Rwanda" data-description="Provide access to clean drinking water for 5,000 people in rural Kenya by building wells and water purification systems.">
+                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Clean Water Project" class="campaign-image">
+                <div class="campaign-badge">Health & Water</div>
+                <div class="campaign-urgency"><i class="fas fa-fire"></i> 5 days left</div>
+                <div class="campaign-content">
+                    <h3 class="campaign-title">Clean Water for Rwanda</h3>
+                    <p class="campaign-description">Provide access to clean drinking water for 5,000 people in rural Kenya by building wells and water purification systems.</p>
+                    <div class="campaign-meta">
+                        <div class="campaign-location"><i class="fas fa-map-marker-alt"></i> Kenya</div>
+                        <div class="campaign-donors"><i class="fas fa-users"></i> 342 donors</div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-raised">$4,500 raised</span>
+                            <span class="progress-goal">of $10,000</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <div class="campaign-actions">
+                        <button class="donate-btn"><i class="fas fa-heart"></i> Donate Now</button>
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaign 2 -->
+            <div class="campaign-card" data-category="education" data-title="Education for Syrian Refugees" data-description="Support education for 1,000 refugee children by providing schools, teachers, and learning materials in refugee camps.">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Education for Children" class="campaign-image">
+                <div class="campaign-badge">Education</div>
+                <div class="campaign-urgency"><i class="fas fa-fire"></i> 12 days left</div>
+                <div class="campaign-content">
+                    <h3 class="campaign-title">Education for Syrian Refugees</h3>
+                    <p class="campaign-description">Support education for 1,000 refugee children by providing schools, teachers, and learning materials in refugee camps.</p>
+                    <div class="campaign-meta">
+                        <div class="campaign-location"><i class="fas fa-map-marker-alt"></i> Jordan</div>
+                        <div class="campaign-donors"><i class="fas fa-users"></i> 521 donors</div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-raised">$18,750 raised</span>
+                            <span class="progress-goal">of $25,000</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="campaign-actions">
+                        <button class="donate-btn"><i class="fas fa-heart"></i> Donate Now</button>
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaign 3 -->
+            <div class="campaign-card" data-category="emergency" data-title="Earthquake Relief in Turkey" data-description="Provide immediate emergency relief including shelter, food, and medical supplies to communities affected by the recent earthquake.">
+                <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Emergency Relief" class="campaign-image">
+                <div class="campaign-badge">Emergency</div>
+                <div class="campaign-urgency"><i class="fas fa-fire"></i> 2 days left</div>
+                <div class="campaign-content">
+                    <h3 class="campaign-title">Earthquake Relief in Turkey</h3>
+                    <p class="campaign-description">Provide immediate emergency relief including shelter, food, and medical supplies to communities affected by the recent earthquake.</p>
+                    <div class="campaign-meta">
+                        <div class="campaign-location"><i class="fas fa-map-marker-alt"></i> Turkey</div>
+                        <div class="campaign-donors"><i class="fas fa-users"></i> 1,243 donors</div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-raised">$67,800 raised</span>
+                            <span class="progress-goal">of $50,000</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="campaign-actions">
+                        <button class="donate-btn"><i class="fas fa-heart"></i> Donate Now</button>
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Campaign 4 -->
+            <div class="campaign-card" data-category="environment" data-title="Reforestation in Amazon" data-description="Help plant 10,000 trees in the Amazon rainforest to combat deforestation and preserve biodiversity.">
+                <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Reforestation" class="campaign-image">
+                <div class="campaign-badge">Environment</div>
+                <div class="campaign-urgency"><i class="fas fa-fire"></i> 30 days left</div>
+                <div class="campaign-content">
+                    <h3 class="campaign-title">Reforestation in Amazon</h3>
+                    <p class="campaign-description">Help plant 10,000 trees in the Amazon rainforest to combat deforestation and preserve biodiversity.</p>
+                    <div class="campaign-meta">
+                        <div class="campaign-location"><i class="fas fa-map-marker-alt"></i> Brazil</div>
+                        <div class="campaign-donors"><i class="fas fa-users"></i> 890 donors</div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-raised">$15,200 raised</span>
+                            <span class="progress-goal">of $20,000</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 76%"></div>
+                        </div>
+                    </div>
+                    <div class="campaign-actions">
+                        <button class="donate-btn"><i class="fas fa-heart"></i> Donate Now</button>
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="no-results">
+            <i class="fas fa-search"></i>
+            <h3>No campaigns found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+        </div>
+
+        <!-- Mobile Carousel -->
+        <div class="campaign-carousel">
+            <div class="carousel-track">
+                <!-- Campaign 1 for Carousel -->
+                <div class="carousel-card">
+                    <div class="campaign-card">
+                        <img src="./images (1).jpeg" alt="Clean Water Project" class="campaign-image">
+                        <div class="campaign-badge">Health & Water</div>
+                        <div class="campaign-urgency"><i class="fas fa-fire"></i> 5 days left</div>
+                        <div class="campaign-content">
+                            <h3 class="campaign-title">Clean Water for Kenya</h3>
+                            <p class="campaign-description">Provide access to clean drinking water for 5,000 people in rural Kenya by building wells and water purification systems.</p>
+                            <div class="campaign-meta">
+                                <div class="campaign-location"><i class="fas fa-map-marker-alt"></i> Kenya</div>
+                                <div class="campaign-donors"><i class="fas fa-users"></i> 342 donors</div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-info">
+                                    <span class="progress-raised">$4,500 raised</span>
+                                    <span class="progress-goal">of $10,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="campaign-actions">
+                                <button class="donate-btn"><i class="fas fa-heart"></i> Donate Now</button>
+                                <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional campaign cards for carousel would go here -->
+            </div>
+            <div class="carousel-nav">
+                <div class="carousel-dot active"></div>
+                <div class="carousel-dot"></div>
+                <div class="carousel-dot"></div>
+            </div>
+        </div>
+
+        <!-- Live Donations -->
+        <div class="live-donations">
+            <h3 class="live-donations-title"><i class="fas fa-bolt"></i> Live Donations</h3>
+            <div class="donation-list">
+                <div class="donation-item">
+                    <span>Maria K. donated to <strong>Education for Syrian Refugees</strong></span>
+                    <span class="donation-amount">$50</span>
+                </div>
+                <div class="donation-item">
+                    <span>John D. donated to <strong>Clean Water for Kenya</strong></span>
+                    <span class="donation-amount">$25</span>
+                </div>
+                <div class="donation-item">
+                    <span>Anonymous donated to <strong>Earthquake Relief in Turkey</strong></span>
+                    <span class="donation-amount">$100</span>
+                </div>
+                <div class="donation-item">
+                    <span>Sarah M. donated to <strong>Education for Syrian Refugees</strong></span>
+                    <span class="donation-amount">$75</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gamification Badges -->
+        <div class="gamification-badges">
+            <div class="badge">
+                <i class="fas fa-medal"></i>
+                <span>Top Donor Badge Available</span>
+            </div>
+            <div class="badge">
+                <i class="fas fa-trophy"></i>
+                <span>Complete 3 donations to unlock "Global Helper"</span>
+            </div>
+            <div class="badge">
+                <i class="fas fa-award"></i>
+                <span>Donate $100+ for "Humanitarian Hero" status</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Campaign data for filtering and searching
+        const campaigns = [
+            {
+                id: 1,
+                title: "Clean Water for Rwanda",
+                description: "Provide access to clean drinking water for 5,000 people in rural Kenya by building wells and water purification systems.",
+                category: "health",
+                location: "Kenya",
+                donors: 342,
+                raised: 4500,
+                goal: 10000,
+                urgency: "5 days left",
+                badge: "Health & Water"
+            },
+            {
+                id: 2,
+                title: "Education for Syrian Refugees",
+                description: "Support education for 1,000 refugee children by providing schools, teachers, and learning materials in refugee camps.",
+                category: "education",
+                location: "Jordan",
+                donors: 521,
+                raised: 18750,
+                goal: 25000,
+                urgency: "12 days left",
+                badge: "Education"
+            },
+            {
+                id: 3,
+                title: "Earthquake Relief in Turkey",
+                description: "Provide immediate emergency relief including shelter, food, and medical supplies to communities affected by the recent earthquake.",
+                category: "emergency",
+                location: "Turkey",
+                donors: 1243,
+                raised: 67800,
+                goal: 50000,
+                urgency: "2 days left",
+                badge: "Emergency"
+            },
+            {
+                id: 4,
+                title: "Reforestation in Amazon",
+                description: "Help plant 10,000 trees in the Amazon rainforest to combat deforestation and preserve biodiversity.",
+                category: "environment",
+                location: "Brazil",
+                donors: 890,
+                raised: 15200,
+                goal: 20000,
+                urgency: "30 days left",
+                badge: "Environment"
+            }
+        ];
+
+        // DOM elements
+        const campaignGrid = document.querySelector('.campaign-grid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('search-input');
+        const noResults = document.getElementById('no-results');
+        const toast = document.getElementById('toast');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Progress bar animation
+            const progressBars = document.querySelectorAll('.progress-fill');
+            
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+
+            // Favorite button functionality
+            const favoriteBtns = document.querySelectorAll('.favorite-btn');
+            
+            favoriteBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleFavorite(this);
+                });
+            });
+
+            // Donate button functionality
+            const donateBtns = document.querySelectorAll('.donate-btn');
+            
+            donateBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    handleDonation(this);
+                });
+            });
+
+            // Filter button functionality
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    filterCampaigns(filter, searchInput.value);
+                });
+            });
+
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                filterCampaigns(activeFilter, this.value);
+            });
+
+            // Mobile carousel functionality
+            if (window.innerWidth <= 768) {
+                initCarousel();
+            }
+
+            // Simulate live donations updates
+            setInterval(updateLiveDonations, 8000);
+        });
+
+        // Toggle favorite status
+        function toggleFavorite(button) {
+            const icon = button.querySelector('i');
+            
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                button.classList.add('active');
+                showToast('Added to favorites!');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                button.classList.remove('active');
+                showToast('Removed from favorites!');
+            }
+        }
+
+        // Handle donation button click
+        function handleDonation(button) {
+            const originalText = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = '<div class="loading"></div> Processing...';
+            
+            // Simulate donation processing
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Donated!';
+                showToast('Thank you for your donation!');
+                
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }, 1500);
+        }
+
+        // Filter campaigns based on category and search term
+        function filterCampaigns(category, searchTerm) {
+            const campaignCards = document.querySelectorAll('.campaign-card');
+            let visibleCount = 0;
+            
+            campaignCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                const title = card.getAttribute('data-title').toLowerCase();
+                const description = card.getAttribute('data-description').toLowerCase();
+                const searchLower = searchTerm.toLowerCase();
+                
+                const matchesCategory = category === 'all' || cardCategory === category;
+                const matchesSearch = searchTerm === '' || 
+                    title.includes(searchLower) || 
+                    description.includes(searchLower);
+                
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show/hide no results message
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        // Initialize mobile carousel
+        function initCarousel() {
+            const track = document.querySelector('.carousel-track');
+            const dots = document.querySelectorAll('.carousel-dot');
+            let currentIndex = 0;
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+
+            function updateCarousel() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+
+            // Auto-advance carousel
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % dots.length;
+                updateCarousel();
+            }, 5000);
+        }
+
+        // Update live donations
+        function updateLiveDonations() {
+            const donations = [
+                { name: "Alex P.", campaign: "Clean Water for Kenya", amount: "$30" },
+                { name: "Team Volunteers", campaign: "Education for Syrian Refugees", amount: "$150" },
+                { name: "Lisa T.", campaign: "Earthquake Relief in Turkey", amount: "$50" },
+                { name: "Robert J.", campaign: "Clean Water for Kenya", amount: "$25" }
+            ];
+            
+            const randomDonation = donations[Math.floor(Math.random() * donations.length)];
+            const donationList = document.querySelector('.donation-list');
+            
+            // Create new donation item
+            const donationItem = document.createElement('div');
+            donationItem.className = 'donation-item';
+            donationItem.innerHTML = `
+                <span>${randomDonation.name} donated to <strong>${randomDonation.campaign}</strong></span>
+                <span class="donation-amount">${randomDonation.amount}</span>
+            `;
+            
+            // Add with fade-in effect
+            donationItem.style.opacity = '0';
+            donationList.prepend(donationItem);
+            
+            setTimeout(() => {
+                donationItem.style.transition = 'opacity 0.5s ease';
+                donationItem.style.opacity = '1';
+            }, 10);
+            
+            // Remove oldest donation if more than 4
+            if (donationList.children.length > 4) {
+                donationList.removeChild(donationList.lastChild);
+            }
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Handle window resize for carousel
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.campaign-grid').style.display = 'none';
+                document.querySelector('.campaign-carousel').style.display = 'block';
+                initCarousel();
+            } else {
+                document.querySelector('.campaign-grid').style.display = 'grid';
+                document.querySelector('.campaign-carousel').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

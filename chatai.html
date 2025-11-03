@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Add these new styles to your existing CSS */
+
+        /* Course Creation Section */
+        .course-creation-section {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .creation-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-input-group {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 2px dashed #ddd;
+        }
+
+        .video-input-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .remove-video-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .add-video-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .submit-course-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .submit-course-btn:hover {
+            background: #5568d3;
+        }
+
+        /* My Courses Section */
+        .my-courses-section {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .my-courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .my-course-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            position: relative;
+        }
+
+        .my-course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .my-course-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-course-btn, .delete-course-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .edit-course-btn {
+            color: #667eea;
+        }
+
+        .delete-course-btn {
+            color: #ff6b6b;
+        }
+
+        .edit-course-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .delete-course-btn:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #48bb78;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add this new section to your navigation -->
+    <!-- Update your desktop navigation -->
+    <nav class="desktop-nav">
+        <a href="#" onclick="showSection('home')" class="nav-link active">Home</a>
+        <a href="#" onclick="showSection('courses')" class="nav-link">Courses</a>
+        <a href="#" onclick="showSection('my-courses')" class="nav-link">My Courses</a>
+        <a href="#" onclick="showSection('create-course')" class="nav-link">Create Course</a>
+        <a href="#" onclick="showSection('code-editor')" class="nav-link">Code Editor</a>
+        <a href="#" onclick="showSection('about')" class="nav-link">About</a>
+        <a href="#" onclick="showSection('contact')" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- Update your mobile navigation -->
+    <div class="mobile-nav-links">
+        <a href="#" onclick="showSection('home'); closeMobileNav();" class="nav-link active">Home</a>
+        <a href="#" onclick="showSection('courses'); closeMobileNav();" class="nav-link">Courses</a>
+        <a href="#" onclick="showSection('my-courses'); closeMobileNav();" class="nav-link">My Courses</a>
+        <a href="#" onclick="showSection('create-course'); closeMobileNav();" class="nav-link">Create Course</a>
+        <a href="#" onclick="showSection('code-editor'); closeMobileNav();" class="nav-link">Code Editor</a>
+        <a href="#" onclick="showSection('about'); closeMobileNav();" class="nav-link">About</a>
+        <a href="#" onclick="showSection('contact'); closeMobileNav();" class="nav-link">Contact</a>
+        <div class="mobile-auth-buttons">
+            <button class="auth-btn login-btn" style="width: 100%; margin-bottom: 10px;">Login</button>
+            <button class="auth-btn signup-btn" style="width: 100%;">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Add these new sections to your body -->
+
+    <!-- My Courses Section -->
+    <section id="my-courses" class="section">
+        <div class="my-courses-section">
+            <div class="container">
+                <h2 class="section-title">My Created Courses</h2>
+                <div class="my-courses-grid" id="my-courses-grid">
+                    <!-- User-created courses will appear here -->
+                </div>
+                <div class="empty-state" id="empty-my-courses" style="display: none;">
+                    <div class="empty-state-icon">📚</div>
+                    <h3>No Courses Created Yet</h3>
+                    <p>Start creating your first course to share your knowledge with others!</p>
+                    <button class="cta-button" onclick="showSection('create-course')" style="margin-top: 20px;">
+                        Create Your First Course
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Course Section -->
+    <section id="create-course" class="section">
+        <div class="course-creation-section">
+            <div class="container">
+                <h2 class="section-title">Create Your Own Course</h2>
+                <p style="text-align: center; margin-bottom: 30px; color: #666;">
+                    Share your knowledge by creating and publishing your own courses
+                </p>
+
+                <div class="success-message" id="success-message">
+                    Course created successfully! 🎉
+                </div>
+
+                <div class="creation-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="course-title">Course Title</label>
+                            <input type="text" id="course-title" required placeholder="e.g., Advanced JavaScript Patterns">
+                        </div>
+                        <div class="form-group">
+                            <label for="course-icon">Course Icon (Emoji)</label>
+                            <input type="text" id="course-icon" required placeholder="e.g., ⚡" value="📚">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course-description">Course Description</label>
+                        <textarea id="course-description" rows="3" required placeholder="Describe what students will learn in this course..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="course-lessons">Number of Lessons</label>
+                            <input type="number" id="course-lessons" required min="1" value="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="course-duration">Total Duration</label>
+                            <input type="text" id="course-duration" required placeholder="e.g., 6 hours" value="5 hours">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course-playlist">YouTube Playlist ID (Optional)</label>
+                        <input type="text" id="course-playlist" placeholder="Paste YouTube playlist ID here">
+                        <small style="color: #666; font-size: 0.8rem;">Find this in your YouTube playlist URL after "list="</small>
+                    </div>
+
+                    <h3 style="margin: 30px 0 20px 0;">Course Videos</h3>
+                    <div id="video-inputs-container">
+                        <!-- Video inputs will be added here dynamically -->
+                    </div>
+
+                    <button type="button" class="add-video-btn" onclick="addVideoInput()">
+                        <i class="fas fa-plus"></i> Add Another Video
+                    </button>
+
+                    <button type="button" class="submit-course-btn" onclick="createCourse()">
+                        <i class="fas fa-rocket"></i> Publish Course
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Add these new JavaScript functions
+
+        // Store user-created courses
+        let userCourses = JSON.parse(localStorage.getItem('userCourses')) || [];
+
+        // Initialize video inputs
+        function initializeVideoInputs() {
+            const container = document.getElementById('video-inputs-container');
+            container.innerHTML = '';
+            addVideoInput(); // Add one video input by default
+        }
+
+        // Add video input field
+        function addVideoInput() {
+            const container = document.getElementById('video-inputs-container');
+            const videoCount = container.children.length + 1;
+            
+            const videoGroup = document.createElement('div');
+            videoGroup.className = 'video-input-group';
+            videoGroup.innerHTML = `
+                <div class="video-input-header">
+                    <h4>Video ${videoCount}</h4>
+                    ${videoCount > 1 ? '<button type="button" class="remove-video-btn" onclick="removeVideoInput(this)"><i class="fas fa-times"></i></button>' : ''}
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Video Title</label>
+                        <input type="text" class="video-title" required placeholder="e.g., Introduction to Course">
+                    </div>
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text" class="video-duration" required placeholder="e.g., 15 min" value="10 min">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Video Description</label>
+                    <textarea class="video-description" rows="2" required placeholder="Describe what this video covers..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>YouTube Video ID</label>
+                    <input type="text" class="video-id" required placeholder="Paste YouTube video ID">
+                    <small style="color: #666; font-size: 0.8rem;">Find this in your YouTube video URL after "v="</small>
+                </div>
+            `;
+            
+            container.appendChild(videoGroup);
+        }
+
+        // Remove video input
+        function removeVideoInput(button) {
+            button.closest('.video-input-group').remove();
+            // Renumber remaining videos
+            const containers = document.querySelectorAll('.video-input-group');
+            containers.forEach((container, index) => {
+                container.querySelector('h4').textContent = `Video ${index + 1}`;
+            });
+        }
+
+        // Create new course
+        function createCourse() {
+            const title = document.getElementById('course-title').value;
+            const icon = document.getElementById('course-icon').value;
+            const description = document.getElementById('course-description').value;
+            const lessons = parseInt(document.getElementById('course-lessons').value);
+            const duration = document.getElementById('course-duration').value;
+            const playlistId = document.getElementById('course-playlist').value;
+
+            // Validate required fields
+            if (!title || !icon || !description) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Get video data
+            const videoInputs = document.querySelectorAll('.video-input-group');
+            const videos = [];
+            
+            videoInputs.forEach((input, index) => {
+                const title = input.querySelector('.video-title').value;
+                const duration = input.querySelector('.video-duration').value;
+                const description = input.querySelector('.video-description').value;
+                const videoId = input.querySelector('.video-id').value;
+
+                if (title && duration && description && videoId) {
+                    videos.push({
+                        title: title,
+                        duration: duration,
+                        description: description,
+                        videoId: videoId
+                    });
+                }
+            });
+
+            if (videos.length === 0) {
+                alert('Please add at least one video to your course');
+                return;
+            }
+
+            // Create course object
+            const newCourse = {
+                id: Date.now().toString(),
+                title: title,
+                icon: icon,
+                description: description,
+                lessons: lessons,
+                duration: duration,
+                playlistId: playlistId || null,
+                videos: videos,
+                isUserCreated: true,
+                createdAt: new Date().toISOString()
+            };
+
+            // Add to user courses
+            userCourses.unshift(newCourse);
+            localStorage.setItem('userCourses', JSON.stringify(userCourses));
+
+            // Show success message
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+            
+            // Reset form
+            document.getElementById('course-title').value = '';
+            document.getElementById('course-icon').value = '📚';
+            document.getElementById('course-description').value = '';
+            document.getElementById('course-lessons').value = '5';
+            document.getElementById('course-duration').value = '5 hours';
+            document.getElementById('course-playlist').value = '';
+            initializeVideoInputs();
+
+            // Update my courses display
+            renderMyCourses();
+
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Render user-created courses
+        function renderMyCourses() {
+            const grid = document.getElementById('my-courses-grid');
+            const emptyState = document.getElementById('empty-my-courses');
+
+            if (userCourses.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+            grid.innerHTML = '';
+
+            userCourses.forEach(course => {
+                const card = document.createElement('div');
+                card.className = 'my-course-card';
+                card.innerHTML = `
+                    <div class="my-course-actions">
+                        <button class="edit-course-btn" onclick="editCourse('${course.id}')" title="Edit Course">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="delete-course-btn" onclick="deleteCourse('${course.id}')" title="Delete Course">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="course-icon">${course.icon}</div>
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="course-meta">
+                        <span>📹 ${course.lessons} lessons</span>
+                        <span>⏱️ ${course.duration}</span>
+                    </div>
+                    <div class="course-meta" style="margin-top: 10px;">
+                        <small style="color: #666;">Created: ${new Date(course.createdAt).toLocaleDateString()}</small>
+                    </div>
+                    <button class="view-course-btn" onclick="openCourse('${course.id}')" style="margin-top: 15px;">
+                        View Course
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Delete course
+        function deleteCourse(courseId) {
+            if (confirm('Are you sure you want to delete this course? This action cannot be undone.')) {
+                userCourses = userCourses.filter(course => course.id !== courseId);
+                localStorage.setItem('userCourses', JSON.stringify(userCourses));
+                renderMyCourses();
+            }
+        }
+
+        // Edit course (simplified version - in a real app, you'd implement full editing)
+        function editCourse(courseId) {
+            const course = userCourses.find(c => c.id === courseId);
+            if (course) {
+                // Populate form with course data
+                document.getElementById('course-title').value = course.title;
+                document.getElementById('course-icon').value = course.icon;
+                document.getElementById('course-description').value = course.description;
+                document.getElementById('course-lessons').value = course.lessons;
+                document.getElementById('course-duration').value = course.duration;
+                document.getElementById('course-playlist').value = course.playlistId || '';
+
+                // Clear and repopulate video inputs
+                initializeVideoInputs();
+                course.videos.forEach((video, index) => {
+                    if (index > 0) addVideoInput();
+                    const videoInputs = document.querySelectorAll('.video-input-group');
+                    const currentInput = videoInputs[index];
+                    
+                    currentInput.querySelector('.video-title').value = video.title;
+                    currentInput.querySelector('.video-duration').value = video.duration;
+                    currentInput.querySelector('.video-description').value = video.description;
+                    currentInput.querySelector('.video-id').value = video.videoId;
+                });
+
+                // Delete the old course
+                userCourses = userCourses.filter(c => c.id !== courseId);
+                
+                // Show create course section
+                showSection('create-course');
+                
+                alert('Course loaded for editing. Make your changes and click "Publish Course" to save.');
+            }
+        }
+
+        // Enhanced openCourse function to handle user-created courses
+        function openCourse(courseId) {
+            // Check if it's a user-created course
+            const userCourse = userCourses.find(c => c.id === courseId);
+            if (userCourse) {
+                document.getElementById('course-modal-title').textContent = userCourse.title;
+                document.getElementById('course-modal-description').textContent = userCourse.description;
+
+                const videoList = document.getElementById('video-list');
+                videoList.innerHTML = '';
+
+                userCourse.videos.forEach((video, index) => {
+                    const videoItem = document.createElement('div');
+                    videoItem.className = 'video-item';
+                    videoItem.onclick = () => openVideo(video.videoId, video.title, video.description);
+                    videoItem.innerHTML = `
+                        <div class="video-thumbnail">▶️</div>
+                        <div class="video-info">
+                            <h4>${video.title}</h4>
+                            <p>${video.description}</p>
+                        </div>
+                        <div class="video-duration">${video.duration}</div>
+                    `;
+                    videoList.appendChild(videoItem);
+                });
+
+                document.getElementById('course-modal').classList.add('active');
+                return;
+            }
+
+            // Original course handling (from your existing courses array)
+            const course = courses.find(c => c.id === courseId);
+            if (!course) return;
+
+            document.getElementById('course-modal-title').textContent = course.title;
+            document.getElementById('course-modal-description').textContent = course.description;
+
+            const videoList = document.getElementById('video-list');
+            videoList.innerHTML = '';
+
+            course.videos.forEach((video, index) => {
+                const videoItem = document.createElement('div');
+                videoItem.className = 'video-item';
+                videoItem.onclick = () => openVideo(video.videoId, video.title, `This is lesson ${index + 1} of ${course.title}. ${course.description}`);
+                videoItem.innerHTML = `
+                    <div class="video-thumbnail">▶️</div>
+                    <div class="video-info">
+                        <h4>${video.title}</h4>
+                        <p>${video.duration} - Click to watch this lesson</p>
+                    </div>
+                    <div class="video-duration">${video.duration}</div>
+                `;
+                videoList.appendChild(videoItem);
+            });
+
+            document.getElementById('course-modal').classList.add('active');
+        }
+
+        // Update the initialization to include the new functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Your existing initialization code
+            renderCourses();
+            
+            // New initialization for course creation
+            initializeVideoInputs();
+            renderMyCourses();
+            
+            // Rest of your existing initialization code...
+        });
+
+        // Update showSection function to handle new sections
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Special handling for different sections
+            if (sectionName === 'courses') {
+                renderAllCourses();
+            } else if (sectionName === 'my-courses') {
+                renderMyCourses();
+            } else if (sectionName === 'create-course') {
+                initializeVideoInputs();
+            }
+        }
+    </script>
+</body>
+</html>

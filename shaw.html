@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub - Interactive Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #48bb78;
+            --warning: #ed8936;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .shape:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 30%;
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        .shape:nth-child(5) {
+            width: 70px;
+            height: 70px;
+            top: 50%;
+            left: 40%;
+            animation-delay: 8s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+                opacity: 0.7;
+            }
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 8px 15px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            outline: none;
+            width: 200px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-box i {
+            color: rgba(255, 255, 255, 0.7);
+            margin-right: 8px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--light);
+        }
+
+        .login-btn:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        .signup-btn {
+            background: var(--accent);
+            color: var(--light);
+        }
+
+        .signup-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .cta-button {
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .primary-btn {
+            background: var(--accent);
+            color: var(--light);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--light);
+        }
+
+        .secondary-btn:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Code Editor Section */
+        .code-editor-section {
+            padding: 80px 20px;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 500px;
+            margin-top: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+                height: 800px;
+            }
+        }
+
+        .code-panel, .output-panel {
+            background: #2d3748;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background: #4a5568;
+            color: white;
+            padding: 12px 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .run-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .run-btn:hover {
+            background: #38a169;
+        }
+
+        .code-area {
+            width: 100%;
+            height: calc(100% - 50px);
+            background: #2d3748;
+            color: #e2e8f0;
+            border: none;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+        }
+
+        .output-area {
+            padding: 20px;
+            background: white;
+            height: calc(100% - 50px);
+            overflow-y: auto;
+            color: #2d3748;
+        }
+
+        /* Courses Section */
+        .courses {
+            padding: 80px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .course-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .course-card p {
+            opacity: 0.8;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .view-course-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .view-course-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* Chat Section */
+        .chat-section {
+            padding: 80px 20px;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-header {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chat-messages {
+            height: 400px;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .message.bot {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            align-self: flex-start;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .chat-input input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .chat-input button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: #ff5252;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .search-box {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid, .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🚀</div>
+                    <div class="logo-text">
+                        <h1>LearnHub</h1>
+                        <p>Learn Anything, Anytime</p>
+                    </div>
+                </div>
+                
+                <nav>
+                    <a href="#" class="active">Home</a>
+                    <a href="#courses">Courses</a>
+                    <a href="#code-editor">Code Editor</a>
+                    <a href="#chat">AI Assistant</a>
+                    <a href="#features">Features</a>
+                </nav>
+                
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search courses, tutorials...">
+                    </div>
+                    <div class="auth-buttons">
+                        <button class="auth-btn login-btn">Login</button>
+                        <button class="auth-btn signup-btn">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Learn Coding & Technology Skills</h2>
+            <p>Master in-demand skills with our interactive courses, code editor, and AI-powered learning assistant. Start your journey today!</p>
+            <div class="cta-buttons">
+                <button class="cta-button primary-btn">
+                    <i class="fas fa-play"></i> Start Learning
+                </button>
+                <button class="cta-button secondary-btn">
+                    <i class="fas fa-code"></i> Try Code Editor
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose LearnHub?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Interactive Code Editor</h3>
+                    <p>Write, run, and debug code directly in your browser with our powerful online code editor.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Learning Assistant</h3>
+                    <p>Get instant answers to your coding questions with our intelligent AI assistant.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Comprehensive Courses</h3>
+                    <p>Learn from beginner to advanced levels with our structured learning paths.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Learn Anywhere</h3>
+                    <p>Access all our resources from any device with an internet connection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Editor Section -->
+    <section class="code-editor-section" id="code-editor">
+        <div class="container">
+            <h2 class="section-title">Interactive Code Editor</h2>
+            <p style="text-align: center; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Write HTML, CSS, and JavaScript code and see the results instantly! Perfect for testing ideas and learning by doing.
+            </p>
+            
+            <div class="editor-container">
+                <div class="code-panel">
+                    <div class="panel-header">
+                        <span>HTML/CSS/JS Editor</span>
+                        <button class="run-btn" onclick="runCode()">Run Code</button>
+                    </div>
+                    <textarea class="code-area" id="html-code">
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to LearnHub!</h1>
+        <p>This is your interactive code playground. Edit this code and see the changes instantly.</p>
+        
+        <div class="feature">
+            <h2>Try Our Features</h2>
+            <p>Click the button below to see JavaScript in action</p>
+            <button onclick="showMessage()">Click Me!</button>
+        </div>
+        
+        <div id="output"></div>
+    </div>
+    
+    <script>
+        function showMessage() {
+            document.getElementById('output').innerHTML = '<div class="feature"><h3>Congratulations!</h3><p>You just ran JavaScript code in our interactive editor!</p></div>';
+        }
+        
+        console.log("Welcome to the LearnHub code editor!");
+    </script>
+</body>
+</html>
+                    </textarea>
+                </div>
+                
+                <div class="output-panel">
+                    <div class="panel-header">
+                        <span>Output</span>
+                    </div>
+                    <div class="output-area" id="output-area">
+                        Output will appear here after running the code.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <h2 class="section-title">Popular Courses</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-icon">🌐</div>
+                    <h3>HTML & CSS</h3>
+                    <p>Learn to build beautiful websites with HTML and CSS. From basics to advanced layouts.</p>
+                    <div class="course-meta">
+                        <span>📹 24 lessons</span>
+                        <span>⏱️ 8 hours</span>
+                    </div>
+                    <button class="view-course-btn">Start Learning</button>
+                </div>
+                <div class="course-card">
+                    <div class="course-icon">⚡</div>
+                    <h3>JavaScript</h3>
+                    <p>Master JavaScript programming. Learn variables, functions, DOM manipulation and more.</p>
+                    <div class="course-meta">
+                        <span>📹 32 lessons</span>
+                        <span>⏱️ 12 hours</span>
+                    </div>
+                    <button class="view-course-btn">Start Learning</button>
+                </div>
+                <div class="course-card">
+                    <div class="course-icon">🐍</div>
+                    <h3>Python</h3>
+                    <p>Learn Python programming from scratch. Build projects and understand core concepts.</p>
+                    <div class="course-meta">
+                        <span>📹 28 lessons</span>
+                        <span>⏱️ 10 hours</span>
+                    </div>
+                    <button class="view-course-btn">Start Learning</button>
+                </div>
+                <div class="course-card">
+                    <div class="course-icon">🚀</div>
+                    <h3>React.js</h3>
+                    <p>Build modern web applications with React. Learn components, hooks, and state management.</p>
+                    <div class="course-meta">
+                        <span>📹 36 lessons</span>
+                        <span>⏱️ 15 hours</span>
+                    </div>
+                    <button class="view-course-btn">Start Learning</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Section -->
+    <section class="chat-section" id="chat">
+        <div class="container">
+            <h2 class="section-title">AI Learning Assistant</h2>
+            <p style="text-align: center; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Ask our AI assistant any coding question and get instant help with explanations and examples.
+            </p>
+            
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h3>LearnHub Assistant</h3>
+                    <p>How can I help you learn today?</p>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot">
+                        Hello! I'm your AI learning assistant. I can help explain coding concepts, debug your code, or answer any questions you have about programming. What would you like to learn today?
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input" placeholder="Ask a question about coding...">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <div class="logo-icon">🚀</div>
+                    <div class="logo-text">
+                        <h1>LearnHub</h1>
+                        <p>Learn Anything, Anytime</p>
+                    </div>
+                </div>
+                <p>© 2023 LearnHub. All rights reserved. The future of interactive learning.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Code Editor Functionality
+        function runCode() {
+            const code = document.getElementById('html-code').value;
+            const outputArea = document.getElementById('output-area');
+            
+            try {
+                // Create a new iframe to render the HTML
+                outputArea.innerHTML = '';
+                const iframe = document.createElement('iframe');
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+                outputArea.appendChild(iframe);
+                
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                iframeDoc.open();
+                iframeDoc.write(code);
+                iframeDoc.close();
+            } catch (error) {
+                outputArea.innerHTML = `<div style="color: red; padding: 20px;">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Chat Functionality
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addChatMessage(message, 'user');
+            input.value = '';
+
+            // Simulate AI response
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addChatMessage(response, 'bot');
+            }, 1000);
+        }
+
+        function addChatMessage(message, sender) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = message;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Programming-specific responses
+            if (lowerMessage.includes('html') || lowerMessage.includes('css')) {
+                return "HTML and CSS are the building blocks of web development. HTML provides the structure of a webpage, while CSS handles the styling and layout. Would you like me to explain a specific concept or help with a particular problem?";
+            } else if (lowerMessage.includes('javascript') || lowerMessage.includes('js')) {
+                return "JavaScript makes websites interactive! It's a programming language that runs in the browser. You can use it to handle user interactions, manipulate the DOM, and much more. What specific aspect of JavaScript are you interested in?";
+            } else if (lowerMessage.includes('python')) {
+                return "Python is a versatile programming language great for beginners! It's used for web development, data analysis, artificial intelligence, and more. Its simple syntax makes it easy to learn. Would you like help with Python basics or a specific project?";
+            } else if (lowerMessage.includes('error') || lowerMessage.includes('debug')) {
+                return "Debugging is an essential skill for every programmer. When you encounter an error, first check the console for error messages. Then, review your code line by line. Common issues include syntax errors, undefined variables, or incorrect function calls. Can you share the specific error message you're seeing?";
+            }
+
+            // General responses
+            const responses = [
+                "That's a great question! Programming is all about solving problems step by step.",
+                "I'd be happy to help you learn! What programming language or concept interests you most?",
+                "Learning to code is like learning a new language - practice makes perfect! Keep experimenting with small projects.",
+                "That's a common question among new programmers. The key is to start with the fundamentals and build from there.",
+                "Great job being curious! That's the most important skill for a programmer. What would you like to build?"
+            ];
+
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // Initialize code editor with default output
+        document.addEventListener('DOMContentLoaded', function() {
+            runCode();
+            
+            // Handle Enter key in chat
+            document.getElementById('chat-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

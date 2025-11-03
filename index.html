@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yohana Simon — Portfolio</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./main.js"></script>
+  <script src="https://kit.fontawesome.com/a2d9b6f8d1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- HEADER / NAV -->
+  <header class="site-header" id="top">
+    <div class="container nav-inner">
+      <a class="brand" href="#top">Yohana Simon</a>
+
+      <nav class="nav" id="mainNav" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <button id="mobileToggle" class="mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO / HOME -->
+  <main>
+    <section id="home" class="hero container">
+      <div class="hero-left">
+        <p class="small-intro">Hello, I'm</p>
+        <h1 class="hero-title">Yohana <span>Simon</span></h1>
+        <h3 class="sub-title">Web Developer</h3>
+        <p class="lead">
+          Passionate web developer creating modern, responsive websites and web applications.
+          I build accessible interfaces, smooth interactions, and delightful experiences.
+        </p>
+
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#contact">Hire Me</a>
+          <a class="btn btn-outline" href="#about">Learn More</a>
+        </div>
+
+        <div class="socials">
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="profile-orbit">
+          <div class="glow-blob"></div>
+          <img src="assets/profile.jpg" alt="Profile" class="profile-photo" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="page container about-me">
+      <div class="about-grid">
+        <div class="about-photo">
+          <div class="glow-blob small"></div>
+          <img src="assets/profile.jpg" alt="Yohana" class="profile-photo about-img" />
+        </div>
+
+        <div class="about-text">
+          <h2 class="section-title">About Me</h2>
+          <p class="lead">
+            I’m Yohana — a web developer focused on crafting engaging, accessible, and performant
+            web experiences. I enjoy turning ideas into reality with clean HTML, CSS and JavaScript.
+          </p>
+
+          <h3>Experience & Education</h3>
+          <ul class="timeline">
+            <li><strong>2022–Present:</strong> Senior Frontend Developer — Company X</li>
+            <li><strong>2020–2022:</strong> Frontend Developer — Company Y</li>
+            <li><strong>2016–2020:</strong> B.Sc. Computer Science — University Z</li>
+          </ul>
+
+          <div class="about-cta">
+            <a href="assets/CV.pdf" class="btn btn-primary" download>Download CV</a>
+            <a href="#contact" class="btn btn-outline">Contact Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="page container skills">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill">
+          <h4>HTML & CSS</h4>
+          <div class="bar"><div class="bar-fill" data-fill="95%"></div></div>
+        </div>
+
+        <div class="skill">
+          <h4>JavaScript</h4>
+          <div class="bar"><div class="bar-fill" data-fill="90%"></div></div>
+        </div>
+
+        <div class="skill">
+          <h4>React</h4>
+          <div class="bar"><div class="bar-fill" data-fill="85%"></div></div>
+        </div>
+
+        <div class="skill">
+          <h4>Node.js</h4>
+          <div class="bar"><div class="bar-fill" data-fill="80%"></div></div>
+        </div>
+
+        <div class="skill">
+          <h4>Design & UX</h4>
+          <div class="bar"><div class="bar-fill" data-fill="78%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="page container services">
+      <h2 class="section-title">Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <i class="fas fa-laptop-code service-icon"></i>
+          <h3>Frontend Development</h3>
+          <p>Modern, responsive user interfaces with accessibility and performance in mind.</p>
+        </div>
+
+        <div class="service-card">
+          <i class="fas fa-palette service-icon"></i>
+          <h3>UI/UX Design</h3>
+          <p>Design systems, prototypes, and user-focused interfaces that convert.</p>
+        </div>
+
+        <div class="service-card">
+          <i class="fas fa-cogs service-icon"></i>
+          <h3>Web Apps</h3>
+          <p>Single-page apps, APIs, and small full-stack solutions for production.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="page container portfolio">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-gallery">
+        <div class="gallery-item">
+          <img src="assets/project1.jpg" alt="Project 1" />
+          <div class="gallery-info">
+            <h3>Project One</h3>
+            <p>Interactive landing page with animations and CMS integration.</p>
+            <a class="link-more" href="#">View case study →</a>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="assets/project2.jpg" alt="Project 2" />
+          <div class="gallery-info">
+            <h3>Project Two</h3>
+            <p>Single page app featuring user auth and real-time updates.</p>
+            <a class="link-more" href="#">View case study →</a>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="assets/project3.jpg" alt="Project 3" />
+          <div class="gallery-info">
+            <h3>Project Three</h3>
+            <p>Ecommerce project with custom checkout and analytics.</p>
+            <a class="link-more" href="#">View case study →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" class="page container blog-list">
+      <h2 class="section-title">Blog</h2>
+      <div class="posts-grid">
+        <article class="post">
+          <img src="assets/project1.jpg" alt="post" />
+          <div class="post-body">
+            <h3><a href="#">How I built a fast landing page</a></h3>
+            <p class="meta">Oct 20, 2025 • 6 min read</p>
+            <p>Short summary describing the post and what readers will learn.</p>
+            <a class="link-more" href="#">Read more →</a>
+          </div>
+        </article>
+
+        <article class="post">
+          <img src="assets/project2.jpg" alt="post" />
+          <div class="post-body">
+            <h3><a href="#">Design system tips</a></h3>
+            <p class="meta">Sep 14, 2025 • 5 min read</p>
+            <p>How to organize components and create consistent UX.</p>
+            <a class="link-more" href="#">Read more →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="page container contact">
+      <h2 class="section-title">Let's talk</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Get in touch</h3>
+          <p>Email: <a href="mailto:hello@yohana.com">hello@yohana.com</a></p>
+          <p>Phone: <a href="tel:+10000000000">+1 (000) 000-0000</a></p>
+          <p>Location: City, Country</p>
+          <div class="socials">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+
+        <form id="contactForm" class="contact-form" aria-label="Contact form">
+          <label>
+            <span>Your name</span>
+            <input type="text" name="name" required />
+          </label>
+
+          <label>
+            <span>Your email</span>
+            <input type="email" name="email" required />
+          </label>
+
+          <label>
+            <span>Message</span>
+            <textarea name="message" rows="6" required></textarea>
+          </label>
+
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <p id="formMessage" class="form-message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <strong>Yohana Simon</strong>
+        <p>Web Developer • Frontend & UI/UX</p>
+      </div>
+
+      <div class="footer-right">
+        <nav class="footer-nav">
+          <a href="#home">Home</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="copyright">© <span id="year"></span> Yohana Simon. All rights reserved.</div>
+  </footer>
+</body>
+</html>
