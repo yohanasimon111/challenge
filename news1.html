@@ -1,0 +1,1560 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahama Community News</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    * { box-sizing: border-box; }
+    html, body { height: 100%; overflow-x: hidden; }
+    
+    /* Mobile Menu Styles */
+    .mobile-menu-btn { display: none; }
+    .mobile-nav { 
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100%;
+      background: white;
+      z-index: 50;
+      transition: right 0.3s ease;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    }
+    .mobile-nav.active { right: 0; }
+    .menu-overlay { 
+      display: none;
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,0.5); 
+      z-index: 40; 
+    }
+    .menu-overlay.active { display: block; }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .desktop-nav { display: none !important; }
+      .mobile-menu-btn { display: block; }
+      .tab-content { padding: 1rem; }
+      .floating-btn { bottom: 80px; }
+      .grid-responsive { grid-template-columns: 1fr; }
+      .text-responsive { font-size: 0.875rem; }
+    }
+    
+    /* Animations */
+    .news-card { 
+      transition: transform 0.2s ease, box-shadow 0.2s ease; 
+      will-change: transform;
+    }
+    .news-card:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .btn { 
+      transition: all 0.2s ease; 
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    
+    /* Status Indicators */
+    .online-dot {
+      width: 8px; 
+      height: 8px; 
+      background: #10b981; 
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+    
+    /* Priority Borders */
+    .priority-urgent { border-left: 4px solid #ef4444; }
+    .priority-important { border-left: 4px solid #f59e0b; }
+    .priority-normal { border-left: 4px solid #3b82f6; }
+    
+    /* Container */
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 1rem; 
+    }
+    
+    /* Floating Button */
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 30;
+      transition: all 0.3s ease;
+    }
+    .floating-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+    
+    /* Loading States */
+    .loading { opacity: 0.6; pointer-events: none; }
+    
+    /* Custom Scrollbar */
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    
+    /* Organization View Styles */
+    .organization-view .org-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    
+    /* Reaction Picker Styles */
+    .reaction-picker {
+      position: relative;
+    }
+    
+    .reaction-picker button:hover {
+      transform: scale(1.2);
+      background-color: #f3f4f6;
+    }
+    
+    /* Tab Styles */
+    .tab-btn.active {
+      border-bottom-color: #3b82f6;
+      color: #3b82f6;
+    }
+    
+    /* Form Styles */
+    .form-input {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Notification Styles */
+    .notification {
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="bg-gray-50"><!-- Header -->
+  <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg sticky top-0 z-30">
+   <div class="container">
+    <div class="flex items-center justify-between py-4"><!-- Logo & Title -->
+     <div class="flex items-center space-x-3">
+      <div class="text-3xl">
+       📰
+      </div>
+      <div>
+       <h1 class="text-xl sm:text-2xl font-bold flex items-center">Mahama Community News <span id="org-badge" class="org-badge hidden">🏢 ORG</span></h1>
+       <p class="text-blue-100 text-sm hidden sm:block">Stay Connected with Your Community</p>
+      </div>
+     </div><!-- Desktop Navigation -->
+     <div class="desktop-nav flex items-center space-x-4">
+      <div class="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full px-3 py-1">
+       <div class="online-dot"></div><span class="text-sm">Online: <span id="online-count">1</span></span>
+      </div>
+      <div class="text-sm text-blue-100 hidden lg:block">
+       Total Users: <span id="total-users">0</span>
+      </div><select id="language-selector" class="bg-white text-gray-800 px-3 py-2 rounded-lg text-sm font-medium"> <option value="en">🇺🇸 English</option> <option value="rn">🇧🇮 Kirundi</option> <option value="rw">🇷🇼 Kinyarwanda</option> </select>
+     </div><!-- Mobile Menu Button --> <button class="mobile-menu-btn text-white p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-colors" onclick="toggleMobileMenu()">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg></button>
+    </div>
+   </div>
+  </header><!-- Mobile Menu Overlay -->
+  <div id="menu-overlay" class="menu-overlay" onclick="closeMobileMenu()"></div><!-- Mobile Navigation -->
+  <nav id="mobile-nav" class="mobile-nav">
+   <div class="p-4 border-b bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+    <div class="flex items-center justify-between">
+     <h2 class="text-lg font-bold">Menu</h2><button onclick="closeMobileMenu()" class="text-white hover:bg-white hover:bg-opacity-20 p-1 rounded">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg></button>
+    </div>
+   </div>
+   <div class="p-4 space-y-6"><!-- Status Info -->
+    <div class="bg-gray-50 rounded-lg p-3 space-y-2">
+     <div class="flex items-center space-x-2 text-sm text-gray-600">
+      <div class="online-dot"></div><span>Online: <span id="mobile-online-count">1</span></span>
+     </div>
+     <div class="text-sm text-gray-600">
+      Total Users: <span id="mobile-total-users">0</span>
+     </div>
+    </div><!-- Language Selector -->
+    <div><label class="block text-sm font-medium text-gray-700 mb-2">Language</label> <select id="mobile-language-selector" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"> <option value="en">🇺🇸 English</option> <option value="rn">🇧🇮 Kirundi</option> <option value="rw">🇷🇼 Kinyarwanda</option> </select>
+    </div><!-- Quick Actions -->
+    <div>
+     <h3 class="font-medium text-gray-800 mb-3">Quick Actions</h3>
+     <div class="space-y-2"><button onclick="showTab('news'); closeMobileMenu();" class="w-full text-left px-4 py-3 rounded-lg hover:bg-blue-50 flex items-center space-x-3 transition-colors"> <span class="text-xl">📰</span> <span class="font-medium">News Feed</span> </button> <button onclick="showTab('chat'); closeMobileMenu();" class="w-full text-left px-4 py-3 rounded-lg hover:bg-blue-50 flex items-center space-x-3 transition-colors"> <span class="text-xl">💬</span> <span class="font-medium">Community Chat</span> </button> <button onclick="showTab('create'); closeMobileMenu();" class="w-full text-left px-4 py-3 rounded-lg hover:bg-blue-50 flex items-center space-x-3 transition-colors"> <span class="text-xl">✍️</span> <span class="font-medium">Share News</span> </button> <button onclick="showTab('categories'); closeMobileMenu();" class="w-full text-left px-4 py-3 rounded-lg hover:bg-blue-50 flex items-center space-x-3 transition-colors"> <span class="text-xl">📂</span> <span class="font-medium">Categories</span> </button>
+     </div>
+    </div>
+   </div>
+  </nav><!-- Navigation Tabs -->
+  <nav class="bg-white shadow-sm border-b sticky top-16 z-20">
+   <div class="container">
+    <div class="flex space-x-1 overflow-x-auto"><button onclick="showTab('news')" id="news-tab" class="tab-btn active py-3 px-4 border-b-2 font-medium whitespace-nowrap text-sm sm:text-base transition-colors"> <span class="sm:hidden">📰</span> <span class="hidden sm:inline">📰 News Feed</span> </button> <button onclick="showTab('chat')" id="chat-tab" class="tab-btn py-3 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium whitespace-nowrap text-sm sm:text-base transition-colors"> <span class="sm:hidden">💬</span> <span class="hidden sm:inline">💬 Community Chat</span> </button> <button onclick="showTab('create')" id="create-tab" class="tab-btn py-3 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium whitespace-nowrap text-sm sm:text-base transition-colors"> <span class="sm:hidden">✍️</span> <span class="hidden sm:inline">✍️ Share News</span> </button> <button onclick="showTab('categories')" id="categories-tab" class="tab-btn py-3 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium whitespace-nowrap text-sm sm:text-base transition-colors"> <span class="sm:hidden">📂</span> <span class="hidden sm:inline">📂 Categories</span> </button> <button onclick="showTab('org-chat')" id="org-chat-tab" class="tab-btn py-3 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium whitespace-nowrap text-sm sm:text-base transition-colors hidden"> <span class="sm:hidden">🏢</span> <span class="hidden sm:inline">🏢 Organization</span> </button>
+    </div>
+   </div>
+  </nav><!-- Main Content -->
+  <main class="container py-6 pb-24"><!-- News Feed Tab -->
+   <div id="news-content" class="tab-content"><!-- Welcome Section -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+     <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-3">Welcome to Mahama Community News</h2>
+     <p class="text-gray-600 text-lg">Stay updated with the latest news and connect with your neighbors in real-time.</p>
+    </div><!-- Filter Bar -->
+    <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4"><select id="category-filter" class="form-input px-4 py-3 border border-gray-300 rounded-lg focus:outline-none text-sm"> <option value="all">All Categories</option> <option value="emergency">🚨 Emergency</option> <option value="community">🏘️ Community</option> <option value="health">🏥 Health</option> <option value="education">📚 Education</option> <option value="events">🎉 Events</option> <option value="announcements">📢 Announcements</option> </select> <select id="priority-filter" class="form-input px-4 py-3 border border-gray-300 rounded-lg focus:outline-none text-sm"> <option value="all">All Priority Levels</option> <option value="urgent">🔴 Urgent</option> <option value="important">🟡 Important</option> <option value="normal">🔵 Normal</option> </select> <button onclick="refreshNews()" class="btn px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm"> 🔄 Refresh Feed </button>
+     </div>
+    </div><!-- News Feed -->
+    <div id="news-feed" class="space-y-6">
+     <div class="text-center py-16">
+      <div class="text-8xl mb-6">
+       📰
+      </div>
+      <h3 class="text-2xl font-bold text-gray-600 mb-3">No news stories yet</h3>
+      <p class="text-gray-500 text-lg mb-6">Be the first to share news with your community!</p><button onclick="showTab('create')" class="btn px-8 py-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-medium text-lg"> 📝 Share First News Story </button>
+     </div>
+    </div>
+   </div><!-- Community Chat Tab -->
+   <div id="chat-content" class="tab-content hidden">
+    <div class="bg-white rounded-xl shadow-sm h-96 sm:h-[500px] flex flex-col">
+     <div class="p-4 border-b bg-gray-50 rounded-t-xl">
+      <h3 class="text-lg font-bold text-gray-800">Community Chat</h3>
+      <p class="text-sm text-gray-600">Connect and chat with your neighbors in real-time</p>
+     </div>
+     <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 custom-scroll">
+      <div class="text-center py-12">
+       <div class="text-6xl mb-4">
+        💬
+       </div>
+       <h4 class="text-xl font-semibold text-gray-600 mb-2">Start the conversation!</h4>
+       <p class="text-gray-500">Be the first to send a message to your community.</p>
+      </div>
+     </div>
+     <div class="p-4 border-t bg-gray-50 rounded-b-xl">
+      <form id="chat-form" class="space-y-3">
+       <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3"><input type="text" id="chat-name" placeholder="Your name" class="form-input px-4 py-3 border border-gray-300 rounded-lg focus:outline-none text-sm sm:w-40"> <textarea id="chat-message" placeholder="Type your message..." class="form-input flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none text-sm resize-none" rows="1"></textarea> <button type="submit" class="btn px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm"> Send </button>
+       </div>
+       <div class="flex flex-wrap gap-3 items-center"><input type="file" id="chat-image" accept="image/*" class="text-xs"> <input type="file" id="chat-video" accept="video/*" class="text-xs"> <button type="button" id="voice-btn" class="btn px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"> 🎤 Voice Message </button>
+        <div id="voice-status" class="text-sm text-green-600 hidden">
+         🔴 Recording...
+        </div>
+       </div>
+      </form>
+     </div>
+    </div>
+   </div><!-- Create News Tab -->
+   <div id="create-content" class="tab-content hidden">
+    <div class="bg-white rounded-xl shadow-sm p-6">
+     <div class="mb-6">
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">Share News with Your Community</h3>
+      <p class="text-gray-600">Help keep your neighbors informed by sharing important news and updates.</p>
+     </div>
+     <form id="news-form" class="space-y-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+       <div><label for="news-title" class="block text-sm font-semibold text-gray-700 mb-2">News Title *</label> <input type="text" id="news-title" required class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none">
+       </div>
+       <div><label for="news-author" class="block text-sm font-semibold text-gray-700 mb-2">Your Name *</label> <input type="text" id="news-author" required class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none">
+       </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+       <div><label for="news-category" class="block text-sm font-semibold text-gray-700 mb-2">Category *</label> <select id="news-category" required class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none"> <option value="">Select Category</option> <option value="emergency">🚨 Emergency</option> <option value="community">🏘️ Community</option> <option value="health">🏥 Health</option> <option value="education">📚 Education</option> <option value="events">🎉 Events</option> <option value="announcements">📢 Announcements</option> </select>
+       </div>
+       <div><label for="news-priority" class="block text-sm font-semibold text-gray-700 mb-2">Priority Level *</label> <select id="news-priority" required class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none"> <option value="">Select Priority</option> <option value="urgent">🔴 Urgent</option> <option value="important">🟡 Important</option> <option value="normal">🔵 Normal</option> </select>
+       </div>
+       <div><label for="news-location" class="block text-sm font-semibold text-gray-700 mb-2">Location</label> <input type="text" id="news-location" placeholder="e.g., Block A, Section 2" class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none">
+       </div>
+      </div>
+      <div><label for="news-content" class="block text-sm font-semibold text-gray-700 mb-2">News Content *</label> <textarea id="news-content" rows="6" required class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none" placeholder="Write your news story here..."></textarea>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+       <div><label for="news-image" class="block text-sm font-semibold text-gray-700 mb-2">Upload Image</label> <input type="file" id="news-image" accept="image/*" class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none">
+        <p class="text-sm text-gray-500 mt-1">JPG, PNG, GIF up to 10MB</p>
+       </div>
+       <div><label for="news-video" class="block text-sm font-semibold text-gray-700 mb-2">Upload Video</label> <input type="file" id="news-video" accept="video/*" class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none">
+        <p class="text-sm text-gray-500 mt-1">MP4, MOV, AVI up to 50MB</p>
+       </div>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4"><button type="button" onclick="clearForm()" class="btn px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium"> Clear Form </button> <button type="submit" id="submit-btn" class="btn px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"> 📰 Publish News Story </button>
+      </div>
+     </form>
+    </div>
+   </div><!-- Organization Chat Tab -->
+   <div id="org-chat-content" class="tab-content hidden">
+    <div class="bg-white rounded-xl shadow-sm h-96 sm:h-[500px] flex flex-col">
+     <div class="p-4 border-b bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-xl">
+      <h3 class="text-lg font-bold text-gray-800 flex items-center space-x-2"><span>🏢</span> <span>Organization Chat</span></h3>
+      <p class="text-sm text-gray-600">Private communication channel for organization members</p>
+     </div>
+     <div id="org-chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 custom-scroll">
+      <div class="text-center py-12">
+       <div class="text-6xl mb-4">
+        🏢
+       </div>
+       <h4 class="text-xl font-semibold text-gray-600 mb-2">Organization Communication</h4>
+       <p class="text-gray-500">Secure channel for organization members only.</p>
+      </div>
+     </div>
+     <div class="p-4 border-t bg-gray-50 rounded-b-xl">
+      <form id="org-chat-form" class="space-y-3">
+       <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3"><textarea id="org-chat-message" placeholder="Type your message..." class="form-input flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none text-sm resize-none" rows="1"></textarea> <button type="submit" class="btn px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium text-sm"> Send </button>
+       </div>
+       <div class="flex flex-wrap gap-3 items-center"><input type="file" id="org-chat-image" accept="image/*" class="text-xs"> <input type="file" id="org-chat-video" accept="video/*" class="text-xs">
+       </div>
+      </form>
+     </div>
+    </div>
+   </div><!-- Categories Tab -->
+   <div id="categories-content" class="tab-content hidden">
+    <div class="mb-6">
+     <h2 class="text-2xl font-bold text-gray-800 mb-2">News Categories</h2>
+     <p class="text-gray-600">Browse news by category to find what matters most to you.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+     <div class="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+      <div class="text-4xl mb-3">
+       🚨
+      </div>
+      <h3 class="text-xl font-bold text-red-800 mb-2">Emergency</h3>
+      <p class="text-red-600 mb-4">Urgent alerts and emergency information for immediate attention</p>
+      <div id="emergency-count" class="text-3xl font-bold text-red-700">
+       0
+      </div>
+      <p class="text-sm text-red-500">Active alerts</p>
+     </div>
+     <div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+      <div class="text-4xl mb-3">
+       🏘️
+      </div>
+      <h3 class="text-xl font-bold text-blue-800 mb-2">Community</h3>
+      <p class="text-blue-600 mb-4">Local community news, events, and neighborhood updates</p>
+      <div id="community-count" class="text-3xl font-bold text-blue-700">
+       0
+      </div>
+      <p class="text-sm text-blue-500">Recent posts</p>
+     </div>
+     <div class="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+      <div class="text-4xl mb-3">
+       🏥
+      </div>
+      <h3 class="text-xl font-bold text-green-800 mb-2">Health</h3>
+      <p class="text-green-600 mb-4">Health services, medical updates, and wellness information</p>
+      <div id="health-count" class="text-3xl font-bold text-green-700">
+       0
+      </div>
+      <p class="text-sm text-green-500">Health updates</p>
+     </div>
+     <div class="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+      <div class="text-4xl mb-3">
+       📚
+      </div>
+      <h3 class="text-xl font-bold text-purple-800 mb-2">Education</h3>
+      <p class="text-purple-600 mb-4">School news, educational resources, and learning opportunities</p>
+      <div id="education-count" class="text-3xl font-bold text-purple-700">
+       0
+      </div>
+      <p class="text-sm text-purple-500">Education posts</p>
+     </div>
+     <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+      <div class="text-4xl mb-3">
+       🎉
+      </div>
+      <h3 class="text-xl font-bold text-yellow-800 mb-2">Events</h3>
+      <p class="text-yellow-600 mb-4">Community events, celebrations, and social gatherings</p>
+      <div id="events-count" class="text-3xl font-bold text-yellow-700">
+       0
+      </div>
+      <p class="text-sm text-yellow-500">Upcoming events</p>
+     </div>
+     <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 border border-indigo-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+      <div class="text-4xl mb-3">
+       📢
+      </div>
+      <h3 class="text-xl font-bold text-indigo-800 mb-2">Announcements</h3>
+      <p class="text-indigo-600 mb-4">Official announcements, notices, and important updates</p>
+      <div id="announcements-count" class="text-3xl font-bold text-indigo-700">
+       0
+      </div>
+      <p class="text-sm text-indigo-500">Announcements</p>
+     </div>
+    </div>
+   </div>
+  </main><!-- Floating Action Button --> <button onclick="showTab('create')" class="floating-btn bg-blue-600 text-white p-4 rounded-full shadow-xl hover:bg-blue-700">
+   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+   </svg></button> <!-- Loading Overlay -->
+  <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+   <div class="bg-white rounded-xl p-8 text-center max-w-sm mx-4">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">Publishing News</h3>
+    <p class="text-gray-600">Please wait while we share your story...</p>
+   </div>
+  </div><!-- Media Viewer Modal -->
+  <div id="media-modal" class="fixed inset-0 bg-black bg-opacity-90 hidden z-50 flex items-center justify-center p-4">
+   <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90%] overflow-hidden">
+    <div class="p-4 border-b flex justify-between items-center">
+     <h3 id="media-title" class="text-lg font-semibold text-gray-800">Media Viewer</h3><button onclick="closeMediaModal()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">×</button>
+    </div>
+    <div id="media-content" class="p-8 text-center overflow-y-auto max-h-96"><!-- Media content will be inserted here -->
+    </div>
+   </div>
+  </div><!-- User Login Modal -->
+  <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+   <div class="bg-white rounded-xl max-w-md w-full">
+    <div class="p-6 border-b">
+     <h3 class="text-xl font-bold text-gray-800">Welcome to Mahama Community</h3>
+     <p class="text-gray-600 mt-2">Please enter your details to continue</p>
+    </div>
+    <div class="p-6 space-y-4">
+     <div><label class="block text-sm font-semibold text-gray-700 mb-2">Your Name *</label> <input type="text" id="user-name-input" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your full name">
+     </div>
+     <div><label class="block text-sm font-semibold text-gray-700 mb-2">Account Type</label>
+      <div class="space-y-3"><label class="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"> <input type="radio" name="account-type" value="user" checked class="text-blue-600">
+        <div>
+         <div class="font-medium text-gray-800">
+          👤 Community Member
+         </div>
+         <div class="text-sm text-gray-600">
+          Regular community member
+         </div>
+        </div></label> <label class="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"> <input type="radio" name="account-type" value="organization" class="text-blue-600">
+        <div>
+         <div class="font-medium text-gray-800">
+          🏢 Organization
+         </div>
+         <div class="text-sm text-gray-600">
+          Organization member with moderation powers
+         </div>
+        </div></label>
+      </div>
+     </div>
+     <div id="org-code-section" class="hidden"><label class="block text-sm font-semibold text-gray-700 mb-2">Organization Code *</label> <input type="password" id="org-code-input" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter organization access code">
+      <p class="text-xs text-gray-500 mt-1">Contact admin for organization access code</p>
+     </div><button onclick="loginUser()" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"> Continue to Community </button>
+    </div>
+   </div>
+  </div><!-- Translation Modal -->
+  <div id="translation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+   <div class="bg-white rounded-xl max-w-2xl w-full">
+    <div class="p-4 border-b flex justify-between items-center">
+     <h3 class="text-lg font-semibold text-gray-800">Translation Service</h3><button onclick="closeTranslationModal()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">×</button>
+    </div>
+    <div class="p-6 space-y-4">
+     <div><label class="block text-sm font-semibold text-gray-700 mb-2">Original Text:</label>
+      <div id="original-text" class="p-4 bg-gray-100 rounded-lg text-gray-800 border"></div>
+     </div>
+     <div><label class="block text-sm font-semibold text-gray-700 mb-2">Translate to:</label> <select id="translate-to" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"> <option value="en">🇺🇸 English</option> <option value="rn">🇧🇮 Kirundi</option> <option value="rw">🇷🇼 Kinyarwanda</option> </select>
+     </div>
+     <div><label class="block text-sm font-semibold text-gray-700 mb-2">Translation:</label>
+      <div id="translated-text" class="p-4 bg-blue-50 rounded-lg text-gray-800 min-h-[80px] border">
+       <div class="text-center text-gray-500">
+        Click "Translate" to see the translation
+       </div>
+      </div>
+     </div>
+     <div class="flex justify-end space-x-3 pt-4"><button onclick="closeTranslationModal()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium"> Close </button> <button onclick="performTranslation()" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"> 🌐 Translate </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Local Storage Data Management
+    let allNewsData = JSON.parse(localStorage.getItem('mahamaNews') || '[]');
+    let allChatData = JSON.parse(localStorage.getItem('mahamaChat') || '[]');
+    let allComments = JSON.parse(localStorage.getItem('mahamaComments') || '[]');
+    let allReactions = JSON.parse(localStorage.getItem('mahamaReactions') || '[]');
+    let organizationMembers = JSON.parse(localStorage.getItem('organizationMembers') || '[]');
+    let organizationChat = JSON.parse(localStorage.getItem('organizationChat') || '[]');
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{"name": "", "role": "user", "isOrganization": false}');
+
+    // Save data to localStorage
+    function saveData() {
+      localStorage.setItem('mahamaNews', JSON.stringify(allNewsData));
+      localStorage.setItem('mahamaChat', JSON.stringify(allChatData));
+      localStorage.setItem('mahamaComments', JSON.stringify(allComments));
+      localStorage.setItem('mahamaReactions', JSON.stringify(allReactions));
+      localStorage.setItem('organizationMembers', JSON.stringify(organizationMembers));
+      localStorage.setItem('organizationChat', JSON.stringify(organizationChat));
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!currentUser.name) {
+        showLoginModal();
+      } else {
+        hideLoginModal();
+        updateUIForUser();
+      }
+      renderNewsFeed();
+      renderChatMessages();
+      renderOrgChat();
+      updateCategoryCounts();
+      updateUserCount();
+      syncMobileCounters();
+    });
+
+    // Login Functions
+    function showLoginModal() {
+      document.getElementById('login-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideLoginModal() {
+      document.getElementById('login-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function loginUser() {
+      const name = document.getElementById('user-name-input').value.trim();
+      const accountType = document.querySelector('input[name="account-type"]:checked').value;
+      const orgCode = document.getElementById('org-code-input').value;
+
+      if (!name) {
+        showNotification('Please enter your name', 'error');
+        return;
+      }
+
+      if (accountType === 'organization') {
+        if (orgCode !== 'MAHAMA2024') {
+          showNotification('Invalid organization code', 'error');
+          return;
+        }
+        currentUser = {
+          name: name,
+          role: 'organization',
+          isOrganization: true
+        };
+        organizationMembers.push(currentUser);
+      } else {
+        currentUser = {
+          name: name,
+          role: 'user',
+          isOrganization: false
+        };
+      }
+
+      saveData();
+      hideLoginModal();
+      updateUIForUser();
+      showNotification(`Welcome ${name}! 🎉`, 'success');
+    }
+
+    function updateUIForUser() {
+      if (currentUser.isOrganization) {
+        document.getElementById('org-chat-tab').classList.remove('hidden');
+        document.getElementById('org-badge').classList.remove('hidden');
+        document.body.classList.add('organization-view');
+      }
+      
+      // Pre-fill name in chat if user is logged in
+      const chatNameInput = document.getElementById('chat-name');
+      if (chatNameInput && currentUser.name) {
+        chatNameInput.value = currentUser.name;
+        chatNameInput.readOnly = true;
+        chatNameInput.classList.add('bg-gray-100');
+      }
+    }
+
+    // Show/hide organization code field
+    document.addEventListener('change', function(e) {
+      if (e.target.name === 'account-type') {
+        const orgSection = document.getElementById('org-code-section');
+        if (e.target.value === 'organization') {
+          orgSection.classList.remove('hidden');
+        } else {
+          orgSection.classList.add('hidden');
+        }
+      }
+    });
+
+    // Tab Management
+    function showTab(tabName) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+      
+      // Remove active state from all tabs
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected tab content
+      document.getElementById(`${tabName}-content`).classList.remove('hidden');
+      
+      // Add active state to selected tab
+      document.getElementById(`${tabName}-tab`).classList.add('active');
+    }
+
+    // Mobile Menu Functions
+    function toggleMobileMenu() {
+      const mobileNav = document.getElementById('mobile-nav');
+      const overlay = document.getElementById('menu-overlay');
+      
+      mobileNav.classList.add('active');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeMobileMenu() {
+      const mobileNav = document.getElementById('mobile-nav');
+      const overlay = document.getElementById('menu-overlay');
+      
+      mobileNav.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // News Form Submission
+    const newsForm = document.getElementById('news-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const loadingOverlay = document.getElementById('loading-overlay');
+
+    newsForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Publishing...';
+      loadingOverlay.classList.remove('hidden');
+
+      const title = document.getElementById('news-title').value;
+      const author = document.getElementById('news-author').value;
+      const category = document.getElementById('news-category').value;
+      const priority = document.getElementById('news-priority').value;
+      const location = document.getElementById('news-location').value;
+      const content = document.getElementById('news-content').value;
+      const imageFile = document.getElementById('news-image').files[0];
+      const videoFile = document.getElementById('news-video').files[0];
+
+      const newsData = {
+        id: generateId(),
+        title: title,
+        content: content,
+        author: author,
+        location: location || 'Not specified',
+        timestamp: new Date().toISOString(),
+        image_name: imageFile ? imageFile.name : '',
+        video_name: videoFile ? videoFile.name : '',
+        likes: 0,
+        comments: 0,
+        category: category,
+        priority: priority
+      };
+
+      // Simulate network delay
+      setTimeout(() => {
+        allNewsData.unshift(newsData);
+        saveData();
+        
+        loadingOverlay.classList.add('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '📰 Publish News Story';
+
+        showNotification('News published successfully! 🎉', 'success');
+        newsForm.reset();
+        showTab('news');
+        renderNewsFeed();
+        updateCategoryCounts();
+        updateUserCount();
+      }, 1500);
+    });
+
+    // Chat Form Submission
+    const chatForm = document.getElementById('chat-form');
+    chatForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('chat-name').value || currentUser.name;
+      const message = document.getElementById('chat-message').value;
+      const imageFile = document.getElementById('chat-image').files[0];
+      const videoFile = document.getElementById('chat-video').files[0];
+
+      if (!message.trim() && !imageFile && !videoFile) {
+        showNotification('Please enter a message or upload media', 'error');
+        return;
+      }
+
+      const chatData = {
+        id: generateId(),
+        author: name,
+        content: message || (imageFile ? 'Shared an image' : videoFile ? 'Shared a video' : ''),
+        timestamp: new Date().toISOString(),
+        image_name: imageFile ? imageFile.name : '',
+        video_name: videoFile ? videoFile.name : '',
+        location: ''
+      };
+
+      allChatData.unshift(chatData);
+      saveData();
+
+      document.getElementById('chat-message').value = '';
+      document.getElementById('chat-image').value = '';
+      document.getElementById('chat-video').value = '';
+      showNotification('Message sent! 💬', 'success');
+      renderChatMessages();
+      updateUserCount();
+    });
+
+    // Organization Chat Form Submission
+    const orgChatForm = document.getElementById('org-chat-form');
+    if (orgChatForm) {
+      orgChatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!currentUser.isOrganization) {
+          showNotification('Access denied: Organization members only', 'error');
+          return;
+        }
+        
+        const message = document.getElementById('org-chat-message').value;
+        const imageFile = document.getElementById('org-chat-image').files[0];
+        const videoFile = document.getElementById('org-chat-video').files[0];
+
+        if (!message.trim() && !imageFile && !videoFile) {
+          showNotification('Please enter a message or upload media', 'error');
+          return;
+        }
+
+        const chatData = {
+          id: generateId(),
+          author: currentUser.name,
+          content: message || (imageFile ? 'Shared an image' : videoFile ? 'Shared a video' : ''),
+          timestamp: new Date().toISOString(),
+          image_name: imageFile ? imageFile.name : '',
+          video_name: videoFile ? videoFile.name : ''
+        };
+
+        organizationChat.unshift(chatData);
+        saveData();
+
+        document.getElementById('org-chat-message').value = '';
+        document.getElementById('org-chat-image').value = '';
+        document.getElementById('org-chat-video').value = '';
+        showNotification('Organization message sent! 🏢', 'success');
+        renderOrgChat();
+      });
+    }
+
+    // Voice Recording
+    let mediaRecorder;
+    let isRecording = false;
+    
+    document.getElementById('voice-btn').addEventListener('click', async function() {
+      const voiceBtn = document.getElementById('voice-btn');
+      const voiceStatus = document.getElementById('voice-status');
+      
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          
+          mediaRecorder.start();
+          isRecording = true;
+          voiceBtn.textContent = '⏹️ Stop Recording';
+          voiceBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+          voiceBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+          voiceStatus.classList.remove('hidden');
+          
+          mediaRecorder.ondataavailable = function(event) {
+            if (event.data.size > 0) {
+              const name = document.getElementById('chat-name').value;
+              if (!name.trim()) {
+                showNotification('Please enter your name first', 'error');
+                return;
+              }
+              
+              const chatData = {
+                id: generateId(),
+                author: name,
+                content: 'Sent a voice message',
+                timestamp: new Date().toISOString(),
+                image_name: '',
+                video_name: '',
+                location: 'voice'
+              };
+              
+              allChatData.unshift(chatData);
+              saveData();
+              renderChatMessages();
+            }
+          };
+        } catch (error) {
+          showNotification('Microphone access denied or not available', 'error');
+        }
+      } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        voiceBtn.textContent = '🎤 Voice Message';
+        voiceBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+        voiceBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+        voiceStatus.classList.add('hidden');
+        
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+      }
+    });
+
+    // Render Functions
+    function renderNewsFeed() {
+      const newsFeed = document.getElementById('news-feed');
+      const categoryFilter = document.getElementById('category-filter').value;
+      const priorityFilter = document.getElementById('priority-filter').value;
+
+      let filteredNews = allNewsData;
+
+      if (categoryFilter !== 'all') {
+        filteredNews = filteredNews.filter(news => news.category === categoryFilter);
+      }
+
+      if (priorityFilter !== 'all') {
+        filteredNews = filteredNews.filter(news => news.priority === priorityFilter);
+      }
+
+      if (filteredNews.length === 0) {
+        newsFeed.innerHTML = `
+          <div class="text-center py-16">
+            <div class="text-8xl mb-6">📰</div>
+            <h3 class="text-2xl font-bold text-gray-600 mb-3">No news found</h3>
+            <p class="text-gray-500 text-lg mb-6">Try adjusting your filters or be the first to share news!</p>
+            <button onclick="showTab('create')" class="btn px-8 py-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-medium text-lg">
+              📝 Share News Story
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      newsFeed.innerHTML = filteredNews.map(news => {
+        const date = new Date(news.timestamp);
+        const timeAgo = getTimeAgo(date);
+        const categoryEmoji = getCategoryEmoji(news.category);
+        const priorityClass = `priority-${news.priority}`;
+
+        return `
+          <article class="news-card bg-white rounded-xl shadow-sm border ${priorityClass} p-6 hover:shadow-lg transition-all">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center space-x-4">
+                <div class="text-3xl">${categoryEmoji}</div>
+                <div>
+                  <h3 class="text-xl font-bold text-gray-800 mb-1">${escapeHtml(news.title)}</h3>
+                  <div class="flex items-center space-x-3 text-sm text-gray-500">
+                    <span class="flex items-center space-x-1">
+                      <span>👤</span>
+                      <span>${escapeHtml(news.author)}</span>
+                    </span>
+                    <span>•</span>
+                    <span class="flex items-center space-x-1">
+                      <span>📍</span>
+                      <span>${escapeHtml(news.location)}</span>
+                    </span>
+                    <span>•</span>
+                    <span class="flex items-center space-x-1">
+                      <span>🕐</span>
+                      <span>${timeAgo}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="px-3 py-1 text-xs font-medium rounded-full ${getPriorityBadgeClass(news.priority)}">
+                  ${getPriorityText(news.priority)}
+                </span>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex items-start justify-between">
+                <p class="text-gray-700 leading-relaxed flex-1 text-lg">${escapeHtml(news.content)}</p>
+                <button onclick="translateText('${escapeHtml(news.content)}')" class="ml-4 text-sm text-blue-600 hover:text-blue-800 flex items-center space-x-1 bg-blue-50 px-3 py-1 rounded-lg hover:bg-blue-100 transition-colors">
+                  <span>🌐</span>
+                  <span>Translate</span>
+                </button>
+              </div>
+            </div>
+            
+            ${news.image_name ? `
+              <div class="mb-4">
+                <div class="bg-gray-50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="viewMedia('image', '${escapeHtml(news.image_name)}', '${escapeHtml(news.title)}')">
+                  <div class="flex items-center space-x-3">
+                    <div class="text-3xl">🖼️</div>
+                    <div>
+                      <p class="font-medium text-gray-800">Image attached</p>
+                      <p class="text-sm text-gray-600">📷 ${escapeHtml(news.image_name)}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+            
+            ${news.video_name ? `
+              <div class="mb-4">
+                <div class="bg-gray-50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 transition-colors" onclick="viewMedia('video', '${escapeHtml(news.video_name)}', '${escapeHtml(news.title)}')">
+                  <div class="flex items-center space-x-3">
+                    <div class="text-3xl">🎥</div>
+                    <div>
+                      <p class="font-medium text-gray-800">Video attached</p>
+                      <p class="text-sm text-gray-600">🎬 ${escapeHtml(news.video_name)}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+            
+            <div class="flex items-center justify-between pt-4 border-t">
+              <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-1">
+                  <button onclick="toggleReactionPicker('${news.id}')" class="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors relative">
+                    <span class="text-lg">👍</span>
+                    <span class="font-medium">${getTotalReactions(news.id)}</span>
+                  </button>
+                  <div id="reaction-picker-${news.id}" class="hidden absolute bottom-full mb-2 bg-white border rounded-lg shadow-lg p-2 flex space-x-1 z-10">
+                    <button onclick="addReaction('${news.id}', 'like')" class="p-2 hover:bg-gray-100 rounded text-xl" title="Like">👍</button>
+                    <button onclick="addReaction('${news.id}', 'love')" class="p-2 hover:bg-gray-100 rounded text-xl" title="Love">❤️</button>
+                    <button onclick="addReaction('${news.id}', 'wow')" class="p-2 hover:bg-gray-100 rounded text-xl" title="Wow">😮</button>
+                    <button onclick="addReaction('${news.id}', 'haha')" class="p-2 hover:bg-gray-100 rounded text-xl" title="Haha">😂</button>
+                    <button onclick="addReaction('${news.id}', 'sad')" class="p-2 hover:bg-gray-100 rounded text-xl" title="Sad">😢</button>
+                    <button onclick="addReaction('${news.id}', 'angry')" class="p-2 hover:bg-gray-100 rounded text-xl" title="Angry">😡</button>
+                  </div>
+                </div>
+                <button onclick="toggleComments('${news.id}')" class="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors">
+                  <span class="text-lg">💬</span>
+                  <span class="font-medium">${getCommentsCount(news.id)}</span>
+                </button>
+                <button onclick="shareNews('${news.id}')" class="flex items-center space-x-2 text-gray-500 hover:text-green-500 transition-colors">
+                  <span class="text-lg">📤</span>
+                  <span class="font-medium">Share</span>
+                </button>
+              </div>
+              <div class="flex items-center space-x-2">
+                ${currentUser.isOrganization ? `
+                  <button onclick="deleteNews('${news.id}')" class="text-red-400 hover:text-red-600 transition-colors p-2 hover:bg-red-50 rounded-lg" title="Delete (Organization)">
+                    <span class="text-lg">🗑️</span>
+                  </button>
+                ` : ''}
+                <button onclick="reportContent('${news.id}', 'news')" class="text-yellow-400 hover:text-yellow-600 transition-colors p-2 hover:bg-yellow-50 rounded-lg" title="Report">
+                  <span class="text-lg">⚠️</span>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Comments Section -->
+            <div id="comments-${news.id}" class="hidden mt-6 pt-6 border-t bg-gray-50 rounded-xl p-4">
+              <h4 class="font-semibold text-gray-800 mb-4">Comments</h4>
+              <div id="comments-list-${news.id}" class="space-y-3 mb-4">
+                ${renderComments(news.id)}
+              </div>
+              <form onsubmit="addComment(event, '${news.id}')" class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                <input type="text" placeholder="Your name" class="form-input px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-32" required>
+                <input type="text" placeholder="Write a comment..." class="form-input flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <button type="submit" class="btn px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
+                  Send
+                </button>
+              </form>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderChatMessages() {
+      const chatMessages = document.getElementById('chat-messages');
+      
+      if (allChatData.length === 0) {
+        chatMessages.innerHTML = `
+          <div class="text-center py-12">
+            <div class="text-6xl mb-4">💬</div>
+            <h4 class="text-xl font-semibold text-gray-600 mb-2">Start the conversation!</h4>
+            <p class="text-gray-500">Be the first to send a message to your community.</p>
+          </div>
+        `;
+        return;
+      }
+
+      chatMessages.innerHTML = allChatData.map(chat => {
+        const date = new Date(chat.timestamp);
+        const timeAgo = getTimeAgo(date);
+
+        return `
+          <div class="chat-bubble bg-white rounded-lg p-4 shadow-sm border">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-gray-800">${escapeHtml(chat.author)}</span>
+              <div class="flex items-center space-x-3">
+                <button onclick="translateText('${escapeHtml(chat.content)}')" class="text-xs text-blue-600 hover:text-blue-800 bg-blue-50 px-2 py-1 rounded">
+                  🌐 Translate
+                </button>
+                <span class="text-xs text-gray-500">${timeAgo}</span>
+              </div>
+            </div>
+            <p class="text-gray-700">${escapeHtml(chat.content)}</p>
+            
+            ${chat.image_name ? `
+              <div class="mt-3">
+                <div class="bg-gray-50 rounded-lg p-3 cursor-pointer hover:bg-gray-100 transition-colors inline-block" onclick="viewMedia('image', '${escapeHtml(chat.image_name)}', 'Chat Image')">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-lg">🖼️</span>
+                    <span class="text-sm text-gray-600">${escapeHtml(chat.image_name)}</span>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+            
+            ${chat.video_name ? `
+              <div class="mt-3">
+                <div class="bg-gray-50 rounded-lg p-3 cursor-pointer hover:bg-gray-100 transition-colors inline-block" onclick="viewMedia('video', '${escapeHtml(chat.video_name)}', 'Chat Video')">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-lg">🎥</span>
+                    <span class="text-sm text-gray-600">${escapeHtml(chat.video_name)}</span>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+            
+            ${chat.location === 'voice' ? `
+              <div class="mt-3">
+                <div class="bg-green-50 rounded-lg p-3 inline-block border border-green-200">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-lg">🎤</span>
+                    <span class="text-sm text-green-700 font-medium">Voice Message</span>
+                    <button class="text-xs text-green-600 hover:text-green-800 bg-green-100 px-2 py-1 rounded">▶️ Play</button>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function updateCategoryCounts() {
+      const counts = {
+        emergency: 0,
+        community: 0,
+        health: 0,
+        education: 0,
+        events: 0,
+        announcements: 0
+      };
+
+      allNewsData.forEach(news => {
+        if (counts.hasOwnProperty(news.category)) {
+          counts[news.category]++;
+        }
+      });
+
+      Object.keys(counts).forEach(category => {
+        const element = document.getElementById(`${category}-count`);
+        if (element) {
+          element.textContent = counts[category];
+        }
+      });
+    }
+
+    // Utility Functions
+    function generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function getTimeAgo(date) {
+      const now = new Date();
+      const diffInSeconds = Math.floor((now - date) / 1000);
+      
+      if (diffInSeconds < 60) return 'Just now';
+      if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+      if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+      return `${Math.floor(diffInSeconds / 86400)}d ago`;
+    }
+
+    function getCategoryEmoji(category) {
+      const emojis = {
+        emergency: '🚨',
+        community: '🏘️',
+        health: '🏥',
+        education: '📚',
+        events: '🎉',
+        announcements: '📢'
+      };
+      return emojis[category] || '📰';
+    }
+
+    function getPriorityBadgeClass(priority) {
+      const classes = {
+        urgent: 'bg-red-100 text-red-800',
+        important: 'bg-yellow-100 text-yellow-800',
+        normal: 'bg-blue-100 text-blue-800'
+      };
+      return classes[priority] || 'bg-gray-100 text-gray-800';
+    }
+
+    function getPriorityText(priority) {
+      const texts = {
+        urgent: '🔴 Urgent',
+        important: '🟡 Important',
+        normal: '🔵 Normal'
+      };
+      return texts[priority] || 'Normal';
+    }
+
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg text-white font-medium ${
+        type === 'success' ? 'bg-green-500' : 
+        type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+      }`;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 5000);
+    }
+
+    // Reaction Functions
+    function toggleReactionPicker(newsId) {
+      const picker = document.getElementById(`reaction-picker-${newsId}`);
+      // Hide all other pickers
+      document.querySelectorAll('[id^="reaction-picker-"]').forEach(p => {
+        if (p.id !== `reaction-picker-${newsId}`) {
+          p.classList.add('hidden');
+        }
+      });
+      picker.classList.toggle('hidden');
+    }
+
+    function addReaction(newsId, reactionType) {
+      const existingReaction = allReactions.find(r => 
+        r.newsId === newsId && r.userId === currentUser.name && r.type === reactionType
+      );
+
+      if (existingReaction) {
+        // Remove existing reaction
+        const index = allReactions.indexOf(existingReaction);
+        allReactions.splice(index, 1);
+      } else {
+        // Remove any other reaction from this user for this news
+        allReactions = allReactions.filter(r => 
+          !(r.newsId === newsId && r.userId === currentUser.name)
+        );
+        
+        // Add new reaction
+        allReactions.push({
+          id: generateId(),
+          newsId: newsId,
+          userId: currentUser.name,
+          type: reactionType,
+          timestamp: new Date().toISOString()
+        });
+      }
+
+      saveData();
+      renderNewsFeed();
+      
+      // Hide picker
+      document.getElementById(`reaction-picker-${newsId}`).classList.add('hidden');
+    }
+
+    function getTotalReactions(newsId) {
+      return allReactions.filter(r => r.newsId === newsId).length;
+    }
+
+    function getReactionBreakdown(newsId) {
+      const reactions = allReactions.filter(r => r.newsId === newsId);
+      const breakdown = {};
+      reactions.forEach(r => {
+        breakdown[r.type] = (breakdown[r.type] || 0) + 1;
+      });
+      return breakdown;
+    }
+
+    // Organization Functions
+    function reportContent(contentId, contentType) {
+      if (currentUser.isOrganization) {
+        showNotification('Organization members can delete content directly', 'info');
+        return;
+      }
+      
+      const reportData = {
+        id: generateId(),
+        contentId: contentId,
+        contentType: contentType,
+        reportedBy: currentUser.name,
+        timestamp: new Date().toISOString(),
+        reason: 'Inappropriate content'
+      };
+      
+      // In a real app, this would be sent to moderators
+      showNotification('Content reported to organization moderators', 'success');
+    }
+
+    function renderOrgChat() {
+      if (!currentUser.isOrganization) return;
+      
+      const orgChatMessages = document.getElementById('org-chat-messages');
+      
+      if (organizationChat.length === 0) {
+        orgChatMessages.innerHTML = `
+          <div class="text-center py-12">
+            <div class="text-6xl mb-4">🏢</div>
+            <h4 class="text-xl font-semibold text-gray-600 mb-2">Organization Communication</h4>
+            <p class="text-gray-500">Secure channel for organization members only.</p>
+          </div>
+        `;
+        return;
+      }
+
+      orgChatMessages.innerHTML = organizationChat.map(chat => {
+        const date = new Date(chat.timestamp);
+        const timeAgo = getTimeAgo(date);
+
+        return `
+          <div class="chat-bubble bg-purple-50 rounded-lg p-4 shadow-sm border border-purple-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-purple-800 flex items-center space-x-2">
+                <span>🏢</span>
+                <span>${escapeHtml(chat.author)}</span>
+              </span>
+              <span class="text-xs text-purple-600">${timeAgo}</span>
+            </div>
+            <p class="text-gray-700">${escapeHtml(chat.content)}</p>
+            
+            ${chat.image_name ? `
+              <div class="mt-3">
+                <div class="bg-purple-100 rounded-lg p-3 cursor-pointer hover:bg-purple-200 transition-colors inline-block" onclick="viewMedia('image', '${escapeHtml(chat.image_name)}', 'Organization Image')">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-lg">🖼️</span>
+                    <span class="text-sm text-purple-700">${escapeHtml(chat.image_name)}</span>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+            
+            ${chat.video_name ? `
+              <div class="mt-3">
+                <div class="bg-purple-100 rounded-lg p-3 cursor-pointer hover:bg-purple-200 transition-colors inline-block" onclick="viewMedia('video', '${escapeHtml(chat.video_name)}', 'Organization Video')">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-lg">🎥</span>
+                    <span class="text-sm text-purple-700">${escapeHtml(chat.video_name)}</span>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      orgChatMessages.scrollTop = orgChatMessages.scrollHeight;
+    }
+
+    // Action Functions
+    function likeNews(newsId) {
+      // This function is now replaced by the reaction system
+      addReaction(newsId, 'like');
+    }
+
+    function deleteNews(newsId) {
+      const newsIndex = allNewsData.findIndex(n => n.id === newsId);
+      if (newsIndex !== -1) {
+        allNewsData.splice(newsIndex, 1);
+        saveData();
+        showNotification('News deleted successfully', 'success');
+        renderNewsFeed();
+        updateCategoryCounts();
+      }
+    }
+
+    function shareNews(newsId) {
+      const news = allNewsData.find(n => n.id === newsId);
+      if (!news) return;
+
+      const shareText = `📰 ${news.title}\n\nBy: ${news.author}\nLocation: ${news.location}\n\n${news.content}\n\n#MahamaCommunityNews`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: news.title,
+          text: shareText,
+          url: window.location.href
+        });
+      } else {
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      }
+    }
+
+    function clearForm() {
+      document.getElementById('news-form').reset();
+      showNotification('Form cleared', 'info');
+    }
+
+    function refreshNews() {
+      renderNewsFeed();
+      showNotification('News feed refreshed! 🔄', 'success');
+    }
+
+    // Comments System
+    function getCommentsCount(newsId) {
+      return allComments.filter(comment => comment.newsId === newsId).length;
+    }
+    
+    function renderComments(newsId) {
+      const comments = allComments.filter(comment => comment.newsId === newsId);
+      if (comments.length === 0) {
+        return '<p class="text-gray-500 text-sm">No comments yet. Be the first to comment!</p>';
+      }
+      
+      return comments.map(comment => {
+        const timeAgo = getTimeAgo(new Date(comment.timestamp));
+        return `
+          <div class="bg-white rounded-lg p-3 border">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-medium text-gray-800">${escapeHtml(comment.author)}</span>
+              <div class="flex items-center space-x-2">
+                <button onclick="translateText('${escapeHtml(comment.content)}')" class="text-xs text-blue-600 hover:text-blue-800">
+                  🌐 Translate
+                </button>
+                <span class="text-xs text-gray-500">${timeAgo}</span>
+              </div>
+            </div>
+            <p class="text-gray-700 text-sm">${escapeHtml(comment.content)}</p>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    function addComment(event, newsId) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const name = form.children[0].value;
+      const content = form.children[1].value;
+      
+      if (!name.trim() || !content.trim()) {
+        showNotification('Please enter your name and comment', 'error');
+        return;
+      }
+      
+      const commentData = {
+        id: generateId(),
+        newsId: newsId,
+        author: name,
+        content: content,
+        timestamp: new Date().toISOString()
+      };
+      
+      allComments.push(commentData);
+      saveData();
+      
+      form.reset();
+      showNotification('Comment added! 💬', 'success');
+      
+      // Update the comments display
+      const commentsList = document.getElementById(`comments-list-${newsId}`);
+      commentsList.innerHTML = renderComments(newsId);
+      
+      // Update comment count in the news card
+      renderNewsFeed();
+    }
+    
+    function toggleComments(newsId) {
+      const commentsSection = document.getElementById(`comments-${newsId}`);
+      commentsSection.classList.toggle('hidden');
+    }
+
+    // Media Viewer Functions
+    function viewMedia(type, filename, title) {
+      const modal = document.getElementById('media-modal');
+      const mediaTitle = document.getElementById('media-title');
+      const mediaContent = document.getElementById('media-content');
+      
+      mediaTitle.textContent = title;
+      
+      if (type === 'image') {
+        mediaContent.innerHTML = `
+          <div class="text-center">
+            <div class="text-8xl mb-6">🖼️</div>
+            <h3 class="text-2xl font-semibold mb-4">Image Preview</h3>
+            <p class="text-gray-600 mb-6">Filename: ${escapeHtml(filename)}</p>
+            <div class="bg-gray-100 rounded-xl p-12 max-w-2xl mx-auto">
+              <p class="text-gray-500 text-lg">Image would be displayed here</p>
+              <p class="text-sm text-gray-400 mt-2">In a real application, this would show the actual uploaded image</p>
+            </div>
+          </div>
+        `;
+      } else if (type === 'video') {
+        mediaContent.innerHTML = `
+          <div class="text-center">
+            <div class="text-8xl mb-6">🎥</div>
+            <h3 class="text-2xl font-semibold mb-4">Video Preview</h3>
+            <p class="text-gray-600 mb-6">Filename: ${escapeHtml(filename)}</p>
+            <div class="bg-gray-100 rounded-xl p-12 max-w-2xl mx-auto">
+              <p class="text-gray-500 text-lg">Video would be displayed here</p>
+              <p class="text-sm text-gray-400 mt-2">In a real application, this would show the actual uploaded video</p>
+            </div>
+          </div>
+        `;
+      }
+      
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeMediaModal() {
+      const modal = document.getElementById('media-modal');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Translation Functions
+    function translateText(text) {
+      const modal = document.getElementById('translation-modal');
+      const originalText = document.getElementById('original-text');
+      
+      originalText.textContent = text;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeTranslationModal() {
+      const modal = document.getElementById('translation-modal');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    
+    function performTranslation() {
+      const originalText = document.getElementById('original-text').textContent;
+      const translateTo = document.getElementById('translate-to').value;
+      const translatedTextDiv = document.getElementById('translated-text');
+      
+      const translations = {
+        'Hello': { rn: 'Muraho', rw: 'Muraho' },
+        'Good morning': { rn: 'Bwakeye', rw: 'Bwakeye' },
+        'Thank you': { rn: 'Urakoze', rw: 'Urakoze' },
+        'How are you?': { rn: 'Amakuru?', rw: 'Amakuru?' },
+        'Welcome': { rn: 'Murakaza neza', rw: 'Murakaza neza' },
+        'Food': { rn: 'Ibiryo', rw: 'Ibiryo' },
+        'Water': { rn: 'Amazi', rw: 'Amazi' },
+        'Help': { rn: 'Ubufasha', rw: 'Ubufasha' },
+        'Emergency': { rn: 'Byihutirwa', rw: 'Byihutirwa' },
+        'Community': { rn: 'Abaturage', rw: 'Abaturage' }
+      };
+      
+      let translatedText = originalText;
+      
+      Object.keys(translations).forEach(word => {
+        if (originalText.toLowerCase().includes(word.toLowerCase()) && translations[word][translateTo]) {
+          translatedText = translatedText.replace(new RegExp(word, 'gi'), translations[word][translateTo]);
+        }
+      });
+      
+      if (translateTo === 'en') {
+        translatedText = originalText;
+      }
+      
+      translatedTextDiv.innerHTML = `<p class="text-gray-800">${escapeHtml(translatedText)}</p>`;
+      
+      if (translatedText === originalText && translateTo !== 'en') {
+        translatedTextDiv.innerHTML += '<p class="text-sm text-gray-500 mt-2">Note: This is a basic translation. Some words may not be translated.</p>';
+      }
+    }
+
+    // User Management
+    function updateUserCount() {
+      const uniqueAuthors = new Set();
+      [...allNewsData, ...allChatData].forEach(item => {
+        if (item.author) uniqueAuthors.add(item.author);
+      });
+      
+      const totalUsers = uniqueAuthors.size;
+      const onlineUsers = Math.min(totalUsers, Math.max(1, Math.floor(totalUsers * 0.3) + Math.floor(Math.random() * 3)));
+      
+      document.getElementById('total-users').textContent = totalUsers;
+      document.getElementById('online-count').textContent = onlineUsers;
+    }
+
+    function syncMobileCounters() {
+      const onlineCount = document.getElementById('online-count').textContent;
+      const totalUsers = document.getElementById('total-users').textContent;
+      
+      document.getElementById('mobile-online-count').textContent = onlineCount;
+      document.getElementById('mobile-total-users').textContent = totalUsers;
+    }
+
+    // Language Synchronization
+    document.getElementById('language-selector').addEventListener('change', function(e) {
+      document.getElementById('mobile-language-selector').value = e.target.value;
+      showNotification(`Language changed to ${e.target.options[e.target.selectedIndex].text}`, 'info');
+    });
+    
+    document.getElementById('mobile-language-selector').addEventListener('change', function(e) {
+      document.getElementById('language-selector').value = e.target.value;
+      showNotification(`Language changed to ${e.target.options[e.target.selectedIndex].text}`, 'info');
+    });
+
+    // Filter Event Listeners
+    document.getElementById('category-filter').addEventListener('change', renderNewsFeed);
+    document.getElementById('priority-filter').addEventListener('change', renderNewsFeed);
+
+    // Auto-resize textarea
+    document.getElementById('chat-message').addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = this.scrollHeight + 'px';
+    });
+
+    // Make functions global for onclick handlers
+    window.showTab = showTab;
+    window.toggleMobileMenu = toggleMobileMenu;
+    window.closeMobileMenu = closeMobileMenu;
+    window.likeNews = likeNews;
+    window.deleteNews = deleteNews;
+    window.shareNews = shareNews;
+    window.clearForm = clearForm;
+    window.refreshNews = refreshNews;
+    window.toggleComments = toggleComments;
+    window.addComment = addComment;
+    window.viewMedia = viewMedia;
+    window.closeMediaModal = closeMediaModal;
+    window.translateText = translateText;
+    window.closeTranslationModal = closeTranslationModal;
+    window.performTranslation = performTranslation;
+    window.getCommentsCount = getCommentsCount;
+    window.renderComments = renderComments;
+    window.loginUser = loginUser;
+    window.toggleReactionPicker = toggleReactionPicker;
+    window.addReaction = addReaction;
+    window.getTotalReactions = getTotalReactions;
+    window.reportContent = reportContent;
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99943f04c2dcacb3',t:'MTc2MjI2MDcyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

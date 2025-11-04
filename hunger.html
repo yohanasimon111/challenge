@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hunger Help Mahama</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .btn-primary {
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      transform: scale(1.05);
+    }
+    
+    .smooth-scroll {
+      scroll-behavior: smooth;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="smooth-scroll"><!-- Navigation -->
+  <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+     <div class="flex items-center"><span class="text-2xl">🤝</span> <span id="nav-title" class="ml-2 text-xl font-bold text-gray-800">Hunger Help Mahama</span>
+     </div>
+     <div class="hidden md:flex space-x-8 items-center"><a href="#home" class="text-gray-700 hover:text-purple-600 font-medium">Home</a> <a href="#about" class="text-gray-700 hover:text-purple-600 font-medium">About</a> <a href="#needs" class="text-gray-700 hover:text-purple-600 font-medium">What We Need</a> <a href="#contact" class="text-gray-700 hover:text-purple-600 font-medium">Contact</a>
+      <div class="relative"><select id="language-selector" class="bg-purple-100 text-purple-800 px-3 py-2 rounded-lg text-sm font-medium border-none focus:outline-none focus:ring-2 focus:ring-purple-500"> <option value="en">🇺🇸 English</option> <option value="rn">🇧🇮 Kirundi</option> <option value="rw">🇷🇼 Kinyarwanda</option> </select>
+      </div>
+     </div><button id="mobile-menu-btn" class="md:hidden text-gray-700">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg></button>
+    </div>
+   </div><!-- Mobile Menu -->
+   <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+    <div class="px-4 py-3 space-y-3"><a href="#home" class="block text-gray-700 hover:text-purple-600 font-medium">Home</a> <a href="#about" class="block text-gray-700 hover:text-purple-600 font-medium">About</a> <a href="#needs" class="block text-gray-700 hover:text-purple-600 font-medium">What We Need</a> <a href="#contact" class="block text-gray-700 hover:text-purple-600 font-medium">Contact</a>
+     <div class="pt-3 border-t"><select id="mobile-language-selector" class="w-full bg-purple-100 text-purple-800 px-3 py-2 rounded-lg text-sm font-medium border-none focus:outline-none focus:ring-2 focus:ring-purple-500"> <option value="en">🇺🇸 English</option> <option value="rn">🇧🇮 Kirundi</option> <option value="rw">🇷🇼 Kinyarwanda</option> </select>
+     </div>
+    </div>
+   </div>
+  </nav><!-- Hero Section -->
+  <section id="home" class="hero-gradient text-white pt-24 pb-20 px-4">
+   <div class="max-w-4xl mx-auto text-center">
+    <h1 id="hero-heading" class="text-5xl md:text-6xl font-bold mb-6">Supporting Refugees in Mahama Camp</h1>
+    <p id="hero-subheading" class="text-xl md:text-2xl mb-8 opacity-90">Together we can provide food, shelter, and hope to those who need it most</p><button id="cta-button" class="btn-primary bg-white text-purple-700 px-8 py-4 rounded-full text-lg font-semibold shadow-lg">Get Involved Today</button>
+   </div>
+  </section><!-- About Section -->
+  <section id="about" class="py-20 px-4 bg-gray-50">
+   <div class="max-w-6xl mx-auto">
+    <h2 id="about-heading" class="text-4xl font-bold text-center mb-12 text-gray-800">About Mahama Refugee Camp</h2>
+    <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+     <p id="about-text" class="text-lg text-gray-700 leading-relaxed mb-6">Mahama Refugee Camp in Rwanda is home to thousands of refugees who have fled conflict and hardship. These families face daily challenges in accessing basic necessities like food, clean water, healthcare, and education. Our mission is to bridge the gap between those who want to help and those who need support.</p>
+     <div class="grid md:grid-cols-3 gap-6 mt-8">
+      <div class="text-center p-6 bg-purple-50 rounded-xl">
+       <div class="text-4xl mb-3">
+        👨‍👩‍👧‍👦
+       </div>
+       <h3 class="text-2xl font-bold text-purple-700 mb-2">50,000+</h3>
+       <p class="text-gray-600">Refugees Served</p>
+      </div>
+      <div class="text-center p-6 bg-blue-50 rounded-xl">
+       <div class="text-4xl mb-3">
+        🍲
+       </div>
+       <h3 class="text-2xl font-bold text-blue-700 mb-2">Daily</h3>
+       <p class="text-gray-600">Food Distribution</p>
+      </div>
+      <div class="text-center p-6 bg-green-50 rounded-xl">
+       <div class="text-4xl mb-3">
+        ❤️
+       </div>
+       <h3 class="text-2xl font-bold text-green-700 mb-2">24/7</h3>
+       <p class="text-gray-600">Support Available</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Needs Section -->
+  <section id="needs" class="py-20 px-4 bg-white">
+   <div class="max-w-6xl mx-auto">
+    <h2 id="needs-heading" class="text-4xl font-bold text-center mb-12 text-gray-800">What Refugees Need Most</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"><!-- Food -->
+     <div class="card-hover bg-white border-2 border-gray-200 rounded-2xl p-8 text-center">
+      <div class="text-5xl mb-4">
+       🍚
+      </div>
+      <h3 class="text-2xl font-bold mb-3 text-gray-800">Food &amp; Nutrition</h3>
+      <p class="text-gray-600 mb-4">Rice, beans, cooking oil, and nutritious meals for families</p>
+      <div class="bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+       Critical Need
+      </div><button onclick="openRequestModal('food')" class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-colors">Request Food Support</button>
+     </div><!-- Water -->
+     <div class="card-hover bg-white border-2 border-gray-200 rounded-2xl p-8 text-center">
+      <div class="text-5xl mb-4">
+       💧
+      </div>
+      <h3 class="text-2xl font-bold mb-3 text-gray-800">Clean Water</h3>
+      <p class="text-gray-600 mb-4">Access to safe drinking water and sanitation facilities</p>
+      <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+       High Priority
+      </div><button onclick="openRequestModal('water')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">Request Water Support</button>
+     </div><!-- Shelter -->
+     <div class="card-hover bg-white border-2 border-gray-200 rounded-2xl p-8 text-center">
+      <div class="text-5xl mb-4">
+       🏠
+      </div>
+      <h3 class="text-2xl font-bold mb-3 text-gray-800">Shelter Materials</h3>
+      <p class="text-gray-600 mb-4">Tents, blankets, and materials for safe housing</p>
+      <div class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+       Essential
+      </div><button onclick="openRequestModal('shelter')" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors">Request Shelter Support</button>
+     </div><!-- Education -->
+     <div class="card-hover bg-white border-2 border-gray-200 rounded-2xl p-8 text-center">
+      <div class="text-5xl mb-4">
+       📚
+      </div>
+      <h3 class="text-2xl font-bold mb-3 text-gray-800">Education</h3>
+      <p class="text-gray-600 mb-4">School supplies, books, and learning materials for children</p>
+      <div class="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+       Important
+      </div><button onclick="openEducationModal()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">Access Education</button>
+     </div><!-- Clothing -->
+     <div class="card-hover bg-white border-2 border-gray-200 rounded-2xl p-8 text-center">
+      <div class="text-5xl mb-4">
+       👕
+      </div>
+      <h3 class="text-2xl font-bold mb-3 text-gray-800">Clothing</h3>
+      <p class="text-gray-600 mb-4">Clothes, shoes, and warm items for all ages</p>
+      <div class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+       Needed
+      </div><button onclick="openRequestModal('clothing')" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">Request Clothing Support</button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Request Modal -->
+  <div id="request-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+   <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6 border-b">
+     <div class="flex justify-between items-center">
+      <h3 id="modal-title" class="text-2xl font-bold text-gray-800">Request Support</h3><button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+     </div>
+    </div>
+    <div class="p-6">
+     <form id="request-form">
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+       <div><label for="req-name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label> <input type="text" id="req-name" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+       </div>
+       <div><label for="req-phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label> <input type="tel" id="req-phone" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+       </div>
+      </div>
+      <div class="mb-4"><label for="req-address" class="block text-sm font-semibold text-gray-700 mb-2">House Address * (e.g., V1-C2-P2A)</label> <input type="text" id="req-address" required placeholder="V1-C2-P2A" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+      </div>
+      <div id="family-size-section" class="mb-4"><label for="family-size" class="block text-sm font-semibold text-gray-700 mb-2">Family Size *</label> <input type="number" id="family-size" min="1" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+      </div>
+      <div id="care-number-section" class="mb-4"><label for="care-number" class="block text-sm font-semibold text-gray-700 mb-2">Care Number (if applicable)</label> <input type="text" id="care-number" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+      </div>
+      <div id="hours-section" class="mb-4 hidden"><label for="available-hours" class="block text-sm font-semibold text-gray-700 mb-2">Available Hours</label> <input type="text" id="available-hours" placeholder="e.g., 9:00 AM - 5:00 PM" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+      </div>
+      <div id="image-section" class="mb-4 hidden"><label for="support-image" class="block text-sm font-semibold text-gray-700 mb-2">Upload Image (optional)</label> <input type="file" id="support-image" accept="image/*" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+      </div>
+      <div id="food-image-section" class="mb-4 hidden"><label for="food-image" class="block text-sm font-semibold text-gray-700 mb-2">Upload Proof Image (optional)</label> <input type="file" id="food-image" accept="image/*" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+       <p class="text-sm text-gray-500 mt-1">Take a photo or upload an image as proof of your need</p>
+      </div>
+      <div id="additional-text-section" class="mb-4 hidden"><label for="additional-text" class="block text-sm font-semibold text-gray-700 mb-2">Additional Information</label> <textarea id="additional-text" rows="3" placeholder="Describe your specific situation or attach any additional details..." class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none"></textarea>
+      </div>
+      <div class="mb-6"><label for="req-message" class="block text-sm font-semibold text-gray-700 mb-2">Additional Message *</label> <textarea id="req-message" rows="4" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none" placeholder="Please describe your specific needs..."></textarea>
+      </div><button type="submit" class="w-full bg-purple-600 text-white py-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors">Send Request via WhatsApp</button>
+     </form>
+    </div>
+   </div>
+  </div><!-- Education Modal -->
+  <div id="education-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+   <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6 border-b">
+     <div class="flex justify-between items-center">
+      <h3 class="text-2xl font-bold text-gray-800">Education Center</h3><button onclick="closeEducationModal()" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+     </div>
+    </div>
+    <div class="p-6">
+     <div class="grid md:grid-cols-2 gap-8"><!-- Primary School -->
+      <div class="bg-blue-50 rounded-xl p-6">
+       <div class="text-4xl mb-4 text-center">
+        🎒
+       </div>
+       <h4 class="text-xl font-bold mb-4 text-center text-blue-800">Primary School Courses</h4>
+       <div class="space-y-3">
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-semibold mb-2">Mathematics Basics</h5>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/ZX5fhkHvqJg" title="Basic Math for Kids - Numbers and Counting" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/Aq4WAhFRrpI" title="Addition and Subtraction for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/dFzAU3u06Ps" title="Multiplication Tables for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/StqUDRGh8s0" title="Shapes and Geometry for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2">Learn basic numbers, counting, addition, subtraction, and shapes</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-semibold mb-2">English Language</h5>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/36IBDpTRVNE" title="English Alphabet Song for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/BELlZKpi1Zs" title="Phonics Song for Children" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/hq3yfQnllfQ" title="Basic English Words for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/R087lYrRpgY" title="Reading Comprehension for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2">Learn alphabet, phonics, basic words, and reading skills</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-semibold mb-2">Science Basics</h5>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/wygy721nzRc" title="Animals for Kids - Educational Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/rNkgDJBQn1Q" title="Solar System for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/BQ9q4U2P3ig" title="Plants and Trees for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/HQTUWK7CM-Y" title="Weather and Seasons for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2">Explore animals, solar system, plants, and weather</p>
+        </div>
+       </div>
+      </div><!-- Secondary School -->
+      <div class="bg-green-50 rounded-xl p-6">
+       <div class="text-4xl mb-4 text-center">
+        🎓
+       </div>
+       <h4 class="text-xl font-bold mb-4 text-center text-green-800">Secondary School Courses</h4>
+       <div class="space-y-3">
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-semibold mb-2">Advanced Mathematics</h5>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/WUvTyaaNkzM" title="Introduction to Algebra - Math Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/fNk_zzaMoSs" title="Geometry Basics - Lines and Angles" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/sQP99u7P3YU" title="Fractions and Decimals" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/mvmuCPvRoWQ" title="Introduction to Calculus" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2">Learn algebra, geometry, fractions, and calculus basics</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-semibold mb-2">Literature &amp; Writing</h5>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/AX7uybwukkk" title="How to Write an Essay - Writing Skills" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/1khK6is-Bfs" title="Grammar and Punctuation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/MSYw502dJNY" title="Poetry Analysis and Writing" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/blmvxWg4U8Y" title="Creative Writing Techniques" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2">Develop essay writing, grammar, poetry, and creative writing skills</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-semibold mb-2">History &amp; Geography</h5>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/xuCn8ux2gbs" title="World History Overview - Educational Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/ZEw8c6TmzGg" title="African History and Culture" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/MqDuK73WJCM" title="Geography and Maps" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/VNqNnUJVcVs" title="World Civilizations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2">Explore world history, African culture, geography, and civilizations</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-semibold mb-2">Science &amp; Physics</h5>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/ZihywtixUYo" title="Introduction to Physics" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/J3xLuZNKhlY" title="Chemistry Basics" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/qWcfiPi9gUo" title="Biology and Life Sciences" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+          <div class="aspect-video rounded-lg overflow-hidden"><iframe src="https://www.youtube.com/embed/dGiQaabX3_o" title="Environmental Science" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"> </iframe>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2">Learn physics, chemistry, biology, and environmental science</p>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="mt-8 text-center">
+      <p class="text-gray-600 mb-4">Need educational materials or have questions?</p><button onclick="openRequestModal('education')" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">Request Educational Support</button>
+     </div>
+    </div>
+   </div>
+  </div><!-- How to Help Section -->
+  <section class="py-20 px-4 bg-gradient-to-br from-purple-50 to-blue-50">
+   <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-4xl font-bold mb-8 text-gray-800">How You Can Help</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+     <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="text-4xl mb-3">
+       💝
+      </div>
+      <h3 class="text-xl font-bold mb-2 text-gray-800">Donate</h3>
+      <p class="text-gray-600">Financial contributions help us purchase essential supplies</p>
+     </div>
+     <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="text-4xl mb-3">
+       📦
+      </div>
+      <h3 class="text-xl font-bold mb-2 text-gray-800">Send Supplies</h3>
+      <p class="text-gray-600">Organize collection drives in your community</p>
+     </div>
+     <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="text-4xl mb-3">
+       📢
+      </div>
+      <h3 class="text-xl font-bold mb-2 text-gray-800">Spread Awareness</h3>
+      <p class="text-gray-600">Share our mission with friends and family</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Contact Section -->
+  <section id="contact" class="py-20 px-4 bg-white">
+   <div class="max-w-3xl mx-auto">
+    <h2 id="contact-heading" class="text-4xl font-bold text-center mb-12 text-gray-800">Get In Touch</h2>
+    <div class="bg-gray-50 rounded-2xl p-8 md:p-12 shadow-lg">
+     <form id="contact-form" class="space-y-6">
+      <div><label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Your Name</label> <input type="text" id="name" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+      </div>
+      <div><label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label> <input type="email" id="email" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none">
+      </div>
+      <div><label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Your Message</label> <textarea id="message" rows="5" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none"></textarea>
+      </div><button type="submit" class="w-full bg-purple-600 text-white py-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors">Send Message</button>
+     </form>
+     <div id="form-success" class="hidden mt-6 p-4 bg-green-100 text-green-800 rounded-lg text-center font-semibold">
+      Thank you! We'll get back to you soon.
+     </div>
+     <div class="mt-8 text-center">
+      <p class="text-gray-600 mb-2">Or reach us directly:</p>
+      <p id="contact-email-display" class="text-purple-600 font-semibold text-lg">help@mahamahungerhelp.org</p>
+      <div class="mt-4 space-y-2">
+       <p class="text-gray-600 text-sm">WhatsApp Support:</p>
+       <div class="flex justify-center space-x-4"><a href="https://wa.me/250736585352" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-700 font-medium">+250 736 585 352</a> <a href="https://wa.me/250792807588" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-700 font-medium">+250 792 807 588</a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12 px-4">
+   <div class="max-w-6xl mx-auto text-center">
+    <div class="text-4xl mb-4">
+     🤝
+    </div>
+    <h3 class="text-2xl font-bold mb-4">Hunger Help Mahama</h3>
+    <p class="text-gray-400 mb-6">Supporting refugees with compassion and dignity</p>
+    <div class="flex justify-center space-x-6 mb-6"><a href="#home" class="text-gray-400 hover:text-white">Home</a> <a href="#about" class="text-gray-400 hover:text-white">About</a> <a href="#needs" class="text-gray-400 hover:text-white">Needs</a> <a href="#contact" class="text-gray-400 hover:text-white">Contact</a>
+    </div>
+    <p class="text-gray-500 text-sm">© 2024 Hunger Help Mahama. Making a difference together.</p>
+   </div>
+  </footer>
+  <script>
+    const defaultConfig = {
+      site_title: "Hunger Help Mahama",
+      hero_heading: "Supporting Refugees in Mahama Camp",
+      hero_subheading: "Together we can provide food, shelter, and hope to those who need it most",
+      cta_button: "Get Involved Today",
+      about_heading: "About Mahama Refugee Camp",
+      about_text: "Mahama Refugee Camp in Rwanda is home to thousands of refugees who have fled conflict and hardship. These families face daily challenges in accessing basic necessities like food, clean water, healthcare, and education. Our mission is to bridge the gap between those who want to help and those who need support.",
+      needs_heading: "What Refugees Need Most",
+      contact_heading: "Get In Touch",
+      contact_email: "help@mahamahungerhelp.org",
+      background_color: "#667eea",
+      card_color: "#ffffff",
+      text_color: "#1f2937",
+      primary_button_color: "#7c3aed",
+      secondary_button_color: "#3b82f6",
+      font_family: "system-ui",
+      font_size: 16
+    };
+
+    async function onConfigChange(config) {
+      const navTitle = document.getElementById('nav-title');
+      const heroHeading = document.getElementById('hero-heading');
+      const heroSubheading = document.getElementById('hero-subheading');
+      const ctaButton = document.getElementById('cta-button');
+      const aboutHeading = document.getElementById('about-heading');
+      const aboutText = document.getElementById('about-text');
+      const needsHeading = document.getElementById('needs-heading');
+      const contactHeading = document.getElementById('contact-heading');
+      const contactEmailDisplay = document.getElementById('contact-email-display');
+
+      if (navTitle) navTitle.textContent = config.site_title || defaultConfig.site_title;
+      if (heroHeading) heroHeading.textContent = config.hero_heading || defaultConfig.hero_heading;
+      if (heroSubheading) heroSubheading.textContent = config.hero_subheading || defaultConfig.hero_subheading;
+      if (ctaButton) ctaButton.textContent = config.cta_button || defaultConfig.cta_button;
+      if (aboutHeading) aboutHeading.textContent = config.about_heading || defaultConfig.about_heading;
+      if (aboutText) aboutText.textContent = config.about_text || defaultConfig.about_text;
+      if (needsHeading) needsHeading.textContent = config.needs_heading || defaultConfig.needs_heading;
+      if (contactHeading) contactHeading.textContent = config.contact_heading || defaultConfig.contact_heading;
+      if (contactEmailDisplay) contactEmailDisplay.textContent = config.contact_email || defaultConfig.contact_email;
+
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      const baseFontStack = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif';
+      
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      if (heroHeading) heroHeading.style.fontSize = `${baseSize * 3}px`;
+      if (heroSubheading) heroSubheading.style.fontSize = `${baseSize * 1.25}px`;
+      if (aboutHeading) aboutHeading.style.fontSize = `${baseSize * 2.5}px`;
+      if (needsHeading) needsHeading.style.fontSize = `${baseSize * 2.5}px`;
+      if (contactHeading) contactHeading.style.fontSize = `${baseSize * 2.5}px`;
+
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const heroSection = document.querySelector('.hero-gradient');
+      if (heroSection) {
+        heroSection.style.background = backgroundColor;
+      }
+
+      const textColor = config.text_color || defaultConfig.text_color;
+      const textElements = document.querySelectorAll('h1, h2, h3, p, a, label');
+      textElements.forEach(el => {
+        if (!el.closest('.hero-gradient') && !el.closest('footer')) {
+          el.style.color = textColor;
+        }
+      });
+
+      const primaryButtonColor = config.primary_button_color || defaultConfig.primary_button_color;
+      const primaryButtons = document.querySelectorAll('.btn-primary, button[type="submit"]');
+      primaryButtons.forEach(btn => {
+        btn.style.backgroundColor = primaryButtonColor;
+      });
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.primary_button_color || defaultConfig.primary_button_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.primary_button_color = value;
+                window.elementSdk.setConfig({ primary_button_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            if (window.elementSdk) {
+              window.elementSdk.config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            if (window.elementSdk) {
+              window.elementSdk.config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["site_title", config.site_title || defaultConfig.site_title],
+        ["hero_heading", config.hero_heading || defaultConfig.hero_heading],
+        ["hero_subheading", config.hero_subheading || defaultConfig.hero_subheading],
+        ["cta_button", config.cta_button || defaultConfig.cta_button],
+        ["about_heading", config.about_heading || defaultConfig.about_heading],
+        ["about_text", config.about_text || defaultConfig.about_text],
+        ["needs_heading", config.needs_heading || defaultConfig.needs_heading],
+        ["contact_heading", config.contact_heading || defaultConfig.contact_heading],
+        ["contact_email", config.contact_email || defaultConfig.contact_email]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Translation system
+    const translations = {
+      en: {
+        nav_home: "Home",
+        nav_about: "About", 
+        nav_needs: "What We Need",
+        nav_contact: "Contact",
+        hero_heading: "Supporting Refugees in Mahama Camp",
+        hero_subheading: "Together we can provide food, shelter, and hope to those who need it most",
+        cta_button: "Get Involved Today",
+        about_heading: "About Mahama Refugee Camp",
+        needs_heading: "What Refugees Need Most",
+        contact_heading: "Get In Touch",
+        food_title: "Food & Nutrition",
+        water_title: "Clean Water", 
+        shelter_title: "Shelter Materials",
+        education_title: "Education",
+        clothing_title: "Clothing",
+        request_food: "Request Food Support",
+        request_water: "Request Water Support",
+        request_shelter: "Request Shelter Support",
+        request_clothing: "Request Clothing Support",
+        access_education: "Access Education"
+      },
+      rn: {
+        nav_home: "Mu rugo",
+        nav_about: "Uko tubana",
+        nav_needs: "Ico dukeneye",
+        nav_contact: "Duhamagare",
+        hero_heading: "Gufasha Impunzi zo mu Nkambi ya Mahama",
+        hero_subheading: "Hamwe dushobora gutanga ibiryo, inzu, n'ibyiringiro ku bari bakeneye",
+        cta_button: "Jya mu bikorwa uyu munsi",
+        about_heading: "Uko Nkambi y'Impunzi ya Mahama imeze",
+        needs_heading: "Ico Impunzi zikeneye cyane",
+        contact_heading: "Duhamagare",
+        food_title: "Ibiryo n'Intungamubiri",
+        water_title: "Amazi meza",
+        shelter_title: "Ibikoresho by'Inzu",
+        education_title: "Uburezi",
+        clothing_title: "Imyenda",
+        request_food: "Saba Ubufasha bw'Ibiryo",
+        request_water: "Saba Ubufasha bw'Amazi",
+        request_shelter: "Saba Ubufasha bw'Inzu",
+        request_clothing: "Saba Ubufasha bw'Imyenda",
+        access_education: "Injira mu Burezi"
+      },
+      rw: {
+        nav_home: "Ahabanza",
+        nav_about: "Uko tubana",
+        nav_needs: "Ico dukeneye", 
+        nav_contact: "Duhamagare",
+        hero_heading: "Gufasha Impunzi zo mu Nkambi ya Mahama",
+        hero_subheading: "Hamwe dushobora gutanga ibiryo, inzu, n'ibyiringiro ku bari bakeneye",
+        cta_button: "Jya mu bikorwa uyu munsi",
+        about_heading: "Uko Nkambi y'Impunzi ya Mahama imeze",
+        needs_heading: "Ico Impunzi zikeneye cyane",
+        contact_heading: "Duhamagare",
+        food_title: "Ibiryo n'Intungamubiri",
+        water_title: "Amazi meza",
+        shelter_title: "Ibikoresho by'Inzu", 
+        education_title: "Uburezi",
+        clothing_title: "Imyenda",
+        request_food: "Saba Ubufasha bw'Ibiryo",
+        request_water: "Saba Ubufasha bw'Amazi",
+        request_shelter: "Saba Ubufasha bw'Inzu",
+        request_clothing: "Saba Ubufasha bw'Imyenda",
+        access_education: "Injira mu Burezi"
+      }
+    };
+
+    let currentLanguage = 'en';
+
+    function translatePage(lang) {
+      currentLanguage = lang;
+      const t = translations[lang];
+      
+      // Update navigation
+      document.querySelector('a[href="#home"]').textContent = t.nav_home;
+      document.querySelector('a[href="#about"]').textContent = t.nav_about;
+      document.querySelector('a[href="#needs"]').textContent = t.nav_needs;
+      document.querySelector('a[href="#contact"]').textContent = t.nav_contact;
+      
+      // Update mobile navigation
+      const mobileLinks = document.querySelectorAll('#mobile-menu a');
+      mobileLinks[0].textContent = t.nav_home;
+      mobileLinks[1].textContent = t.nav_about;
+      mobileLinks[2].textContent = t.nav_needs;
+      mobileLinks[3].textContent = t.nav_contact;
+      
+      // Update main content if using default values
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      if (config.hero_heading === defaultConfig.hero_heading) {
+        document.getElementById('hero-heading').textContent = t.hero_heading;
+      }
+      if (config.hero_subheading === defaultConfig.hero_subheading) {
+        document.getElementById('hero-subheading').textContent = t.hero_subheading;
+      }
+      if (config.cta_button === defaultConfig.cta_button) {
+        document.getElementById('cta-button').textContent = t.cta_button;
+      }
+      if (config.about_heading === defaultConfig.about_heading) {
+        document.getElementById('about-heading').textContent = t.about_heading;
+      }
+      if (config.needs_heading === defaultConfig.needs_heading) {
+        document.getElementById('needs-heading').textContent = t.needs_heading;
+      }
+      if (config.contact_heading === defaultConfig.contact_heading) {
+        document.getElementById('contact-heading').textContent = t.contact_heading;
+      }
+      
+      // Update need cards
+      const needCards = document.querySelectorAll('#needs .card-hover h3');
+      if (needCards.length >= 5) {
+        needCards[0].textContent = t.food_title;
+        needCards[1].textContent = t.water_title;
+        needCards[2].textContent = t.shelter_title;
+        needCards[3].textContent = t.education_title;
+        needCards[4].textContent = t.clothing_title;
+      }
+      
+      // Update buttons
+      const buttons = document.querySelectorAll('#needs button');
+      if (buttons.length >= 5) {
+        buttons[0].textContent = t.request_food;
+        buttons[1].textContent = t.request_water;
+        buttons[2].textContent = t.request_shelter;
+        buttons[3].textContent = t.access_education;
+        buttons[4].textContent = t.request_clothing;
+      }
+    }
+
+    // Language selector handlers
+    const languageSelector = document.getElementById('language-selector');
+    const mobileLanguageSelector = document.getElementById('mobile-language-selector');
+    
+    languageSelector.addEventListener('change', (e) => {
+      translatePage(e.target.value);
+      mobileLanguageSelector.value = e.target.value;
+    });
+    
+    mobileLanguageSelector.addEventListener('change', (e) => {
+      translatePage(e.target.value);
+      languageSelector.value = e.target.value;
+    });
+
+    // Contact form handling with email integration
+    const contactForm = document.getElementById('contact-form');
+    const formSuccess = document.getElementById('form-success');
+    
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      // Create email subject and body
+      const subject = encodeURIComponent('Hunger Help Mahama - Contact Form Message');
+      const body = encodeURIComponent(`
+Name: ${name}
+Email: ${email}
+Date: ${new Date().toLocaleDateString()}
+Time: ${new Date().toLocaleTimeString()}
+
+Message:
+${message}
+
+---
+Sent from Hunger Help Mahama website
+      `);
+      
+      // Create mailto link (this will open user's email client)
+      const mailtoLink = `mailto:help@mahamahungerhelp.org?subject=${subject}&body=${body}`;
+      
+      // Try to open email client
+      window.open(mailtoLink, '_blank');
+      
+      formSuccess.classList.remove('hidden');
+      contactForm.reset();
+      
+      setTimeout(() => {
+        formSuccess.classList.add('hidden');
+      }, 5000);
+    });
+
+    // CTA button scroll
+    const ctaBtn = document.getElementById('cta-button');
+    ctaBtn.addEventListener('click', () => {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // WhatsApp numbers
+    const whatsappNumbers = ['+250736585352', '+250792807588'];
+    let currentRequestType = '';
+
+    // Modal functions
+    function openRequestModal(type) {
+      currentRequestType = type;
+      const modal = document.getElementById('request-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const hoursSection = document.getElementById('hours-section');
+      const imageSection = document.getElementById('image-section');
+      
+      // Set modal title based on type
+      const titles = {
+        food: 'Request Food & Nutrition Support',
+        water: 'Request Clean Water Support',
+        shelter: 'Request Shelter Materials Support',
+        clothing: 'Request Clothing Support',
+        education: 'Request Educational Support'
+      };
+      
+      modalTitle.textContent = titles[type] || 'Request Support';
+      
+      // Show/hide specific fields based on type
+      const foodImageSection = document.getElementById('food-image-section');
+      const additionalTextSection = document.getElementById('additional-text-section');
+      
+      if (type === 'shelter') {
+        hoursSection.classList.remove('hidden');
+        imageSection.classList.remove('hidden');
+        additionalTextSection.classList.remove('hidden');
+        foodImageSection.classList.add('hidden');
+      } else if (type === 'food') {
+        hoursSection.classList.add('hidden');
+        imageSection.classList.add('hidden');
+        foodImageSection.classList.remove('hidden');
+        additionalTextSection.classList.remove('hidden');
+      } else {
+        hoursSection.classList.add('hidden');
+        imageSection.classList.add('hidden');
+        foodImageSection.classList.add('hidden');
+        additionalTextSection.classList.add('hidden');
+      }
+      
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('request-modal');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+      document.getElementById('request-form').reset();
+    }
+
+    function openEducationModal() {
+      const modal = document.getElementById('education-modal');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEducationModal() {
+      const modal = document.getElementById('education-modal');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+
+
+    // Request form submission
+    const requestForm = document.getElementById('request-form');
+    requestForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(requestForm);
+      const name = document.getElementById('req-name').value;
+      const phone = document.getElementById('req-phone').value;
+      const address = document.getElementById('req-address').value;
+      const familySize = document.getElementById('family-size').value;
+      const careNumber = document.getElementById('care-number').value;
+      const availableHours = document.getElementById('available-hours').value;
+      const message = document.getElementById('req-message').value;
+      const additionalText = document.getElementById('additional-text').value;
+      
+      // Create WhatsApp message
+      let whatsappMessage = `🤝 *Hunger Help Mahama - ${currentRequestType.toUpperCase()} Support Request*\n\n`;
+      whatsappMessage += `👤 *Name:* ${name}\n`;
+      whatsappMessage += `📱 *Phone:* ${phone}\n`;
+      whatsappMessage += `🏠 *House Address:* ${address}\n`;
+      whatsappMessage += `👨‍👩‍👧‍👦 *Family Size:* ${familySize}\n`;
+      
+      if (careNumber) {
+        whatsappMessage += `🆔 *Care Number:* ${careNumber}\n`;
+      }
+      
+      if (availableHours && currentRequestType === 'shelter') {
+        whatsappMessage += `⏰ *Available Hours:* ${availableHours}\n`;
+      }
+      
+      whatsappMessage += `\n💬 *Message:*\n${message}\n`;
+      
+      if (additionalText && (currentRequestType === 'food' || currentRequestType === 'shelter')) {
+        whatsappMessage += `\n📝 *Additional Information:*\n${additionalText}\n`;
+      }
+      
+      // Check for uploaded images
+      const foodImage = document.getElementById('food-image');
+      const supportImage = document.getElementById('support-image');
+      
+      if (foodImage && foodImage.files.length > 0) {
+        whatsappMessage += `\n📷 *Proof Image:* ${foodImage.files[0].name} (attached)\n`;
+      }
+      
+      if (supportImage && supportImage.files.length > 0) {
+        whatsappMessage += `\n📷 *Support Image:* ${supportImage.files[0].name} (attached)\n`;
+      }
+      
+      whatsappMessage += `\n📅 *Request Date:* ${new Date().toLocaleDateString()}\n`;
+      whatsappMessage += `🕐 *Request Time:* ${new Date().toLocaleTimeString()}\n\n`;
+      whatsappMessage += `📞 *WhatsApp Numbers:*\n+250 736 585 352\n+250 792 807 588`;
+      
+      // Use first WhatsApp number by default
+      const whatsappUrl = `https://wa.me/${whatsappNumbers[0].replace('+', '')}?text=${encodeURIComponent(whatsappMessage)}`;
+      
+      // Open WhatsApp in new tab
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      
+      // Show success message
+      const successDiv = document.createElement('div');
+      successDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50';
+      successDiv.innerHTML = `
+        <div class="flex items-center">
+          <span class="mr-2">✅</span>
+          <span>Request sent to WhatsApp! We'll contact you soon.</span>
+        </div>
+      `;
+      document.body.appendChild(successDiv);
+      
+      setTimeout(() => {
+        successDiv.remove();
+      }, 5000);
+      
+      closeModal();
+    });
+
+    // Make functions global for onclick handlers
+    window.openRequestModal = openRequestModal;
+    window.closeModal = closeModal;
+    window.openEducationModal = openEducationModal;
+    window.closeEducationModal = closeEducationModal;
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9992d2e643c4acb3',t:'MTc2MjI0NTgwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
