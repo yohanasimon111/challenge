@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahama Voice - Community Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --emergency: #e74c3c;
+            --health: #9b59b6;
+            --education: #27ae60;
+            --community: #e67e22;
+            --events: #f1c40f;
+            --announcements: #1abc9c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .online-counter {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .header-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        #newPostBtn {
+            background: var(--secondary);
+            color: white;
+        }
+
+        #chatToggleBtn {
+            background: var(--education);
+            color: white;
+        }
+
+        .header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            background: var(--dark);
+            padding: 1rem;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Category Statistics */
+        .category-stats {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem auto;
+            max-width: 1200px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-stats h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background: var(--light);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-card.emergency { border-top: 4px solid var(--emergency); }
+        .stat-card.community { border-top: 4px solid var(--community); }
+        .stat-card.health { border-top: 4px solid var(--health); }
+        .stat-card.education { border-top: 4px solid var(--education); }
+        .stat-card.events { border-top: 4px solid var(--events); }
+        .stat-card.announcements { border-top: 4px solid var(--announcements); }
+
+        .stat-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-count {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        /* Category Navigation */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+        }
+
+        .category-filter {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--light);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .category-filter.active,
+        .category-filter:hover {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Post Form */
+        #postForm {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        /* Feeling Buttons */
+        .feeling-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .feeling-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feeling-btn.active {
+            border-color: var(--secondary);
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Media Preview */
+        .media-preview {
+            margin-top: 1rem;
+        }
+
+        .media-preview img,
+        .media-preview video {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 8px;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .publish-btn {
+            background: var(--education);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        #cancelPostBtn {
+            background: #95a5a6;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        /* Posts */
+        .post {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .post:hover {
+            transform: translateY(-3px);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .post-title {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .post-feeling {
+            font-size: 1.2rem;
+        }
+
+        .post-location {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Category Colors */
+        .post.emergency { border-left-color: var(--emergency); }
+        .post.health { border-left-color: var(--health); }
+        .post.education { border-left-color: var(--education); }
+        .post.community { border-left-color: var(--community); }
+        .post.events { border-left-color: var(--events); }
+        .post.announcements { border-left-color: var(--announcements); }
+
+        .category-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            margin-right: 0.5rem;
+        }
+
+        .category-emergency { background: var(--emergency); }
+        .category-health { background: var(--health); }
+        .category-education { background: var(--education); }
+        .category-community { background: var(--community); }
+        .category-events { background: var(--events); }
+        .category-announcements { background: var(--announcements); }
+
+        .post-media {
+            margin: 1rem 0;
+        }
+
+        .post-media img,
+        .post-media video {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            flex-wrap: wrap;
+        }
+
+        .post-action-btn {
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: #f8f9fa;
+        }
+
+        .post-action-btn:hover {
+            color: var(--secondary);
+            background: #e9ecef;
+            transform: translateY(-1px);
+        }
+
+        .post-action-btn.active {
+            color: var(--secondary);
+            background: #e3f2fd;
+        }
+
+        .reaction-options {
+            display: flex;
+            gap: 0.3rem;
+            margin-left: 0.5rem;
+        }
+
+        .reaction-option {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.2rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .reaction-option:hover {
+            transform: scale(1.3);
+        }
+
+        .reaction-option.active {
+            background: #e3f2fd;
+        }
+
+        /* Reaction Counts */
+        .reaction-counts {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            flex-wrap: wrap;
+        }
+
+        .reaction-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Community Chat */
+        #communityChat {
+            position: fixed;
+            bottom: 0;
+            right: 2rem;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .chat-header {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .chat-message.own {
+            background: var(--secondary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-message.other {
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        .chat-input-container {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #ddd;
+        }
+
+        #chatMessageInput {
+            flex: 1;
+            margin-right: 0.5rem;
+        }
+
+        #sendChatBtn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .modal-content img,
+        .modal-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #333;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Share Modal */
+        .share-modal {
+            max-width: 400px;
+        }
+
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .share-option:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .share-option i {
+            font-size: 1.5rem;
+        }
+
+        .share-option:nth-child(1) i { color: var(--secondary); }
+        .share-option:nth-child(2) i { color: #25D366; }
+        .share-option:nth-child(3) i { color: #1877F2; }
+
+        .share-link {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-link input {
+            flex: 1;
+        }
+
+        /* Comment Modal */
+        .comment-modal {
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment-post-preview {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            background: #f8f9fa;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .comments-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comments-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .comment {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .comment-time {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .comment-text {
+            color: #333;
+        }
+
+        .add-comment {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            background: white;
+        }
+
+        .add-comment input {
+            flex: 1;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            color: white;
+            z-index: 3000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success { background: #27ae60; }
+        .notification.error { background: #e74c3c; }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 3rem;
+            color: #7f8c8d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .header-actions {
+                gap: 0.5rem;
+            }
+
+            .header-btn {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .online-counter {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .category-nav {
+                top: 70px;
+                padding: 0.5rem;
+                overflow-x: auto;
+            }
+
+            .category-filter {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+                white-space: nowrap;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            #postForm {
+                padding: 1rem;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+
+            .post {
+                padding: 1rem;
+            }
+
+            .post-actions {
+                gap: 0.5rem;
+            }
+
+            .post-action-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            #communityChat {
+                width: 100%;
+                right: 0;
+                height: 70vh;
+            }
+
+            .footer-stats {
+                gap: 1rem;
+            }
+
+            .share-options {
+                grid-template-columns: 1fr;
+            }
+
+            .comment-modal {
+                max-width: 95%;
+                max-height: 90vh;
+            }
+
+            .modal-content {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .reaction-counts {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .post-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-bullhorn"></i>
+                <span>Mahama Voice</span>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#news">News Feed</a>
+                <a href="#emergency">Emergency</a>
+                <a href="#community">Community</a>
+                <a href="#health">Health</a>
+                <a href="#education">Education</a>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="header-actions">
+                <div class="online-counter">
+                    <i class="fas fa-users"></i>
+                    <span id="onlineCount">1</span>
+                </div>
+                <button class="header-btn" id="newPostBtn">
+                    <i class="fas fa-plus"></i> Post
+                </button>
+                <button class="header-btn" id="chatToggleBtn">
+                    <i class="fas fa-comments"></i> Chat
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#news">News Feed</a>
+            <a href="#emergency">Emergency</a>
+            <a href="#community">Community</a>
+            <a href="#health">Health</a>
+            <a href="#education">Education</a>
+            <a href="#events">Events</a>
+            <a href="#announcements">Announcements</a>
+        </div>
+    </header>
+
+    <!-- Category Statistics -->
+    <section class="category-stats">
+        <h3>Today's News Summary</h3>
+        <div class="stats-grid">
+            <div class="stat-card emergency">
+                <span class="stat-icon">🚨</span>
+                <span class="stat-count" id="count-emergency">0</span>
+                <span class="stat-label">Emergency</span>
+            </div>
+            <div class="stat-card community">
+                <span class="stat-icon">👥</span>
+                <span class="stat-count" id="count-community">0</span>
+                <span class="stat-label">Community</span>
+            </div>
+            <div class="stat-card health">
+                <span class="stat-icon">🏥</span>
+                <span class="stat-count" id="count-health">0</span>
+                <span class="stat-label">Health</span>
+            </div>
+            <div class="stat-card education">
+                <span class="stat-icon">📚</span>
+                <span class="stat-count" id="count-education">0</span>
+                <span class="stat-label">Education</span>
+            </div>
+            <div class="stat-card events">
+                <span class="stat-icon">🎉</span>
+                <span class="stat-count" id="count-events">0</span>
+                <span class="stat-label">Events</span>
+            </div>
+            <div class="stat-card announcements">
+                <span class="stat-icon">📢</span>
+                <span class="stat-count" id="count-announcements">0</span>
+                <span class="stat-label">Announcements</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation for news categories -->
+    <nav class="category-nav">
+        <button class="category-filter active" data-category="all">All News</button>
+        <button class="category-filter" data-category="emergency">🚨 Emergency</button>
+        <button class="category-filter" data-category="community">👥 Community</button>
+        <button class="category-filter" data-category="health">🏥 Health</button>
+        <button class="category-filter" data-category="education">📚 Education</button>
+        <button class="category-filter" data-category="events">🎉 Events</button>
+        <button class="category-filter" data-category="announcements">📢 Announcements</button>
+    </nav>
+
+    <main>
+        <!-- New Post Form -->
+        <section id="postForm" class="hidden">
+            <h2><i class="fas fa-edit"></i> Share Your News</h2>
+            <form id="createPostForm">
+                <div class="form-group">
+                    <input type="text" id="postTitle" placeholder="Title of your post..." required>
+                </div>
+                
+                <div class="form-group">
+                    <textarea id="postContent" placeholder="What's happening in the community?..." required rows="4"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="postCategory">Category:</label>
+                    <select id="postCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="emergency">🚨 Emergency News</option>
+                        <option value="community">👥 Community News</option>
+                        <option value="health">🏥 Health News</option>
+                        <option value="education">📚 Education News</option>
+                        <option value="events">🎉 Events News</option>
+                        <option value="announcements">📢 Announcements</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How are you feeling about this?</label>
+                    <div class="feeling-buttons">
+                        <button type="button" class="feeling-btn active" data-feeling="❤️">❤️ Good</button>
+                        <button type="button" class="feeling-btn" data-feeling="😂">😂 Funny</button>
+                        <button type="button" class="feeling-btn" data-feeling="😢">😢 Sad</button>
+                        <button type="button" class="feeling-btn" data-feeling="😔">😔 Worried</button>
+                        <button type="button" class="feeling-btn" data-feeling="👋">👋 Hello</button>
+                    </div>
+                    <input type="hidden" id="postFeeling" value="❤️">
+                </div>
+
+                <div class="form-group">
+                    <label for="postLocation">Location (Optional):</label>
+                    <input type="text" id="postLocation" placeholder="e.g., Sector 5, Block B">
+                </div>
+
+                <div class="form-group">
+                    <label for="mediaUpload">Add Photo/Video:</label>
+                    <input type="file" id="mediaUpload" accept="image/*,video/*">
+                    <div id="mediaPreview" class="media-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="postAuthor" placeholder="Your Name (optional)">
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="publish-btn"><i class="fas fa-paper-plane"></i> Publish Post</button>
+                    <button type="button" id="cancelPostBtn">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- News Feed -->
+        <section id="newsFeed">
+            <h2><i class="fas fa-newspaper"></i> Community News Feed</h2>
+            <div id="postsContainer">
+                <div class="no-posts">
+                    <i class="fas fa-newspaper" style="font-size: 3rem; color: #bdc3c7; margin-bottom: 1rem;"></i>
+                    <p>No news shared yet. Be the first to post!</p>
+                    <button class="publish-btn" onclick="togglePostForm()" style="margin-top: 1rem;">
+                        <i class="fas fa-plus"></i> Share First Post
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Chat -->
+        <section id="communityChat" class="hidden">
+            <div class="chat-header">
+                <h3><i class="fas fa-comments"></i> Community Chat</h3>
+                <button id="closeChatBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="chatMessages" class="chat-messages">
+                <div class="chat-message other">
+                    <div class="message-header">
+                        <strong>System</strong>
+                        <span class="message-time">Just now</span>
+                    </div>
+                    <div class="message-text">Welcome to Mahama Community Chat! Start a conversation.</div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatMessageInput" placeholder="Type your message...">
+                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer with statistics -->
+    <footer>
+        <div class="footer-stats">
+            <div class="stat">
+                <i class="fas fa-users"></i>
+                <span id="totalUsers">1</span> Total Users
+            </div>
+            <div class="stat">
+                <i class="fas fa-newspaper"></i>
+                <span id="totalPosts">0</span> Posts Today
+            </div>
+            <div class="stat">
+                <i class="fas fa-comments"></i>
+                <span id="totalMessages">1</span> Messages
+            </div>
+            <div class="stat">
+                <i class="fas fa-share"></i>
+                <span id="totalShares">0</span> Shares
+            </div>
+        </div>
+        <p>Made with ❤️ for the Mahama Community</p>
+    </footer>
+
+    <!-- Modals -->
+    <div id="mediaModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <img id="modalImage" src="" alt="Enlarged view">
+            <video id="modalVideo" controls style="display: none;">Your browser does not support the video tag.</video>
+        </div>
+    </div>
+
+    <div id="shareModal" class="modal hidden">
+        <div class="modal-content share-modal">
+            <button class="close-modal">&times;</button>
+            <h3>Share This Post</h3>
+            <div class="share-options">
+                <button class="share-option" onclick="copyPostLink()">
+                    <i class="fas fa-link"></i>
+                    <span>Copy Link</span>
+                </button>
+                <button class="share-option" onclick="shareOnWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="share-option" onclick="shareOnFacebook()">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                </button>
+            </div>
+            <div class="share-link">
+                <input type="text" id="postLink" readonly>
+                <button onclick="copyPostLink()">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="commentModal" class="modal hidden">
+        <div class="modal-content comment-modal">
+            <button class="close-modal">&times;</button>
+            <div class="comment-post-preview"></div>
+            <div class="comments-section">
+                <h4>Comments</h4>
+                <div class="comments-list"></div>
+                <div class="add-comment">
+                    <input type="text" id="commentInput" placeholder="Write a comment...">
+                    <button onclick="addComment()">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let currentFeeling = '❤️';
+        let selectedMedia = null;
+        let onlineUsers = 1;
+        let currentPostId = null;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing Mahama Voice...');
+            initializeApp();
+            setupEventListeners();
+            updateStatistics();
+            updateCategoryCounts();
+            simulateOnlineUsers();
+        });
+
+        function initializeApp() {
+            console.log('Loading posts...');
+            loadPosts();
+            updateOnlineCounter();
+        }
+
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+            // Mobile menu
+            document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+            
+            // Post form events
+            document.getElementById('newPostBtn').addEventListener('click', togglePostForm);
+            document.getElementById('createPostForm').addEventListener('submit', handlePostSubmit);
+            document.getElementById('cancelPostBtn').addEventListener('click', togglePostForm);
+            
+            // Feeling buttons
+            document.querySelectorAll('.feeling-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    currentFeeling = e.target.dataset.feeling;
+                    document.getElementById('postFeeling').value = currentFeeling;
+                    
+                    document.querySelectorAll('.feeling-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                });
+            });
+            
+            // Media upload
+            document.getElementById('mediaUpload').addEventListener('change', handleMediaUpload);
+            
+            // Category filters
+            document.querySelectorAll('.category-filter').forEach(filter => {
+                filter.addEventListener('click', (e) => {
+                    const category = e.target.dataset.category;
+                    filterPosts(category);
+                    
+                    document.querySelectorAll('.category-filter').forEach(f => f.classList.remove('active'));
+                    e.target.classList.add('active');
+                });
+            });
+            
+            // Chat events
+            document.getElementById('chatToggleBtn').addEventListener('click', toggleChat);
+            document.getElementById('closeChatBtn').addEventListener('click', toggleChat);
+            document.getElementById('sendChatBtn').addEventListener('click', sendChatMessage);
+            document.getElementById('chatMessageInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+            
+            // Modal events
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', closeModals);
+            });
+            
+            document.getElementById('mediaModal').addEventListener('click', (e) => {
+                if (e.target.id === 'mediaModal') closeModals();
+            });
+            
+            document.getElementById('shareModal').addEventListener('click', (e) => {
+                if (e.target.id === 'shareModal') closeModals();
+            });
+            
+            document.getElementById('commentModal').addEventListener('click', (e) => {
+                if (e.target.id === 'commentModal') closeModals();
+            });
+
+            console.log('Event listeners setup complete');
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        // Post Management
+        function togglePostForm() {
+            document.getElementById('postForm').classList.toggle('hidden');
+            // Close mobile menu when opening post form
+            document.getElementById('mobileMenu').classList.remove('active');
+        }
+
+        function handlePostSubmit(event) {
+            event.preventDefault();
+            console.log('Handling post submission...');
+            
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const category = document.getElementById('postCategory').value;
+            
+            if (!title || !content || !category) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            const postData = {
+                id: Date.now(),
+                title: title,
+                content: content,
+                category: category,
+                feeling: currentFeeling,
+                location: document.getElementById('postLocation').value,
+                author: document.getElementById('postAuthor').value || 'Anonymous',
+                date: new Date().toLocaleString('en-GB'),
+                media: selectedMedia,
+                comments: [],
+                shares: 0,
+                reactions: {
+                    '❤️': 0,
+                    '😂': 0,
+                    '😢': 0,
+                    '😔': 0,
+                    '👋': 0
+                }
+            };
+            
+            console.log('Saving post:', postData);
+            savePost(postData);
+            resetPostForm();
+            loadPosts();
+            updateStatistics();
+            updateCategoryCounts();
+            
+            showNotification('Post published successfully!', 'success');
+        }
+
+        function resetPostForm() {
+            document.getElementById('createPostForm').reset();
+            currentFeeling = '❤️';
+            selectedMedia = null;
+            document.getElementById('mediaPreview').innerHTML = '';
+            document.querySelectorAll('.feeling-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.feeling-btn[data-feeling="❤️"]').classList.add('active');
+            document.getElementById('postForm').classList.add('hidden');
+        }
+
+        function handleMediaUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                selectedMedia = {
+                    type: file.type.startsWith('image/') ? 'image' : 'video',
+                    url: e.target.result,
+                    name: file.name
+                };
+                
+                displayMediaPreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function displayMediaPreview() {
+            const preview = document.getElementById('mediaPreview');
+            preview.innerHTML = '';
+            
+            if (selectedMedia.type === 'image') {
+                const img = document.createElement('img');
+                img.src = selectedMedia.url;
+                img.alt = 'Preview';
+                img.onclick = () => openMediaModal(selectedMedia.url, 'image');
+                preview.appendChild(img);
+            } else {
+                const video = document.createElement('video');
+                video.src = selectedMedia.url;
+                video.controls = true;
+                video.onclick = () => openMediaModal(selectedMedia.url, 'video');
+                preview.appendChild(video);
+            }
+        }
+
+        function savePost(post) {
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            posts.unshift(post);
+            localStorage.setItem('mahamaPosts', JSON.stringify(posts));
+            console.log('Post saved to localStorage');
+        }
+
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const container = document.getElementById('postsContainer');
+            
+            console.log('Loading posts:', posts.length);
+            
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="no-posts">
+                        <i class="fas fa-newspaper" style="font-size: 3rem; color: #bdc3c7; margin-bottom: 1rem;"></i>
+                        <p>No news shared yet. Be the first to post!</p>
+                        <button class="publish-btn" onclick="togglePostForm()" style="margin-top: 1rem;">
+                            <i class="fas fa-plus"></i> Share First Post
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = posts.map(post => `
+                <div class="post ${post.category}" data-post-id="${post.id}">
+                    <div class="post-header">
+                        <div>
+                            <h3 class="post-title">${post.title}</h3>
+                            <div class="post-meta">
+                                <span class="category-tag category-${post.category}">
+                                    ${getCategoryDisplayName(post.category)}
+                                </span>
+                                <span class="post-feeling">${post.feeling}</span>
+                                <span>By <strong>${post.author}</strong></span>
+                                <span>${post.date}</span>
+                                ${post.location ? `<span class="post-location"><i class="fas fa-map-marker-alt"></i> ${post.location}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.content}</p>
+                    </div>
+                    ${post.media ? `
+                        <div class="post-media">
+                            ${post.media.type === 'image' ? 
+                                `<img src="${post.media.url}" alt="Post image" onclick="openMediaModal('${post.media.url}', 'image')">` :
+                                `<video src="${post.media.url}" controls onclick="openMediaModal('${post.media.url}', 'video')"></video>`
+                            }
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Reaction Counts -->
+                    <div class="reaction-counts">
+                        ${Object.entries(post.reactions).map(([reaction, count]) => 
+                            count > 0 ? `<div class="reaction-item">${reaction} <span>${count}</span></div>` : ''
+                        ).join('')}
+                        ${post.comments.length > 0 ? 
+                            `<div class="reaction-item"><i class="fas fa-comment"></i> ${post.comments.length}</div>` : ''}
+                        ${post.shares > 0 ? 
+                            `<div class="reaction-item"><i class="fas fa-share"></i> ${post.shares}</div>` : ''}
+                    </div>
+                    
+                    <!-- Post Actions -->
+                    <div class="post-actions">
+                        <button class="post-action-btn" onclick="toggleReactions(${post.id})">
+                            <i class="fas fa-heart"></i> React
+                            <div class="reaction-options hidden" id="reactions-${post.id}">
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '❤️')">❤️</button>
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '😂')">😂</button>
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '😢')">😢</button>
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '😔')">😔</button>
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '👋')">👋</button>
+                            </div>
+                        </button>
+                        <button class="post-action-btn" onclick="openComments(${post.id})">
+                            <i class="fas fa-comment"></i> Comment (${post.comments.length})
+                        </button>
+                        <button class="post-action-btn" onclick="openShareModal(${post.id})">
+                            <i class="fas fa-share"></i> Share (${post.shares})
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Reaction System
+        function toggleReactions(postId) {
+            const reactionsDiv = document.getElementById(`reactions-${postId}`);
+            reactionsDiv.classList.toggle('hidden');
+        }
+
+        function addReaction(postId, reaction) {
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const postIndex = posts.findIndex(post => post.id === postId);
+            
+            if (postIndex !== -1) {
+                posts[postIndex].reactions[reaction]++;
+                localStorage.setItem('mahamaPosts', JSON.stringify(posts));
+                loadPosts();
+                updateStatistics();
+                
+                showNotification(`You reacted with ${reaction}`, 'success');
+            }
+        }
+
+        // Comment System
+        function openComments(postId) {
+            currentPostId = postId;
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const post = posts.find(p => p.id === postId);
+            
+            if (!post) return;
+            
+            // Load post preview
+            document.querySelector('.comment-post-preview').innerHTML = `
+                <div class="post-preview">
+                    <strong>${post.author}</strong>
+                    <p>${post.content.substring(0, 100)}${post.content.length > 100 ? '...' : ''}</p>
+                </div>
+            `;
+            
+            // Load comments
+            const commentsList = document.querySelector('.comments-list');
+            commentsList.innerHTML = '';
+            
+            if (post.comments.length > 0) {
+                post.comments.forEach(comment => {
+                    const commentEl = document.createElement('div');
+                    commentEl.className = 'comment';
+                    commentEl.innerHTML = `
+                        <div class="comment-header">
+                            <span class="comment-author">${comment.author}</span>
+                            <span class="comment-time">${comment.time}</span>
+                        </div>
+                        <div class="comment-text">${comment.text}</div>
+                    `;
+                    commentsList.appendChild(commentEl);
+                });
+            } else {
+                commentsList.innerHTML = '<p style="text-align: center; color: #7f8c8d;">No comments yet. Be the first to comment!</p>';
+            }
+            
+            document.getElementById('commentModal').classList.remove('hidden');
+        }
+
+        function addComment() {
+            const commentInput = document.getElementById('commentInput');
+            const commentText = commentInput.value.trim();
+            
+            if (!commentText || !currentPostId) return;
+            
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const postIndex = posts.findIndex(post => post.id === currentPostId);
+            
+            if (postIndex !== -1) {
+                const newComment = {
+                    id: Date.now(),
+                    author: 'User' + Math.floor(Math.random() * 1000),
+                    text: commentText,
+                    time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+                };
+                
+                posts[postIndex].comments.unshift(newComment);
+                localStorage.setItem('mahamaPosts', JSON.stringify(posts));
+                
+                // Refresh comments
+                openComments(currentPostId);
+                commentInput.value = '';
+                updateStatistics();
+                
+                showNotification('Comment added successfully!', 'success');
+            }
+        }
+
+        // Share System
+        function openShareModal(postId) {
+            currentPostId = postId;
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const post = posts.find(p => p.id === postId);
+            
+            if (!post) return;
+            
+            // Generate shareable link
+            const postLink = `${window.location.origin}${window.location.pathname}?post=${postId}`;
+            document.getElementById('postLink').value = postLink;
+            
+            document.getElementById('shareModal').classList.remove('hidden');
+        }
+
+        function copyPostLink() {
+            const postLink = document.getElementById('postLink');
+            postLink.select();
+            document.execCommand('copy');
+            showNotification('Link copied to clipboard!', 'success');
+        }
+
+        function shareOnWhatsApp() {
+            const postLink = document.getElementById('postLink').value;
+            window.open(`https://wa.me/?text=${encodeURIComponent('Check this post from Mahama Voice: ' + postLink)}`, '_blank');
+            incrementShareCount();
+        }
+
+        function shareOnFacebook() {
+            const postLink = document.getElementById('postLink').value;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postLink)}`, '_blank');
+            incrementShareCount();
+        }
+
+        function incrementShareCount() {
+            if (!currentPostId) return;
+            
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const postIndex = posts.findIndex(post => post.id === currentPostId);
+            
+            if (postIndex !== -1) {
+                posts[postIndex].shares++;
+                localStorage.setItem('mahamaPosts', JSON.stringify(posts));
+                loadPosts();
+                updateStatistics();
+                closeModals();
+            }
+        }
+
+        // Category Management
+        function updateCategoryCounts() {
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const today = new Date().toDateString();
+            
+            const counts = {
+                emergency: 0,
+                community: 0,
+                health: 0,
+                education: 0,
+                events: 0,
+                announcements: 0
+            };
+            
+            posts.forEach(post => {
+                if (new Date(post.date).toDateString() === today) {
+                    counts[post.category]++;
+                }
+            });
+            
+            // Update UI
+            Object.keys(counts).forEach(category => {
+                const element = document.getElementById(`count-${category}`);
+                if (element) {
+                    element.textContent = counts[category];
+                }
+            });
+        }
+
+        function filterPosts(category) {
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const filteredPosts = category === 'all' ? posts : posts.filter(post => post.category === category);
+            
+            const container = document.getElementById('postsContainer');
+            if (filteredPosts.length === 0) {
+                container.innerHTML = `<div class="no-posts"><p>No posts in this category yet.</p></div>`;
+                return;
+            }
+            
+            container.innerHTML = filteredPosts.map(post => `
+                <div class="post ${post.category}" data-post-id="${post.id}">
+                    <div class="post-header">
+                        <div>
+                            <h3 class="post-title">${post.title}</h3>
+                            <div class="post-meta">
+                                <span class="category-tag category-${post.category}">
+                                    ${getCategoryDisplayName(post.category)}
+                                </span>
+                                <span class="post-feeling">${post.feeling}</span>
+                                <span>By <strong>${post.author}</strong></span>
+                                <span>${post.date}</span>
+                                ${post.location ? `<span class="post-location"><i class="fas fa-map-marker-alt"></i> ${post.location}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.content}</p>
+                    </div>
+                    ${post.media ? `
+                        <div class="post-media">
+                            ${post.media.type === 'image' ? 
+                                `<img src="${post.media.url}" alt="Post image" onclick="openMediaModal('${post.media.url}', 'image')">` :
+                                `<video src="${post.media.url}" controls onclick="openMediaModal('${post.media.url}', 'video')"></video>`
+                            }
+                        </div>
+                    ` : ''}
+                    
+                    <div class="reaction-counts">
+                        ${Object.entries(post.reactions).map(([reaction, count]) => 
+                            count > 0 ? `<div class="reaction-item">${reaction} <span>${count}</span></div>` : ''
+                        ).join('')}
+                        ${post.comments.length > 0 ? 
+                            `<div class="reaction-item"><i class="fas fa-comment"></i> ${post.comments.length}</div>` : ''}
+                        ${post.shares > 0 ? 
+                            `<div class="reaction-item"><i class="fas fa-share"></i> ${post.shares}</div>` : ''}
+                    </div>
+                    
+                    <div class="post-actions">
+                        <button class="post-action-btn" onclick="toggleReactions(${post.id})">
+                            <i class="fas fa-heart"></i> React
+                            <div class="reaction-options hidden" id="reactions-${post.id}">
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '❤️')">❤️</button>
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '😂')">😂</button>
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '😢')">😢</button>
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '😔')">😔</button>
+                                <button class="reaction-option" onclick="addReaction(${post.id}, '👋')">👋</button>
+                            </div>
+                        </button>
+                        <button class="post-action-btn" onclick="openComments(${post.id})">
+                            <i class="fas fa-comment"></i> Comment (${post.comments.length})
+                        </button>
+                        <button class="post-action-btn" onclick="openShareModal(${post.id})">
+                            <i class="fas fa-share"></i> Share (${post.shares})
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Utility Functions
+        function getCategoryDisplayName(category) {
+            const categories = {
+                'emergency': '🚨 Emergency',
+                'community': '👥 Community',
+                'health': '🏥 Health',
+                'education': '📚 Education',
+                'events': '🎉 Events',
+                'announcements': '📢 Announcements'
+            };
+            return categories[category] || category;
+        }
+
+        function updateStatistics() {
+            const posts = JSON.parse(localStorage.getItem('mahamaPosts')) || [];
+            const today = new Date().toDateString();
+            const postsToday = posts.filter(post => new Date(post.date).toDateString() === today).length;
+            
+            // Calculate total shares and comments
+            const totalSharesCount = posts.reduce((sum, post) => sum + post.shares, 0);
+            const totalCommentsCount = posts.reduce((sum, post) => sum + post.comments.length, 0);
+            
+            document.getElementById('totalPosts').textContent = postsToday;
+            document.getElementById('totalShares').textContent = totalSharesCount;
+            document.getElementById('totalUsers').textContent = Math.max(onlineUsers, 1);
+        }
+
+        function updateOnlineCounter() {
+            document.getElementById('onlineCount').textContent = onlineUsers;
+        }
+
+        function simulateOnlineUsers() {
+            setInterval(() => {
+                const change = Math.random() > 0.5 ? 1 : -1;
+                onlineUsers = Math.max(1, onlineUsers + change);
+                updateOnlineCounter();
+                updateStatistics();
+            }, 30000);
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.add('hidden');
+            });
+        }
+
+        function openMediaModal(url, type) {
+            const modal = document.getElementById('mediaModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalVideo = document.getElementById('modalVideo');
+            
+            if (type === 'image') {
+                modalImage.src = url;
+                modalImage.style.display = 'block';
+                modalVideo.style.display = 'none';
+            } else {
+                modalVideo.src = url;
+                modalVideo.style.display = 'block';
+                modalImage.style.display = 'none';
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        // Chat functionality
+        function toggleChat() {
+            document.getElementById('communityChat').classList.toggle('hidden');
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatMessageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            const chatMessage = {
+                id: Date.now(),
+                text: message,
+                author: 'User' + Math.floor(Math.random() * 1000),
+                timestamp: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+                type: 'text'
+            };
+            
+            displayChatMessage(chatMessage);
+            input.value = '';
+            updateStatistics();
+        }
+
+        function displayChatMessage(message) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageEl = document.createElement('div');
+            messageEl.className = `chat-message ${message.author.includes('User') ? 'other' : 'own'}`;
+            messageEl.innerHTML = `
+                <div class="message-header">
+                    <strong>${message.author}</strong>
+                    <span class="message-time">${message.timestamp}</span>
+                </div>
+                <div class="message-text">${message.text}</div>
+            `;
+            messagesContainer.appendChild(messageEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.mobile-menu') && !e.target.closest('.mobile-menu-btn')) {
+                document.getElementById('mobileMenu').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
