@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HopeLink Footer</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #1f2937;
+        color: #e2e8f0;
+    }
+
+    footer {
+        background: #0f172a;
+        padding: 50px 20px;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 40px;
+    }
+
+    .footer-brand, .footer-links, .footer-contact, .footer-social {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .footer-brand img {
+        width: 45px;
+        margin-right: 10px;
+    }
+
+    .footer-brand-title {
+        display: flex;
+        align-items: center;
+    }
+
+    .footer-brand p {
+        line-height: 1.6;
+        margin-top: 10px;
+    }
+
+    .footer-links ul {
+        list-style: none;
+        padding: 0;
+        line-height: 2;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: #e2e8f0;
+    }
+
+    .footer-links a:hover {
+        color: #38bdf8;
+    }
+
+    .footer-contact p {
+        line-height: 1.8;
+    }
+
+    .social-icons img {
+        width: 35px;
+        margin-right: 12px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .social-icons img:hover {
+        transform: scale(1.1);
+    }
+
+    .subscribe form {
+        display: flex;
+        margin-top: 10px;
+    }
+
+    .subscribe input {
+        padding: 10px;
+        flex: 1;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+    }
+
+    .subscribe button {
+        padding: 10px 15px;
+        border: none;
+        background: #22c55e;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+    }
+
+    hr {
+        margin: 40px 0;
+        border-color: #334155;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+        .footer-container {
+            text-align: center;
+        }
+
+        .social-icons {
+            justify-content: center;
+            display: flex;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<footer>
+    <div class="footer-container">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+            <div class="footer-brand-title">
+                <img src="https://cdn-icons-png.flaticon.com/512/1048/1048946.png">
+                <div>
+                    <h2>HopeLink</h2>
+                    <p style="color:#38bdf8; margin:0;">Mahama Refugee Camp</p>
+                </div>
+            </div>
+            <p>Empowering refugees through technology and innovation in Mahama Camp, Rwanda.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">🏠 Home</a></li>
+                <li><a href="#">ℹ️ About</a></li>
+                <li><a href="#">🤝 Get Involved</a></li>
+                <li><a href="#">✉️ Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-contact">
+            <h3>Contact Info</h3>
+            <p>
+                📍 Mahama Camp, Kirehe District, Rwanda <br>
+                ✉️ hopelink.mahama@gmail.com <br>
+                📞 +250 123 456 789
+            </p>
+        </div>
+
+        <!-- Follow + Subscribe -->
+        <div class="footer-social">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+            </div>
+
+            <h3 style="margin-top:20px;">Stay Updated</h3>
+            <div class="subscribe">
+                <form>
+                    <input type="email" placeholder="Your email">
+                    <button>📩</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="footer-bottom">
+        © 2025 HopeLink Mahama — Empowering Refugees Through Innovation.<br>
+        All rights reserved. Registered non-profit organization.
+    </div>
+</footer>
+
+</body>
+</html>
