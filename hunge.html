@@ -92,6 +92,8 @@ html, body {
         font-size: 16px;
         font-weight: 500;
         transition: 0.2s;
+        position: relative;
+       
     }
 
     .nav-links a:hover,
@@ -284,32 +286,33 @@ html, body {
         line-height: 2;
     }
 
-    .footer-links a {
+    .footer-links i {
         text-decoration: none;
         color: #e2e8f0;
     }
 
-    .footer-links a:hover {
+    .footer-links i:hover {
         color: #38bdf8;
+        background-color: #cbd5e1;
     }
 
     .footer-contact p {
         line-height: 1.8;
+        color: #e2e8f0;
     }
 
-    .social-icons img {
-        width: 35px;
-        margin-right: 12px;
-        transition: 0.3s;
-        cursor: pointer;
+    .social-icons i {
+        font-size: 40px;
+        color: #e2e8f0;
         border-radius: 50%;
-        color: #374151;
-        background-color: #e5e7eb;
+        margin-right: 15px;
+        transition: all 0.3s ease;
+        cursor: pointer;
     }
 
-    .social-icons img:hover {
+    .social-icons i:hover {
         transform: scale(1.1);
-        background-color: #cbd5e1;
+        background-color: blue;
     }
 
     .subscribe form {
@@ -331,6 +334,10 @@ html, body {
         background: #22c55e;
         border-radius: 0 5px 5px 0;
         cursor: pointer;
+        transition: .3s;
+    }
+    .subscribe button:hover {
+        background: #0ff564;
     }
 
     hr {
@@ -589,6 +596,7 @@ html, body {
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div class="aspect-video rounded-lg overflow-hidden">
                                         <iframe src="https://www.youtube.com/embed/ZX5fhkHvqJg" title="Basic Math for Kids - Numbers and Counting" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                                        <iframe src="https://www.youtube.com/embed/ZX5fhkHvqJg" title="Basic Math for Kids - Numbers and Counting" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
                                     </div>
                                     <div class="aspect-video rounded-lg overflow-hidden">
                                         <iframe src="https://www.youtube.com/embed/Aq4WAhFRrpI" title="Addition and Subtraction for Kids" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
@@ -709,10 +717,10 @@ html, body {
         <div class="footer-links">
             <h2>Quick Links</h2>
             <ul>
-                <li><a href="#">🏠 Home</a></li>
-                <li><a href="#">ℹ️ About</a></li>
-                <li><a href="#">🤝 Get Involved</a></li>
-                <li><a href="#">✉️ Contact</a></li>
+                <li><a href="#"><i class='bx bxs-home'></i> Home</a></li>
+                <li><a href="#"><i class='bx bxs-info-circle'></i> About</a></li>
+                <li><a href="#"><i class='bx bxs-hand'></i> Get Involved</a></li>
+                <li><a href="#"><i class='bx bxs-envelope'></i> Contact</a></li>
             </ul>
         </div>
 
@@ -720,9 +728,9 @@ html, body {
         <div class="footer-contact">
             <h2>Contact Info</h2>
             <p>
-                📍 Mahama Camp, Kirehe District, Rwanda <br>
-                ✉️ hopelink.mahama@gmail.com <br>
-                📞 +250 123 456 789
+                <i class='bx bxs-map'></i> Mahama Camp, Kirehe District, Rwanda <br>
+                <i class='bx bxs-envelope'></i> hopelink.mahama@gmail.com <br>
+                <i class='bx bxs-phone'></i> +250 123 456 789
             </p>
         </div>
 
@@ -730,17 +738,17 @@ html, body {
         <div class="footer-social">
             <h2>Follow Us</h2>
             <div class="social-icons">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-                <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png">
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+               <i class='bx bxl-facebook-circle'></i>
+                <i class='bx bxl-instagram'></i>
+                <i class='bx bxl-twitter'></i>
+                <i class='bx bxl-linkedin'></i>
             </div>
 
             <h3 style="margin-top:20px;">Stay Updated</h3>
             <div class="subscribe">
                 <form>
                     <input type="email" placeholder="Your email">
-                    <button>📩</button>
+                    <button><i class='bx bxs-send' ></i></button>
                 </form>
             </div>
         </div>
