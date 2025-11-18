@@ -6,7 +6,8 @@
     <title>Hunger Help Mahama</title>
     <link rel="stylesheet" href="styles.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="/_sdk/element_sdk.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
@@ -32,124 +33,7 @@ html, body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-  /* NAVBAR MAIN */
-    .navbar {
-        display: flex;
-        align-items: center;
-        padding: 15px 40px;
-        background: white;
-        border-bottom: 1px solid #e5e7eb;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
 
-    /* LOGO + TEXT */
-    .logo-section {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .logo-section img {
-        width: 45px;
-    }
-
-    .brand-text h2 {
-        margin: 0;
-        font-size: 22px;
-        color: #0f172a;
-    }
-
-    .brand-text p {
-        margin: 0;
-        font-size: 14px;
-        color: #10b981;
-        font-weight: bold;
-    }
-
-    /* DONATION BADGE */
-    /* .donate-badge {
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        color: white;
-        padding: 10px 18px;
-        border-radius: 10px;
-        font-size: 15px;
-        font-weight: 500;
-        margin-left: 30px;
-        white-space: nowrap;
-    } */
-
-    /* MENU */
-    .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 28px;
-    }
-
-    .nav-links a {
-        text-decoration: none;
-        color: #4b5563;
-        font-size: 16px;
-        font-weight: 500;
-        transition: 0.2s;
-        position: relative;
-       
-    }
-
-    .nav-links a:hover,
-    .active {
-        color: #2563eb !important;
-    }
-
-    /* DROPDOWN */
-    .dropdown {
-        position: relative;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-
-    .dropdown-menu {
-        position: absolute;
-        background: white;
-        border: 1px solid #e5e7eb;
-        top: 35px;
-        left: 0;
-        padding: 10px 0;
-        display: none;
-        border-radius: 6px;
-        min-width: 150px;
-        z-index: 10;
-    }
-
-    .dropdown:hover .dropdown-menu {
-        display: block;
-    }
-
-    .dropdown-menu a {
-        display: block;
-        padding: 8px 15px;
-        color: #374151;
-    }
-
-    .dropdown-menu a:hover {
-        background: #f3f4f6;
-    }
-
-    /* OPPORTUNITIES BUTTON */
-    .opportunities-btn {
-        background: #fbbf24;
-        border-radius: 10px;
-        padding: 8px 18px;
-        font-weight: 600;
-        cursor: pointer;
-        border: none;
-        font-size: 15px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
 
     /* DONATE BUTTON */
     .donate-now {
@@ -364,68 +248,8 @@ html, body {
 </style>
 <body class="smooth-scroll">
 
-<!-- NAVBAR -->
-<nav class="navbar">
-
-    <!-- Logo + Name -->
-    <div style="display:flex; align-items:center;">
-        <div class="logo-section">
-            <img src="https://cdn-icons-png.flaticon.com/512/1048/1048946.png">
-            <div class="brand-text">
-                <h2>HopeLink</h2>
-                <p>Mahama Refugee Camp</p>
-            </div>
-        </div>
-
-        <!-- Donate Badge -->
-
-    </div>
-
-    <!-- Navigation -->
-    <div class="nav-links">
-
-        <a href="#">Home</a>
-
-        <div class="dropdown">
-            <a>Programs</a>
-            <i class='bx bx-chevron-down'></i>
-            <div class="dropdown-menu">
-                <a href="#">Tech Education</a>
-                <a href="#">Entrepreneurship</a>
-                <a href="#">Youth Empowerment</a>
-            </div>
-        </div>
-
-        <a href="#">About</a>
-        <a href="#">Get Involved</a>
-
-        <div class="dropdown">
-            <a>News & Updates</a>
-            <i class='bx bx-chevron-down'></i>
-            <div class="dropdown-menu">
-                <a href="#">Blog</a>
-                <a href="#">Announcements</a>
-            </div>
-        </div>
-
-        <a href="#" class="active">Contact</a>
-
-        <div class="dropdown">
-            <button class="opportunities-btn">
-                Opportunities
-                <i class='bx bx-chevron-down'></i>
-            </button>
-            <div class="dropdown-menu">
-                <a href="#">Jobs</a>
-                <a href="#">Volunteer</a>
-            </div>
-        </div>
-
-        <button class="donate-now">❤️ Donate Now</button>
-
-    </div>
-</nav>
-
+<!-- NAVBARindexs.htm
+     
     <!-- Hero Section -->
     <section id="home" class="hero-gradient text-white pt-24 pb-20 px-4">
         <div class="max-w-4xl mx-auto text-center">
@@ -698,69 +522,89 @@ html, body {
     </section>
 
 
-<footer>
-    <div class="footer-container">
-
-        <!-- Brand -->
-        <div class="footer-brand">
-            <div class="footer-brand-title">
-                <img src="https://cdn-icons-png.flaticon.com/512/1048/1048946.png">
+ <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h2>HopeLink</h2>
-                    <p style="color:#38bdf8; margin:0;">Mahama Refugee Camp</p>
+                    <!-- Footer Logo -->
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-lg">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Empowering refugees through technology and innovation in Mahama Camp, Rwanda.
+                    </p>
+                </div>
+               
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-info-circle mr-2 text-xs"></i>About</a></li>
+                        <li><a href="#" onclick="openModal('getInvolvedModal')" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
+                        <li><a href="#" onclick="openModal('contactModal')" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
+                    </ul>
+                </div>
+               
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            Mahama Camp, Kirehe District, Rwanda
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            hopelink.mahama@gmail.com
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-3"></i>
+                            +250 123 456 789
+                        </p>
+                    </div>
+                </div>
+               
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition transform hover:scale-110">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-red-500 transition transform hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                   
+                    <!-- Newsletter Signup -->
+                    <div class="mt-6">
+                        <h5 class="text-sm font-semibold mb-2">Stay Updated</h5>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none">
+                            <button class="bg-primary-green text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <p>Empowering refugees through technology and innovation in Mahama Camp, Rwanda.</p>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="footer-links">
-            <h2>Quick Links</h2>
-            <ul>
-                <li><a href="#"><i class='bx bxs-home'></i> Home</a></li>
-                <li><a href="#"><i class='bx bxs-info-circle'></i> About</a></li>
-                <li><a href="#"><i class='bx bxs-hand'></i> Get Involved</a></li>
-                <li><a href="#"><i class='bx bxs-envelope'></i> Contact</a></li>
-            </ul>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="footer-contact">
-            <h2>Contact Info</h2>
-            <p>
-                <i class='bx bxs-map'></i> Mahama Camp, Kirehe District, Rwanda <br>
-                <i class='bx bxs-envelope'></i> hopelink.mahama@gmail.com <br>
-                <i class='bx bxs-phone'></i> +250 123 456 789
-            </p>
-        </div>
-
-        <!-- Follow + Subscribe -->
-        <div class="footer-social">
-            <h2>Follow Us</h2>
-            <div class="social-icons">
-               <i class='bx bxl-facebook-circle'></i>
-                <i class='bx bxl-instagram'></i>
-                <i class='bx bxl-twitter'></i>
-                <i class='bx bxl-linkedin'></i>
-            </div>
-
-            <h3 style="margin-top:20px;">Stay Updated</h3>
-            <div class="subscribe">
-                <form>
-                    <input type="email" placeholder="Your email">
-                    <button><i class='bx bxs-send' ></i></button>
-                </form>
+           
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 HopeLink Mahama — Empowering Refugees Through Innovation.</p>
+                <p class="text-xs mt-2">All rights reserved. Registered non-profit organization.</p>
             </div>
         </div>
-    </div>
-
-    <hr>
-
-    <div class="footer-bottom">
-        © 2025 HopeLink Mahama — Empowering Refugees Through Innovation.<br>
-        All rights reserved. Registered non-profit organization.
-    </div>
-</footer>
+    </footer>
 
     <script>
         const defaultConfig = {
